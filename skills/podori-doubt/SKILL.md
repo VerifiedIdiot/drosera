@@ -1,7 +1,7 @@
 ---
 name: podori-doubt
 description: Use when dependencies or images need trust checks.
-version: 0.1.0
+version: 0.3.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]

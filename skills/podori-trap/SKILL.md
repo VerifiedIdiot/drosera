@@ -1,7 +1,7 @@
 ---
 name: podori-trap
 description: Use when the user explicitly requests web app traps.
-version: 0.1.0
+version: 0.3.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]

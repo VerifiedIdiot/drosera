@@ -1,33 +1,31 @@
 # Local Advisories and Lifecycle
 
-1. Reconcile resolved packages, transitive dependencies, base OS, runtime versions, platforms, and available deployed digests.
-2. Record the approved advisory snapshot's origin, integrity, publication date, import date, and coverage.
-3. Verify audit-tool behavior through local help before use.
-4. Disable remote queries, updates, telemetry, and implicit pulls for offline checks.
-5. If tools or data are missing, report the gap without automatic installation.
-6. Compare affected ranges, feature use, and exposure conditions against the exact asset.
-7. Classify each advisory as affected, unaffected, or unknown with evidence.
-8. Apply approved remediation and release policies without automatic fix options.
+1. Reconcile resolved/transitive packages, base OS, runtime versions, platforms, and available deployed digests.
+2. Record approved snapshot origin, integrity, publication/import dates, and coverage.
+3. Verify audit-tool behavior through local help.
+4. Disable remote queries, updates, telemetry, and implicit pulls.
+5. Report missing tools/data without automatic installation.
+6. Compare affected ranges, feature use, and exposure against exact assets.
+7. Classify advisories as affected, unaffected, or unknown with evidence.
+8. Apply approved remediation/release policies without automatic fixes.
 
-Missing records, stale data, unsupported ecosystems, and failed queries do not establish an unaffected result.
-Optional refresh requires approved destinations and disclosed inventory.
-Record identifiers, snapshot dates, exposure evidence, and any exception's owner, scope, reason, and expiry.
+Missing records, stale data, unsupported ecosystems, and failed queries cannot establish unaffected status.
+Require approved destinations and disclosed inventory for optional refresh.
+Record advisory identifiers, snapshot dates, exposure evidence, and exception owner/scope/reason/expiry.
 
 | Gate | Action |
 |---|---|
-| Task start | Assess affected boundaries and evidence freshness |
-| Dependency or boundary change | Repeat affected checks and regression tests |
-| Completion or release | Inspect the diff, exact artifacts, and actual results |
-| Advisory import | Verify source, integrity, date, and affected inventory |
+| Start | Assess affected boundaries and evidence freshness. |
+| Dependency/boundary change | Repeat affected checks and regression tests. |
+| Completion/release | Inspect diff, exact artifacts, and actual results. |
+| Advisory import | Verify source, integrity, date, and affected inventory. |
 
 Keep advisory queries outside request handlers.
-Create continuous checks only with separate approval.
-For persistent integration, use [project rules](../templates/project-security-rules.md) in the actual active instruction file.
-Verify discovery, full content load, and CI enforcement separately through the installed agent's local documentation.
+Require separate approval for continuous checks.
+For persistent integration, put [project rules](../templates/project-security-rules.md) in the active instruction file.
+Verify discovery, full content load, and CI enforcement separately through installed-agent local documentation.
 
 ## Optional Background
 
-These links provide background, not required tools or procedures.
-Do not fetch them automatically.
-
-- [OWASP REST security](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
+[OWASP REST security](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html) is optional background, not a required tool or procedure.
+Do not fetch it automatically.

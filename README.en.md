@@ -1,51 +1,39 @@
-<div align="center">
-
 # podori
 
-![podori: inspect vulnerabilities, question dependencies, and set traps](podori.png?rev=6b3a03a5d6ee)
+[한국어 안내](README.md) | English
 
 **Application and web security skills for AI coding agents.**
 
-`v0.1.0` · **MIT** · Three independent skills
-
-English | [한국어](README.md)
-
-[Start here](#start) · [Security](#secure-code) · [Doubt](#doubt) · [Traps](#trap)
-
-</div>
-
 One missing authorization check can expose another user's data, even when the feature works correctly. A familiar container image can contain an unfamiliar startup script.
 
-podori gives your agent three skills to examine these gaps. The skills help your agent fix vulnerabilities, question apparently safe dependencies, and prepare decoys for hostile exploration.
-
-| Theme | Skill | Purpose |
-|---|---|---|
-| Security | [podori](skills/podori/SKILL.md) | Find and fix vulnerabilities, then verify the fixes with tests. |
-| Doubt | [podori-doubt](skills/podori-doubt/SKILL.md) | Verify the origins and contents of packages and images, even those that appear safe. |
-| Traps | [podori-trap](skills/podori-trap/SKILL.md) | Set decoys and traps to detect hostile exploration. |
-
-Code security comes first. Select dependency checks and traps when needed. Each skill works independently and does not invoke the others.
-
----
-
-<a id="start"></a>
+podori gives your agent independent skills to examine these gaps. The skills help your agent fix vulnerabilities, question apparently safe dependencies, and prepare decoys to detect unauthorized exploration.
 
 ## Start here
 
-Copy the complete selected `skills/<skill-name>/` directory into the agent's skill location. Each directory contains instructions, references, and templates.
+Copy the complete selected `skills/<skill-name>/` directory into the agent's skill location. Each package contains the required instructions and references. Source links are not required inputs.
 
-> [!TIP]
-> Invoke the selected skill in the target project. You do not need an additional task prompt. The agent reads project code and configuration to select inspection targets or suitable traps.
+Invoke the selected skill in the target project. You do not need an additional task prompt. The agent reads project code and configuration to select inspection targets or suitable traps.
 
 If project evidence cannot resolve the target or a required approval, the agent asks a focused question. Installation paths and invocation syntax depend on the agent. The examples below show skill-only calls for agents that support slash commands.
 
-<a id="secure-code"></a>
+## Skill overview
+
+Code security comes first. Select `podori-egov` for eGovFrame projects. Each skill works independently and does not invoke the others.
+
+| Theme | Skill | Purpose |
+|---|---|---|
+| Security | [podori](skills/podori/SKILL.md) | Use a security report to guide fixes and tests. |
+| eGovFrame security | [podori-egov](skills/podori-egov/SKILL.md) | Apply the same procedure with version-specific eGovFrame rules and code cases. |
+| Doubt | [podori-doubt](skills/podori-doubt/SKILL.md) | Verify the origins and contents of packages and images, even those that appear safe. |
+| Traps | [podori-trap](skills/podori-trap/SKILL.md) | Set decoys and traps to detect unauthorized exploration. |
+
+![podori: inspect vulnerabilities, question dependencies, and set traps](podori.png?rev=6b3a03a5d6ee)
 
 ### podori · Security
 
 A hidden admin button does not protect an API that anyone can call.
 
-`podori` examines code from an attacker's perspective. It checks authorization, input validation, file uploads, and attacks that combine multiple weaknesses. It fixes verified defects and tests existing behavior for regressions.
+`podori` examines code from an attacker's perspective. It checks authorization, input validation, file uploads, and attacks that combine multiple weaknesses. It records security findings and existing code conventions before changes. It fixes confirmed defects within approved scope. It then verifies security, normal behavior, and convention compliance.
 
 ```text
 /podori
@@ -53,7 +41,15 @@ A hidden admin button does not protect an API that anyone can call.
 
 Review-only requests leave the code unchanged. The skill does not add traps automatically.
 
-<a id="doubt"></a>
+### podori-egov · eGovFrame security
+
+`podori-egov` preserves the report, convention, fix, and verification procedure. It includes common security rules and separate 3.x, 4.x, and 5.x rules with code cases.
+
+```text
+/podori-egov
+```
+
+It checks runtime, common-component, and actual dependency versions separately. It does not infer safety or support beyond verified versions. Case tests do not replace target-project verification.
 
 ### podori-doubt · Doubt
 
@@ -67,19 +63,17 @@ A familiar source does not prove harmless content. A clean vulnerability scan do
 
 The skill does not install suspect packages or execute suspect images for inspection. It separates verified facts, suspicions, and unverified checks.
 
-<a id="trap"></a>
-
 ### podori-trap · Traps
 
 The API behind the fake key and the documents beyond it contain no real secrets.
 
-`podori-trap` helps your agent create decoy keys, APIs, and document mazes for the project. Decoys divert hostile exploration and record server-verified decoy access. Traps stay within operator-controlled services.
+`podori-trap` helps your agent create decoy keys, APIs, and document mazes for the project. Decoys divert unauthorized exploration and record server-verified decoy access. Traps stay within operator-controlled services.
 
 ```text
 /podori-trap
 ```
 
-Hidden decoy events are also an option. Ordinary page views and DOM inspection do not count as attacks. Decoys have no connection to real data or privileges.
+Decoys have no connection to real data or privileges. Hidden decoy events are also an option. Ordinary page views and DOM inspection do not count as attacks.
 
 New traps start disabled. Production activation requires resource limits, exit conditions, and separate approval.
 
@@ -91,20 +85,32 @@ This diagram shows responsibilities, not an execution sequence.
 flowchart TD
     project["Your project"]
     project --> code["podori · Security"]
+    project --> egov["podori-egov · eGovFrame security"]
     project --> dependency["podori-doubt · Doubt"]
     project -->|When needed| trap["podori-trap · Traps"]
-    code --> fix["Code review · Fixes · Tests"]
+    code --> fix["Report · Conventions → Fixes · Verification"]
+    egov --> fix
     dependency --> verify["Package · Image verification"]
     trap --> decoy["Decoys · Document mazes · Detection"]
-    classDef base fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-    classDef doubt fill:#fef3c7,stroke:#d97706,color:#78350f
-    classDef trap fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-    classDef root fill:#f1f5f9,stroke:#64748b,color:#0f172a
-    class code,fix base
-    class dependency,verify doubt
-    class trap,decoy trap
-    class project root
 ```
+
+## 0.4.0 plan: sandbox reproduction and regression verification
+
+The next version will reproduce report claims in approved sandboxes and check whether the fixed version prevents the same behavior. The feature name is `podori-wreck`.
+
+- Reproduce report items through bounded scenarios with approved target copies and synthetic data.
+- Record actual requests, responses, and state changes.
+- Compare the original and fixed versions under identical initial conditions.
+- Verify normal behavior alongside each reported defect.
+- If execution is unavailable, retain an unverified result instead of a safety claim.
+
+The design requires external network denial, isolation from the host and other experiments, and resource and time limits. If these controls are unavailable, execution must stop.
+
+Version 0.4.0 excludes production or external targets, autonomous exploration, vulnerability chains, arbitrary commands, code-execution demonstrations, destructive tests, and resource-exhaustion tests.
+
+**Version 0.4.0 is an unimplemented plan. The current package contains four skills at version 0.3.0, without the sandbox MCP server or `podori-wreck`.**
+
+The [0.4.0 design document](docs/0.4.0-sandbox-validation.md) defines the scope and acceptance criteria.
 
 ## What to expect
 
@@ -112,6 +118,6 @@ podori provides instructions for an agent, not an active security service. Insta
 
 Reports include evidence and actual test results. Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval.
 
-All three skills include English instructions, references, and templates.
+All four skills include English instructions, references, and templates. Their version is `0.3.0`.
 
 [Changelog](CHANGELOG.md) · [MIT](LICENSE) · VerifiedIdiot
