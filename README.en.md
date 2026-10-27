@@ -1,3 +1,5 @@
+![podori: inspect vulnerabilities, question dependencies, and set traps](podori.png?rev=6b3a03a5d6ee)
+
 # podori
 
 [한국어 안내](README.md) | English
@@ -26,8 +28,6 @@ Code security comes first. Select `podori-egov` for eGovFrame projects. Each ski
 | eGovFrame security | [podori-egov](skills/podori-egov/SKILL.md) | Apply the same procedure with version-specific eGovFrame rules and code cases. |
 | Doubt | [podori-doubt](skills/podori-doubt/SKILL.md) | Verify the origins and contents of packages and images, even those that appear safe. |
 | Traps | [podori-trap](skills/podori-trap/SKILL.md) | Set decoys and traps to detect unauthorized exploration. |
-
-![podori: inspect vulnerabilities, question dependencies, and set traps](podori.png?rev=6b3a03a5d6ee)
 
 ### podori · Security
 

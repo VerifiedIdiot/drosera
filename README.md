@@ -1,3 +1,5 @@
+![podori: 취약점을 샅샅이 뒤지고 의심하고 함정을 설치합니다](podori.png?rev=6b3a03a5d6ee)
+
 # podori
 
 **AI 코딩 에이전트를 위한 앱·웹 보안 스킬.**
@@ -26,8 +28,6 @@ podori(포돌이)는 코딩 에이전트가 이런 빈틈을 살펴보도록 만
 | 전자정부 보안 | [podori-egov](skills/podori-egov/SKILL.md) | 같은 보안 절차를 eGovFrame 버전별 규칙과 코드에 적용합니다. |
 | 의심 | [podori-doubt](skills/podori-doubt/SKILL.md) | 안전해 보이는 패키지와 이미지도 출처와 내용을 검증합니다. |
 | 함정 | [podori-trap](skills/podori-trap/SKILL.md) | 미끼와 함정을 설치해 무단 탐색을 탐지합니다. |
-
-![podori: 취약점을 샅샅이 뒤지고 의심하고 함정을 설치합니다](podori.png?rev=6b3a03a5d6ee)
 
 ### podori · 보안
 
