@@ -1,12 +1,14 @@
 ![podori: inspect vulnerabilities, question dependencies, and set traps](podori.png?rev=6b3a03a5d6ee)
 
-# podori · Security skills for AI coding agents
+# podori · Security code review skills for AI coding agents
 
 **Security fixes with checks for normal behavior.**
 
 [한국어 안내](README.md) | English · `0.5.0`
 
-podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests. Separate skills inspect packages and container images or create decoys and traps on request. Another skill compares vulnerable and fixed variants of the bundled synthetic app.
+podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests.
+
+Independent skills cover eGovFrame secure coding, package and container image supply-chain security, and decoys and traps on request. Sandbox verification compares only the bundled synthetic app.
 
 ## Background
 
@@ -19,7 +21,7 @@ Start with `podori` for application and web security code reviews. Use `podori-e
 | When you want to… | Use this skill |
 |---|---|
 | Find and fix application or web vulnerabilities, then run regression tests | [podori · Security](skills/podori/SKILL.md) |
-| Review secure coding against the relevant eGovFrame version | [podori-egov · eGovFrame security](skills/podori-egov/SKILL.md) |
+| Review government security criteria and secure coding for the relevant eGovFrame version | [podori-egov · eGovFrame security](skills/podori-egov/SKILL.md) |
 | Check package and container image provenance and supply-chain security | [podori-doubt · Doubt](skills/podori-doubt/SKILL.md) |
 | Detect unauthorized exploration with decoys and traps | [podori-trap · Traps](skills/podori-trap/SKILL.md) |
 | Compare vulnerable and fixed variants of the bundled synthetic app | [podori-wreck · Sandbox verification](skills/podori-wreck/SKILL.md) |
@@ -59,9 +61,7 @@ flowchart TD
 
 The agent reads project code and configuration to select the review target. You do not need an additional task prompt. If project evidence or required approval is missing, the agent asks a focused question. A review-only request leaves the code unchanged.
 
-Installation paths and invocation syntax depend on the agent. Each folder includes instructions and references, so source links are not required inputs.
-
-The security, eGovFrame, doubt, and trap skills do not require MCP. Only `podori-wreck` requires a separate local MCP server and host-issued execution approval. Read the [MCP guide](mcp/README.en.md) for setup.
+Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
 
 ## Explore the skills
 
@@ -79,11 +79,11 @@ Review-only requests leave the code unchanged. The skill does not add traps auto
 
 ### podori-egov · eGovFrame security
 
-Security reviews start with the eGovFrame version. The skill distinguishes runtime, common-component, and actual dependency versions. It applies security rules and code cases for 3.x, 4.x, and 5.x.
+`podori-egov` guides eGovFrame secure coding reviews, fixes for confirmed defects, and regression checks. It distinguishes runtime, common-component, and actual dependency versions before the applicable 3.x, 4.x, and 5.x rules and cases.
 
-It follows the same report, fix, and verification procedure as `podori`.
+The package includes 20 design criteria and 49 implementation criteria from MOIS Notice 2025-1, Appendix 3. Each criterion has applicability conditions, local checks, and verification targets. The [criterion coverage record](skills/podori-egov/templates/criteria-coverage.md) captures evidence and results. The [sources and baseline edition](skills/podori-egov/references/government-baseline.md) identify the original documents and their scope.
 
-The bundled government baseline contains 20 design criteria and 49 implementation criteria. Connected and isolated hosts use the same baseline and procedure without external queries. The [eGovFrame guide](skills/podori-egov/README.en.md) explains prerequisites and unresolved evidence.
+Connected and isolated hosts use the same baseline and procedure without external queries. The [eGovFrame security and offline guide](skills/podori-egov/README.en.md) explains prerequisites and unresolved evidence.
 
 ```text
 /podori-egov
@@ -137,12 +137,28 @@ Each skill first defines the task scope, completion criteria, and required check
 
 Separate defects and optional improvements stay on a follow-up list. If required approval or evidence is unavailable, the agent reports unresolved items and stops. `podori-doubt` returns a read-only assessment without changes.
 
+## Frequently asked questions
+
+### Can I copy only `SKILL.md`?
+
+Copy the complete selected skill folder. `SKILL.md` defines the procedure. The `references/` and `templates/` directories contain detailed rules and report templates. The review uses the bundled instructions without access to source links. Agent instructions use English, and user-facing READMEs have paired Korean and English versions.
+
+### Does podori require MCP?
+
+`podori`, `podori-egov`, `podori-doubt`, and `podori-trap` work without MCP. Only `podori-wreck` requires a separate local MCP server and host-issued execution approval. Read the [MCP guide](mcp/README.en.md) for setup.
+
+### Can I use podori in an air-gapped environment?
+
+`podori-egov` uses the same bundled criteria and local evidence on connected and isolated hosts. An isolated host needs an internal agent, model, and the required local tools and dependencies. The skill does not fetch external data or install tools during review. Source and CVE updates remain separate tasks. Read the [offline guide](skills/podori-egov/README.en.md) for prerequisites.
+
+### Does the government baseline replace security certification?
+
+`podori-egov` supports development-security reviews against its bundled source edition. It does not replace official certification or establish legal compliance. Version-specific cases and the `podori-wreck` synthetic app tests do not establish the security of an actual project.
+
 ## What to expect
 
 Skills provide instructions for an agent. Installation alone does not activate defenses in the target project. The `podori-wreck` MCP does not establish the safety of a production environment.
 
 Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval.
-
-Agent instructions, rules, references, and templates use English. User-facing READMEs have paired Korean and English versions.
 
 [Changelog](CHANGELOG.md) · [MIT](LICENSE) · VerifiedIdiot
