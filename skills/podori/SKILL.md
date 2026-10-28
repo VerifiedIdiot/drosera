@@ -1,7 +1,7 @@
 ---
 name: podori
 description: Use when application or web code changes.
-version: 0.3.0
+version: 0.5.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]
@@ -11,6 +11,7 @@ platforms: [linux, macos, windows]
 
 Attacker-perspective application/web review, fixes, and regression tests.
 No other podori skill is required or invoked.
+Read the [completion contract](references/report-completion.md) before review or changes.
 
 ## Scope
 

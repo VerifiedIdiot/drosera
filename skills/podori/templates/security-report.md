@@ -9,6 +9,16 @@
 - Convention baseline path/revision:
 - Scope/exclusions/unresolved limits:
 
+## Completion Contract
+
+- Mode: `fix-and-verify` or `review-only`:
+- Frozen contract revision and required item IDs:
+- Completion criteria and mandatory checks:
+- Change authority and unresolved approval requirements:
+- Approved retry or resource limit, if any:
+
+Result updates do not reset the frozen contract.
+
 ## Coverage
 
 | Path ID | Entry/boundary | Attack class | Source/evidence | Status | Next check/exclusion reason |
@@ -41,3 +51,17 @@ Separate proposals from verified outcomes.
 
 Mark missing execution evidence unverified.
 Exclude credentials, private data, and unredacted secrets.
+
+## Completion Outcome
+
+- Outcome: `COMPLETED` or `BLOCKED`:
+- Verified required items and checks:
+- Unresolved required items and introduced regressions:
+- Required authority, evidence, or next action for blocked work:
+
+## Follow-up Findings
+
+| ID | Separate defect or optional improvement | Evidence and risk | Separate approval or next task |
+|---|---|---|---|
+
+Keep follow-up findings outside the frozen worklist.

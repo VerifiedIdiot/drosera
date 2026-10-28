@@ -1,0 +1,24 @@
+{
+  "name": "@podori/sandbox-mcp",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-only synthetic HTTP validation server.",
+  "engines": { "node": ">=24 <26" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test --test-concurrency=1 test/*.test.mjs",
+    "test:integration": "node --test --test-concurrency=1 test/integration/*.test.mjs",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}

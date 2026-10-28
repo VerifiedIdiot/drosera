@@ -2,3 +2,6 @@
 .env
 seed.txt
 .seeds/
+mcp/node_modules/
+mcp/dist/
+/docs/

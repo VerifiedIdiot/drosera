@@ -1,0 +1,36 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { existsSync, mkdtempSync, symlinkSync, linkSync, chmodSync, writeFileSync, unlinkSync } from 'node:fs';
+import { join } from 'node:path';
+
+test('Private state rejects paths, links, loose permissions and a second controller', async () => {
+  assert.ok(existsSync('dist/store.js'), 'The private state store is absent');
+  assert.ok(process.env.PODORI_EVIDENCE_DIR, 'Set PODORI_EVIDENCE_DIR outside the repository');
+  const { Store } = await import('../dist/store.js');
+  const dir = mkdtempSync(join(process.env.PODORI_EVIDENCE_DIR, 'store-'));
+  const store = new Store(dir);
+  store.write('policy.json', { value: 1 });
+  assert.deepEqual(store.read('policy.json'), { value: 1 });
+  assert.throws(() => store.write('../escape.json', {}));
+  symlinkSync(join(dir,'policy.json'), join(dir,'linked.json'));
+  assert.throws(() => store.read('linked.json'));
+  assert.throws(() => store.write('linked.json', {}));
+  linkSync(join(dir,'policy.json'), join(dir,'hard.json'));
+  assert.throws(() => store.read('hard.json'));
+  store.write('loose.json', {});
+  chmodSync(join(dir,'loose.json'), 0o644);
+  assert.throws(() => store.read('loose.json'));
+  writeFileSync(join(dir,'large.json'), ' '.repeat(1048577), {mode:0o600});
+  assert.throws(() => store.read('large.json'));
+  const release = store.lock();
+  assert.throws(() => new Store(dir).lock(), /controller-active/);
+  release();
+  new Store(dir).lock()();
+  store.write('server.guard',{pid:process.pid});
+  assert.throws(() => new Store(dir).lock(), /controller-lock-busy/);
+  unlinkSync(join(dir,'server.guard'));
+  new Store(dir).lock()();
+  const loose = mkdtempSync(join(process.env.PODORI_EVIDENCE_DIR, 'loose-'));
+  chmodSync(loose,0o755);
+  assert.throws(() => new Store(loose));
+});

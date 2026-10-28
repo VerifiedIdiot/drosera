@@ -4,6 +4,8 @@
 
 [한국어 안내](README.md) | English
 
+The current version is `0.5.0`.
+
 **Application and web security skills for AI coding agents.**
 
 One missing authorization check can expose another user's data, even when the feature works correctly. A familiar container image can contain an unfamiliar startup script.
@@ -14,13 +16,13 @@ podori gives your agent independent skills to examine these gaps. The skills hel
 
 Copy the complete selected `skills/<skill-name>/` directory into the agent's skill location. Each package contains the required instructions and references. Source links are not required inputs.
 
-Invoke the selected skill in the target project. You do not need an additional task prompt. The agent reads project code and configuration to select inspection targets or suitable traps.
+Invoke the security, eGovFrame, doubt, or trap skill in the target project without an additional task prompt. The agent selects targets from project evidence. `podori-wreck` requires the separate MCP package and report-bound execution approval. It currently supports only the bundled synthetic application.
 
 If project evidence cannot resolve the target or a required approval, the agent asks a focused question. Installation paths and invocation syntax depend on the agent. The examples below show skill-only calls for agents that support slash commands.
 
 ## Skill overview
 
-Code security comes first. Select `podori-egov` for eGovFrame projects. Each skill works independently and does not invoke the others.
+Code security comes first. Select `podori-egov` for eGovFrame projects. Each skill works independently and does not invoke the others. The other four skills do not require the MCP package.
 
 | Theme | Skill | Purpose |
 |---|---|---|
@@ -28,6 +30,17 @@ Code security comes first. Select `podori-egov` for eGovFrame projects. Each ski
 | eGovFrame security | [podori-egov](skills/podori-egov/SKILL.md) | Apply the same procedure with version-specific eGovFrame rules and code cases. |
 | Doubt | [podori-doubt](skills/podori-doubt/SKILL.md) | Verify the origins and contents of packages and images, even those that appear safe. |
 | Traps | [podori-trap](skills/podori-trap/SKILL.md) | Set decoys and traps to detect unauthorized exploration. |
+| Sandbox verification | [podori-wreck](skills/podori-wreck/SKILL.md) | Compare report-linked behavior and normal operations in the approved synthetic application. |
+
+## Finish the report, then return
+
+Code can always receive further improvements. A single task does not need an unlimited review loop. Version 0.5.0 freezes confirmed report items and completion criteria before fixes.
+
+Post-change review verifies those items and checks for regressions from the current changes. If every required item and check passes, the task returns immediately. A second successful review is not mandatory.
+
+Separate defects and optional improvements enter a follow-up list, not the current worklist. If required authority or evidence cannot be obtained, the task returns its unresolved items and blockers. A retry limit cannot produce a forced success.
+
+For `podori-doubt`, completion means that the read-only assessment ends. It does not authorize artifact execution or repair.
 
 ### podori · Security
 
@@ -77,6 +90,20 @@ Decoys have no connection to real data or privileges. Hidden decoy events are al
 
 New traps start disabled. Production activation requires resource limits, exit conditions, and separate approval.
 
+### podori-wreck · Sandbox verification
+
+Verify report claims against actual behavior. An optional local stdio MCP runs bounded authorization and input-validation cases in a bundled HTTP application. It sends identical requests to vulnerable and fixed variants from identical initial data. It also verifies normal requests.
+
+```text
+/podori-wreck
+```
+
+The current target is only the bundled synthetic application. Arbitrary repositories, images, paths, and shell commands are not accepted. A trusted host process supplies execution approval, not the model. Read the [MCP guide](mcp/README.md) for setup and approval steps.
+
+Execution requires external network denial, host and cross-experiment isolation, and resource and time limits. If required controls cannot be verified, execution stops. Production or external targets, autonomous exploration, vulnerability chains, code-execution demonstrations, destructive tests, and resource-exhaustion tests are excluded.
+
+Evidence contains actual requests, responses, and state observations. Unexecuted items remain unverified. Cleanup removes only the experiment resources. This feature is not a general sandbox for arbitrary malicious code.
+
 ## Choose the skill for the task
 
 This diagram shows responsibilities, not an execution sequence.
@@ -88,36 +115,29 @@ flowchart TD
     project --> egov["podori-egov · eGovFrame security"]
     project --> dependency["podori-doubt · Doubt"]
     project -->|When needed| trap["podori-trap · Traps"]
+    project -->|Optional MCP| sandbox["podori-wreck · Sandbox verification"]
     code --> fix["Report · Conventions → Fixes · Verification"]
     egov --> fix
     dependency --> verify["Package · Image verification"]
     trap --> decoy["Decoys · Document mazes · Detection"]
+    sandbox --> evidence["Synthetic app · Before and after · Normal behavior"]
 ```
 
-## 0.4.0 plan: sandbox reproduction and regression verification
+## Version 0.5.0 features and verification scope
 
-The next version will reproduce report claims in approved sandboxes and check whether the fixed version prevents the same behavior. The feature name is `podori-wreck`.
+Version 0.5.0 includes bounded sandbox verification and report-based completion rules.
 
-- Reproduce report items through bounded scenarios with approved target copies and synthetic data.
-- Record actual requests, responses, and state changes.
-- Compare the original and fixed versions under identical initial conditions.
-- Verify normal behavior alongside each reported defect.
-- If execution is unavailable, retain an unverified result instead of a safety claim.
+- [Sandbox setup and approval steps](mcp/README.md)
+- [Report completion rules](skills/podori/references/report-completion.md)
 
-The design requires external network denial, isolation from the host and other experiments, and resource and time limits. If these controls are unavailable, execution must stop.
-
-Version 0.4.0 excludes production or external targets, autonomous exploration, vulnerability chains, arbitrary commands, code-execution demonstrations, destructive tests, and resource-exhaustion tests.
-
-**Version 0.4.0 is an unimplemented plan. The current package contains four skills at version 0.3.0, without the sandbox MCP server or `podori-wreck`.**
-
-The [0.4.0 design document](docs/0.4.0-sandbox-validation.md) defines the scope and acceptance criteria.
+Instruction checks, synthetic reader scenarios, and actual MCP or container tests provide different evidence. Instruction access alone does not establish automatic runtime enforcement.
 
 ## What to expect
 
-podori provides instructions for an agent, not an active security service. Installation alone does not activate defenses. An agent must implement and test actual controls in the target project.
+Skills provide instructions for an agent. Installation alone does not activate defenses in the target project. The optional `podori-wreck` MCP is a separate development tool, not verification of a production environment.
 
 Reports include evidence and actual test results. Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval.
 
-All four skills include English instructions, references, and templates. Their version is `0.3.0`.
+Skill instructions and references use English. The instruction package version is `0.5.0`. That version does not establish application deployment or measured security effectiveness.
 
 [Changelog](CHANGELOG.md) · [MIT](LICENSE) · VerifiedIdiot

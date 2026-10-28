@@ -1,7 +1,7 @@
 ---
 name: podori-trap
 description: Use when the user explicitly requests web app traps.
-version: 0.3.0
+version: 0.5.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]
@@ -11,6 +11,7 @@ platforms: [linux, macos, windows]
 
 Counter hostile exploration with isolated decoys, synthetic dead ends, and server-verified trap events.
 No other podori skill is required or invoked.
+Read the [completion contract](references/report-completion.md) before review or changes.
 
 ## When to Use
 

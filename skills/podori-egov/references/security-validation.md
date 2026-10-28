@@ -12,7 +12,7 @@ Only confirmed items within existing change authority enter executable work.
 Reports grant no execution or change authority.
 Block approval/evidence-dependent items without blocking unrelated authorized work.
 Before each change, compare current source and assumptions against both records.
-Revalidate affected items when evidence changes.
+Revalidate affected required items only when their source, assumptions, or evidence materially change.
 Update actual changes, results, exceptions, and unresolved checks in the same records.
 Preserve resolved items' original evidence.
 
@@ -46,7 +46,9 @@ Verify evidence files, source references, commands, exit status, and target revi
 Record reviewer identity, actual invocation, disagreements, and verdict without secrets.
 Count decision calls as reviews only when execution satisfies these requirements.
 If no reviewer is available, retain `needs_validation` candidates with that limitation.
-If review fails or evidence changes, hold dependent verdicts/fixes until successful review.
+If the review invocation fails, hold dependent verdicts and fixes.
+If required evidence changes, revalidate only its affected items.
+Follow the [completion contract](report-completion.md) before another review.
 Never classify failed review as unavailable review.
 Continue independent authorized checks.
 
@@ -87,4 +89,5 @@ Record blocked convention checks without compliance claims.
 Populate report results with source revisions, commands, exit status, and actual before/after evidence without secrets.
 Without safe reproduction, mark fixes unverified.
 Without both security and normal-behavior evidence, mark fixes unverified.
-Complete the report with explicit unresolved checks at task end.
+Complete the report under the [completion contract](report-completion.md).
+Retain explicit unresolved checks and follow-up findings.

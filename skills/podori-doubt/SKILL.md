@@ -1,7 +1,7 @@
 ---
 name: podori-doubt
 description: Use when dependencies or images need trust checks.
-version: 0.3.0
+version: 0.5.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]
@@ -11,6 +11,7 @@ platforms: [linux, macos, windows]
 
 Question apparently safe dependencies through independent provenance, integrity, and behavior evidence.
 No other podori skill is required or invoked.
+Read the [completion contract](references/report-completion.md) before review or changes.
 
 ## When to Use
 
