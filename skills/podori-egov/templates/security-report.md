@@ -9,17 +9,38 @@
 - Convention baseline path/revision:
 - Scope/exclusions/unresolved limits:
 
+## Offline Inputs
+
+- Skill package identity/approved transfer manifest:
+- Government source profile:
+- Agent/model identity/configuration/network placement:
+- Declared network boundary/actual enforcement evidence:
+- Available local tools/versions/offline configuration:
+- Dependency cache/source/advisory snapshot identities and dates:
+- Local decision-capability discovery/exclusions/invocation:
+- Independent reviewer availability/identity/invocation:
+- Missing artifacts/tools/evidence and dependent checks:
+
 ## Completion Contract
 
 - Mode: `fix-and-verify` or `review-only`:
 - Frozen contract revision and required item IDs:
 - Completion criteria and mandatory checks:
+- Per-deliverable evidence requirement: assessment record, confirmed evidence, or runtime verification:
+- Explicitly permitted assessment gaps, if any:
 - Change authority and unresolved approval requirements:
 - Approved retry or resource limit, if any:
 
 Result updates do not reset the frozen contract.
 
 ## Coverage
+
+- [Criterion coverage record](criteria-coverage.md) path/revision:
+- Assessed IDs and result counts:
+- Unresolved applicability and verification limits:
+
+Reconcile the record against all 20 design and 49 implementation IDs in the bundled catalogs.
+Do not count default template markers as completed assessments.
 
 | Path ID | Entry/boundary | Attack class | Source/evidence | Status | Next check/exclusion reason |
 |---|---|---|---|---|---|
@@ -29,6 +50,7 @@ Result updates do not reset the frozen contract.
 Repeat per candidate with stable root-cause/boundary IDs:
 
 - ID/verdict:
+- Government criterion IDs/version-specific rule IDs:
 - Attacker capability/prerequisites:
 - Source-to-impact trace/existing controls:
 - Evidence references/actual observations:

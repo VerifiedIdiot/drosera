@@ -9,7 +9,7 @@ A framework label, login check, or hidden menu does not prove authorization.
 | C01 | Authorize each server action against the authenticated principal, resource, and tenant before access. | Deny anonymous, other-user, other-tenant, and lower-role access without side effects. Preserve allowed access. |
 | C02 | Bind SQL values. Allowlist dynamic identifiers. Trace mapper substitutions and concatenation to actual query use. | Keep hostile input as data. Preserve valid filters and results. |
 | C03 | Encode output for its destination context. Sanitize permitted HTML with the existing approved policy. | Render hostile text inert. Preserve permitted content. |
-| C04 | Protect cookie-authenticated state changes against CSRF. Verify the effective filter chain and token checks. | Reject absent or invalid tokens. Preserve valid requests. |
+| C04 | Protect automatically authenticated browser state changes against CSRF. Verify the effective filter chain and request-authenticity controls. | Reject forged requests without mutation. Where token protection applies, reject absent or invalid tokens. Preserve valid requests. |
 | C05 | Validate file type and size. Use server-selected names and non-executable storage outside the webroot. | Reject disallowed files. Preserve authorized upload and retrieval. |
 | C06 | Resolve resource identifiers within an authorized storage boundary. Check traversal, links, ownership, and archive expansion limits. | Reject escape and cross-owner access. Preserve valid files. |
 | C07 | Restrict outbound schemes and destinations. Recheck redirects and resolved addresses against the authorized network policy. | Reject unauthorized destinations without network contact. Preserve approved destinations. |
@@ -20,7 +20,8 @@ A framework label, login check, or hidden menu does not prove authorization.
 Use synthetic data and local tests within the execution controls.
 For each finding, record the rule ID, applicability evidence, actual path, existing defenses, and expected allowed and denied results.
 Missing controls alone do not prove a reachable defect.
-These rules neither cover every KISA item nor establish certification, legal compliance, or current vulnerability status.
+These selected rules do not replace the complete [government criterion inventory](government-baseline.md).
+Neither set establishes certification, legal compliance, or current vulnerability status.
 
 ## Sources
 

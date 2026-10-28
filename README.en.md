@@ -83,6 +83,8 @@ Security reviews start with the eGovFrame version. The skill distinguishes runti
 
 It follows the same report, fix, and verification procedure as `podori`.
 
+The bundled government baseline contains 20 design criteria and 49 implementation criteria. Connected and isolated hosts use the same baseline and procedure without external queries. The [eGovFrame guide](skills/podori-egov/README.en.md) explains prerequisites and unresolved evidence.
+
 ```text
 /podori-egov
 ```

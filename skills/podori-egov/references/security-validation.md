@@ -5,7 +5,12 @@
 Create one current [report](../templates/security-report.md) and [convention baseline](../templates/project-conventions.md) before application edits.
 Use the project review location or host task-artifact area.
 Keep records outside application source unless the project specifies otherwise.
+When a template leaves the package, resolve its links to the approved installed references or accompanying local copies.
+Link companion reports and coverage records to their actual output paths.
+Do not preserve package-relative links that fail from the output directory.
 Scale records to scope.
+Include the [government criterion coverage](../templates/criteria-coverage.md) without omitting excluded or unresolved IDs.
+Keep criterion results separate from attack-path status and finding verdicts.
 Populate the templates, including exact source, relevant uncommitted evidence, and report/baseline revisions.
 Separate independent verdicts, proposed work, and verified results.
 Only confirmed items within existing change authority enter executable work.
@@ -39,6 +44,8 @@ Empty results or incomplete coverage do not prove safety.
 ## Independent review
 
 Before final verdicts or fixes, use a separate reviewer without discovery or implementation involvement.
+Use an approved independent local agent context or human reviewer under the [offline procedure](offline-execution.md).
+Do not require another model provider, sibling skill, or remote review service.
 Preserve approved tools, data boundaries, cost limits, and ownership.
 Provide claims, source references, prerequisites, evidence, and missing checks.
 Require current-source inspection and challenges to reachability, controls, prerequisites, and impact.
@@ -69,7 +76,8 @@ Schema checks do not establish evidence validity.
 Inspect relevant commands, hooks, and dependencies before execution.
 Execute unfamiliar target code only in an approved disposable OS-level sandbox.
 Exclude host credentials, production data, privileges, and unrelated host mounts.
-Disable external network unless the user explicitly approves its scope.
+Disable external network for review and test execution.
+Treat any external-network exception as a separate approved task outside this offline assessment.
 Bound CPU, memory, storage, and runtime.
 Use synthetic data and controlled test services.
 Do not download or execute malware.

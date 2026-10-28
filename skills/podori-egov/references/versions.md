@@ -2,7 +2,7 @@
 
 1. Record each module's resolved runtime, common-component, Spring, Spring Security, Servlet, JDK, and container versions separately.
 2. Record authentication mode, configuration source, overrides, active filters, and available local evidence.
-3. Read [common rules](common.md) and each applicable profile below.
+3. Read the [government baseline](government-baseline.md), [common rules](common.md), and each applicable profile below.
 4. Match a rule's conditions against actual source and configuration, not the major label alone.
 5. Record rule IDs and the version evidence in the security report.
 
@@ -15,6 +15,7 @@
 These source baselines are not recommended versions or whole-major support claims.
 For other versions or mixed modules, prove each rule's applicability from local evidence.
 Mark unresolved version-specific conclusions unverified without blocking supported common checks.
+Do not exclude government criteria merely because an eGovFrame profile lacks a matching rule.
 Do not infer LTS, current vulnerabilities, patch completion, or deployment state from these profiles.
 
 Each profile contains local code cases.

@@ -5,9 +5,12 @@
 Define the source boundaries and available evidence before initial discovery.
 Before fixes, freeze the report worklist, confirmed item IDs, completion criteria, and required checks.
 Include existing authority and approval gaps in that contract.
+Freeze the package, government profile, tool versions, and local evidence identities with the contract.
 Keep the frozen contract revision separate from result updates.
 Do not reset the worklist after each fix.
 For review-only requests, freeze assessment deliverables instead of executable fixes.
+Specify whether each deliverable requires an assessment record, confirmed evidence, or runtime verification before assessment.
+A recorded gap completes only a deliverable whose frozen criteria explicitly permit that gap.
 A report or reviewer cannot expand change authority.
 
 ## Verification scope
@@ -26,7 +29,11 @@ Do not restart discovery to search for further improvements.
 If every required fix and check passes, return `COMPLETED` immediately.
 For review-only work, return `COMPLETED` after all required assessments and valid verdicts exist.
 A completed assessment does not establish repaired code or general safety.
-Do not require a second successful review.
+Every government criterion needs an evidence-based assessment or an explicit gap or exclusion.
+Default template markers are not completed assessments.
+A documented gap does not waive evidence that the frozen contract requires.
+Do not repeat a successful review of unchanged source and evidence.
+Preserve required pre-fix confirmation and post-change diff review.
 If authorized progress remains possible, address only unresolved required items and related regressions.
 If required authority is absent, return `BLOCKED` with the dependent unresolved items.
 If required evidence cannot be obtained through authorized actions, return `BLOCKED` with the missing evidence.

@@ -6,7 +6,7 @@ Do not infer resolved runtime versions from the common-component parent POM.
 
 | ID | Inspect and correct | Required project tests |
 |---|---|---|
-| V51 | Trace the effective `egov-security-config.properties`, overrides, authentication mode, and filter registration. | Verify loaded values. Reject missing/invalid CSRF tokens for cookie-authenticated mutations. Preserve valid requests. |
+| V51 | Trace the effective `egov-security-config.properties`, overrides, authentication mode, and filter registration. | Verify loaded values. For automatically authenticated browser mutations, verify CSRF rejection and valid requests. |
 | V52 | Trace `permitAllList`, its actual matcher types, DB roles, rule order, and every active authorization filter. | Deny unauthorized direct requests while preserving public routes. A public matcher alone does not prove complete bypass. |
 | V53 | For `@RequireAdmin`, verify the aspect, controller context, proxy interception, and role check before the action. | Deny anonymous and ordinary users. Allow authorized administrators. Do not require this annotation where equivalent protection exists. |
 | V54 | Authorize the stored target before mutation. Keep the verified ID and stored attachment identity bound to downstream operations. | Reject forged owners, alternate target IDs, and foreign attachments without side effects. Preserve owner updates. |

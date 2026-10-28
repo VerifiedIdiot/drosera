@@ -3,6 +3,9 @@
 ## Calls
 
 Discover suitable executable decision skills through the trusted host catalog, regardless of provider or name.
+Only consider approved local capabilities that satisfy the [offline procedure](offline-execution.md).
+Exclude external-network capabilities and record that exclusion without an attempted call.
+If suitability is unknown, hold the dependent decision until trusted local evidence resolves it.
 Instruction access is not invocation.
 Preserve data/network permissions, cost approval, and non-execution controls.
 Do not install tools or enable services for this gate.
@@ -17,7 +20,7 @@ Require explicit approval for application decision-service integration.
 | State | Action |
 |---|---|
 | Suitable callable skill | Invoke before the dependent decision. |
-| None available | Record discovery evidence before the normal procedure. |
+| None eligible locally | Record trusted discovery and exclusions before the normal procedure. |
 | Approval absent | Hold dependent decisions, actions, and conclusions until approval. Continue independent checks. |
 | Failed, invalid, or stale result | Hold dependent actions and conclusions. Continue independent checks. |
 | Valid result | Verify against evidence before dependent work. |
