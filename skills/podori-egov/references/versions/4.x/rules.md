@@ -1,7 +1,7 @@
 # eGovFrame 4.x
 
 Source baseline: runtime `v4.0.0-Final`, common components `v4.0.0`.
-Read [XML rules](../xml-security.md) and [local cases](cases/csrf/README.md).
+Read [XML rules](../xml-security.md) and [local cases](cases/csrf/README.en.md).
 
 The runtime security module declares `org.egovframe.rte:org.egovframe.rte.fdl.security:4.0.0` and `javax.servlet-api:3.1.0`.
 The common configuration uses `egov-security-4.0.0.xsd` and `spring-security.xsd`.

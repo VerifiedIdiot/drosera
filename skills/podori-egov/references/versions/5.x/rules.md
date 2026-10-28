@@ -1,7 +1,7 @@
 # eGovFrame 5.x
 
 Source baseline: runtime `v5.0.2-Final`, common components `v5.0.7`.
-Read [local cases](cases/ownership/README.md).
+Read [local cases](cases/ownership/README.en.md).
 Do not infer resolved runtime versions from the common-component parent POM.
 
 | ID | Inspect and correct | Required project tests |

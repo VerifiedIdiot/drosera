@@ -1,5 +1,7 @@
 # podori sandbox MCP
 
+한국어 안내 | [English](README.en.md)
+
 `0.5.0`의 선택적 로컬 stdio 패키지입니다. 기존 네 스킬은 이 패키지 없이 그대로 사용할 수 있습니다.
 
 ## 지원 범위

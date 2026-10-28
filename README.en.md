@@ -61,7 +61,7 @@ The agent reads project code and configuration to select the review target. You 
 
 Installation paths and invocation syntax depend on the agent. Each folder includes instructions and references, so source links are not required inputs.
 
-The security, eGovFrame, doubt, and trap skills do not require MCP. Only `podori-wreck` requires a separate local MCP server and host-issued execution approval. Read the [MCP guide](mcp/README.md) for setup.
+The security, eGovFrame, doubt, and trap skills do not require MCP. Only `podori-wreck` requires a separate local MCP server and host-issued execution approval. Read the [MCP guide](mcp/README.en.md) for setup.
 
 ## Explore the skills
 
@@ -125,7 +125,7 @@ The current target is only the bundled synthetic app. The local stdio MCP verifi
 
 If the MCP cannot verify external network denial, isolation, or resource and time limits, it stops execution. Evidence contains actual requests, responses, and state observations. Cleanup removes only the experiment resources. Unexecuted items remain unverified.
 
-The MCP refuses arbitrary repositories, images, paths, shell commands, and production or external targets. It also excludes autonomous exploration, vulnerability chains, code-execution demonstrations, destructive tests, and resource-exhaustion tests. This is not a general sandbox for malicious code. Read the [MCP guide](mcp/README.md) for detailed execution requirements.
+The MCP refuses arbitrary repositories, images, paths, shell commands, and production or external targets. It also excludes autonomous exploration, vulnerability chains, code-execution demonstrations, destructive tests, and resource-exhaustion tests. This is not a general sandbox for malicious code. Read the [MCP guide](mcp/README.en.md) for detailed execution requirements.
 
 ## Results and completion
 
@@ -137,6 +137,6 @@ Separate defects and optional improvements stay on a follow-up list. If required
 
 Skills provide instructions for an agent. Installation alone does not activate defenses in the target project. The `podori-wreck` MCP does not establish the safety of a production environment.
 
-Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval. Skill instructions and references use English.
+Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval. Agent instructions, rules, references, and templates use English. User-facing READMEs have paired Korean and English versions.
 
 [Changelog](CHANGELOG.md) · [MIT](LICENSE) · VerifiedIdiot
