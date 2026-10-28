@@ -8,6 +8,10 @@
 
 podori helps your agent find and fix vulnerabilities, and question packages and images that appear safe. On request, it creates decoys and traps that record unauthorized exploration.
 
+## Background
+
+My team recently patched vulnerabilities in Node.js, Python, Java, and nginx across dozens of repositories. I share the checklists and procedures for fixes and verification from that work so other developers can use them.
+
 ## Choose your skill
 
 Start with `podori` for application and web code. Use `podori-egov` for eGovFrame projects.
