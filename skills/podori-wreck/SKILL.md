@@ -1,6 +1,6 @@
 ---
 name: podori-wreck
-description: Use for bounded synthetic HTTP verification.
+description: Use for bounded synthetic HTTP verification. Compare authorization and input-validation fixes in the bundled fixture with host-issued approval.
 version: 0.5.0
 author: VerifiedIdiot
 license: MIT

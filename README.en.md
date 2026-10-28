@@ -1,12 +1,12 @@
 ![podori: inspect vulnerabilities, question dependencies, and set traps](podori.png?rev=6b3a03a5d6ee)
 
-# podori
+# podori · Security skills for AI coding agents
 
-**Application and web security skills for AI coding agents.**
+**Security fixes with checks for normal behavior.**
 
 [한국어 안내](README.md) | English · `0.5.0`
 
-podori helps your agent find and fix vulnerabilities, and question packages and images that appear safe. On request, it creates decoys and traps that record unauthorized exploration.
+podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests. Separate skills inspect packages and container images or create decoys and traps on request. Another skill compares vulnerable and fixed variants of the bundled synthetic app.
 
 ## Background
 
@@ -14,13 +14,13 @@ My team recently patched vulnerabilities in Node.js, Python, Java, and nginx acr
 
 ## Choose your skill
 
-Start with `podori` for application and web code. Use `podori-egov` for eGovFrame projects.
+Start with `podori` for application and web security code reviews. Use `podori-egov` for eGovFrame projects.
 
 | When you want to… | Use this skill |
 |---|---|
-| Find and fix security defects in application or web code | [podori · Security](skills/podori/SKILL.md) |
-| Check security against the relevant eGovFrame version | [podori-egov · eGovFrame security](skills/podori-egov/SKILL.md) |
-| Examine the origins and contents of a package or image | [podori-doubt · Doubt](skills/podori-doubt/SKILL.md) |
+| Find and fix application or web vulnerabilities, then run regression tests | [podori · Security](skills/podori/SKILL.md) |
+| Review secure coding against the relevant eGovFrame version | [podori-egov · eGovFrame security](skills/podori-egov/SKILL.md) |
+| Check package and container image provenance and supply-chain security | [podori-doubt · Doubt](skills/podori-doubt/SKILL.md) |
 | Detect unauthorized exploration with decoys and traps | [podori-trap · Traps](skills/podori-trap/SKILL.md) |
 | Compare vulnerable and fixed variants of the bundled synthetic app | [podori-wreck · Sandbox verification](skills/podori-wreck/SKILL.md) |
 
@@ -79,7 +79,7 @@ Review-only requests leave the code unchanged. The skill does not add traps auto
 
 ### podori-egov · eGovFrame security
 
-Start with the eGovFrame version. The skill distinguishes runtime, common-component, and actual dependency versions. It applies security rules and code cases for 3.x, 4.x, and 5.x.
+Security reviews start with the eGovFrame version. The skill distinguishes runtime, common-component, and actual dependency versions. It applies security rules and code cases for 3.x, 4.x, and 5.x.
 
 It follows the same report, fix, and verification procedure as `podori`.
 
@@ -87,13 +87,15 @@ It follows the same report, fix, and verification procedure as `podori`.
 /podori-egov
 ```
 
+See the [3.x CSRF configuration](skills/podori-egov/references/versions/3.x/cases/csrf/README.en.md), [4.x CSRF configuration](skills/podori-egov/references/versions/4.x/cases/csrf/README.en.md), and [5.x ownership](skills/podori-egov/references/versions/5.x/cases/ownership/README.en.md) cases for commands and expected results.
+
 It does not infer safety or support beyond verified versions. Case tests do not replace target-project verification.
 
 ### podori-doubt · Doubt
 
 A familiar package does not make its install script trustworthy.
 
-The skill examines package install scripts, image startup commands, and layers. It compares approved baselines and verifies signatures and build records. Within approved scope, it traces usage through read-only registry and cluster queries.
+The skill performs read-only supply-chain security checks on packages and container images. It examines install scripts, startup commands, and image layers against approved baselines. It also verifies signatures and build records. Within approved scope, it traces usage through registry and cluster queries.
 
 ```text
 /podori-doubt
@@ -137,6 +139,8 @@ Separate defects and optional improvements stay on a follow-up list. If required
 
 Skills provide instructions for an agent. Installation alone does not activate defenses in the target project. The `podori-wreck` MCP does not establish the safety of a production environment.
 
-Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval. Agent instructions, rules, references, and templates use English. User-facing READMEs have paired Korean and English versions.
+Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval.
+
+Agent instructions, rules, references, and templates use English. User-facing READMEs have paired Korean and English versions.
 
 [Changelog](CHANGELOG.md) · [MIT](LICENSE) · VerifiedIdiot
