@@ -127,7 +127,7 @@ npm test
 npm run test:integration
 ```
 
-시험은 실제 SDK stdio Client, HTTP 요청, 격리 probe, 실험 간 loopback 분리, 초기화, 취소, 지연 완료, timeout, 프로세스 장애와 재시작을 포함합니다. 제어부가 없는 독립 deadline 시험은 실제 45초를 기다립니다. 기존 네 스킬은 각 패키지의 내부 링크·MCP 없는 독립 사용·doubt 비실행 경계를 확인합니다. 별도로 승인된 스킬 문서 버전 변경은 허용합니다.
+시험은 실제 SDK stdio Client, HTTP 요청, 격리 probe, 실험 간 loopback 분리, 초기화, 취소, 지연 완료, timeout, 프로세스 장애와 재시작을 포함합니다. 제어부가 없는 독립 deadline 시험은 실제 45초를 기다립니다. 기존 네 스킬은 각 패키지의 내부 링크·MCP 없는 독립 사용·doubt 비실행 경계를 확인합니다.
 
 단위 정책 시험과 지연/오류 주입은 실제 격리 증거와 구분합니다. 운영 장애 주입은 시험 어댑터에만 있으며 MCP 입력에는 없습니다. egress probe는 예약된 `192.0.2.1`과 `2001:db8::1`만 사용합니다.
 

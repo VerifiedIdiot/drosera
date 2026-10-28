@@ -32,15 +32,13 @@ Code security comes first. Select `podori-egov` for eGovFrame projects. Each ski
 | Traps | [podori-trap](skills/podori-trap/SKILL.md) | Set decoys and traps to detect unauthorized exploration. |
 | Sandbox verification | [podori-wreck](skills/podori-wreck/SKILL.md) | Compare report-linked behavior and normal operations in the approved synthetic application. |
 
-## Finish the report, then return
+## Report-based completion
 
-Code can always receive further improvements. A single task does not need an unlimited review loop. Version 0.5.0 freezes confirmed report items and completion criteria before fixes.
+The agent freezes confirmed report items, completion criteria, and required checks before changes. If every required item and regression check passes, the agent returns the result.
 
-Post-change review verifies those items and checks for regressions from the current changes. If every required item and check passes, the task returns immediately. A second successful review is not mandatory.
+Separate defects and optional improvements stay on a follow-up list. If the agent cannot obtain required approval or evidence, it reports unresolved items and stops.
 
-Separate defects and optional improvements enter a follow-up list, not the current worklist. If required authority or evidence cannot be obtained, the task returns its unresolved items and blockers. A retry limit cannot produce a forced success.
-
-For `podori-doubt`, completion means that the read-only assessment ends. It does not authorize artifact execution or repair.
+`podori-doubt` returns a read-only assessment. It does not execute or modify the suspect artifact.
 
 ### podori · Security
 
@@ -123,21 +121,12 @@ flowchart TD
     sandbox --> evidence["Synthetic app · Before and after · Normal behavior"]
 ```
 
-## Version 0.5.0 features and verification scope
-
-Version 0.5.0 includes bounded sandbox verification and report-based completion rules.
-
-- [Sandbox setup and approval steps](mcp/README.md)
-- [Report completion rules](skills/podori/references/report-completion.md)
-
-Instruction checks, synthetic reader scenarios, and actual MCP or container tests provide different evidence. Instruction access alone does not establish automatic runtime enforcement.
-
 ## What to expect
 
 Skills provide instructions for an agent. Installation alone does not activate defenses in the target project. The optional `podori-wreck` MCP is a separate development tool, not verification of a production environment.
 
 Reports include evidence and actual test results. Unverified checks do not become safety claims. Registry and cluster queries stay within approved scope. Production changes require separate approval.
 
-Skill instructions and references use English. The instruction package version is `0.5.0`. That version does not establish application deployment or measured security effectiveness.
+Skill instructions and references use English.
 
 [Changelog](CHANGELOG.md) · [MIT](LICENSE) · VerifiedIdiot
