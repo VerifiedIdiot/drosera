@@ -26,7 +26,6 @@ jobs:
     env:
       PODORI_TEST_RUNTIME: ${{ matrix.runtime }}
       PODORI_EXPECTED_ARCH: ${{ matrix.arch }}
-      PODORI_EVIDENCE_DIR: ${{ runner.temp }}/podori-evidence
       NPM_CONFIG_AUDIT: 'false'
       NPM_CONFIG_FUND: 'false'
       NPM_CONFIG_UPDATE_NOTIFIER: 'false'
@@ -39,11 +38,14 @@ jobs:
           node-version: '24.22.0'
           package-manager-cache: false
       - name: Prepare the native runtime
+        env:
+          PODORI_EVIDENCE_DIR: ${{ runner.temp }}/podori-evidence
         run: python3 mcp/ci/prepare.py
       - name: Install locked dependencies without hooks
         working-directory: mcp
         run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
       - name: Verify the package and actual sandbox
         env:
+          PODORI_EVIDENCE_DIR: ${{ runner.temp }}/podori-evidence
           NPM_CONFIG_OFFLINE: 'true'
         run: python3 mcp/ci/verify.py
