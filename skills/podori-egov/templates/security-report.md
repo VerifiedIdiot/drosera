@@ -29,7 +29,10 @@
 - Per-deliverable evidence requirement: assessment record, confirmed evidence, or runtime verification:
 - Explicitly permitted assessment gaps, if any:
 - Change authority and unresolved approval requirements:
-- Approved retry or resource limit, if any:
+- Work start, deadline, and elapsed time:
+- Attempt limit and explicit user override, if any:
+- Host limits and actual enforcement evidence:
+- Token limit, meter source, and measured usage or `unmeasured`:
 
 Result updates do not reset the frozen contract.
 
@@ -66,6 +69,13 @@ Repeat per candidate with stable root-cause/boundary IDs:
 Complete a Work Plan row for every proposed change. Exclude unresolved candidates from executable work.
 Separate proposals from verified outcomes.
 
+## Progress Ledger
+
+| Required ID/check | Attempt | Relevant input identities | Actual result/failed assertion | Reused evidence/invalidation reason | Next distinct hypothesis |
+|---|---|---|---|---|---|
+
+Keep prior attempts and evidence when the report changes.
+
 ## Results
 
 | Finding ID | Changed files/source revision | Commands/exit status/actual before-after results | Normal behavior | Convention checks/exceptions | Fix status/remaining work |
@@ -77,6 +87,7 @@ Exclude credentials, private data, and unredacted secrets.
 ## Completion Outcome
 
 - Outcome: `COMPLETED` or `BLOCKED`:
+- Stop reason and remaining time/attempts:
 - Verified required items and checks:
 - Unresolved required items and introduced regressions:
 - Required authority, evidence, or next action for blocked work:

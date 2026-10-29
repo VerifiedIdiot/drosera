@@ -24,18 +24,35 @@ test('A1: real stdio client initializes, discovers and calls a strict tool', asy
   } finally { await client.close(); }
 });
 
-test('V01: real stdio initialization reports 0.5.0 for the private package', async () => {
+test('V01: real stdio initialization reports the private package version', async () => {
   assert.ok(existsSync('dist/server.js'), 'The stdio server implementation is absent');
+  const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+  assert.equal(pkg.private, true);
   const transport = new StdioClientTransport({ command: process.execPath, args: ['dist/server.js'], stderr: 'pipe' });
   const client = new Client({ name: 'podori-version-regression', version: '0.0.0-test' });
   try {
     await client.connect(transport);
-    assert.deepEqual(client.getServerVersion(), { name: 'podori-sandbox', version: '0.5.0' });
-    const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
-    const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
-    assert.equal(pkg.private, true);
-    assert.equal(pkg.version, '0.5.0');
-    assert.equal(lock.version, pkg.version);
-    assert.equal(lock.packages[''].version, pkg.version);
+    assert.deepEqual(client.getServerVersion(), { name: 'podori-sandbox', version: pkg.version });
   } finally { await client.close(); }
+});
+
+test('V02: current release metadata matches the MCP package version', () => {
+  const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+  const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+  assert.equal(lock.version, pkg.version, 'Lockfile version');
+  assert.equal(lock.packages[''].version, pkg.version, 'Lockfile root package version');
+  for (const name of ['podori', 'podori-egov', 'podori-doubt', 'podori-trap', 'podori-wreck']) {
+    const skill = readFileSync(`../skills/${name}/SKILL.md`, 'utf8');
+    const frontmatter = skill.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1];
+    assert.equal(frontmatter?.match(/^version: (\S+)\r?$/m)?.[1], pkg.version, `${name} frontmatter version`);
+  }
+  for (const file of ['../README.md', '../README.en.md', 'README.md', 'README.en.md']) {
+    const readme = readFileSync(file, 'utf8');
+    const introduction = readme.split(/^## /m)[0];
+    const versions = [...introduction.matchAll(/`(\d+\.\d+\.\d+(?:[-+][\w.-]+)?)`/g)].map(match => match[1]);
+    assert.deepEqual(versions, [pkg.version], `${file} current version`);
+    if (file.startsWith('../')) {
+      assert.equal(readme.match(/`v([^`]+)`/)?.[1], pkg.version, `${file} installation release tag`);
+    }
+  }
 });

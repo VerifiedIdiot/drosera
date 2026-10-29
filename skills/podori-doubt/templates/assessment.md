@@ -2,12 +2,24 @@
 
 Frozen contract revision, required target IDs, dimensions, and evidence boundaries:
 Approved read operations and required completion checks:
-Approved retry or resource limit, if any:
+- Work start, deadline, and elapsed time:
+- Attempt limit and explicit user override, if any:
+- Host limits and actual enforcement evidence:
+- Token limit, meter source, and measured usage or `unmeasured`:
 
 
 Targets, exact digests, platforms, origin, acquisition time, and evidence paths:
 Approved policy, independent baseline, expected identities, and network scope:
 Approved registries, cluster contexts, namespaces, selectors, time window, and read operations:
+
+## Progress Ledger
+
+| Required ID/check | Attempt | Relevant input identities | Actual result/failed assertion | Reused evidence/invalidation reason | Next distinct hypothesis |
+|---|---|---|---|---|---|
+
+Keep prior attempts and evidence when the report changes.
+
+## Assessment Results
 
 | Artifact | Dimension | Status | Evidence | Limit |
 |---|---|---|---|---|
@@ -24,5 +36,6 @@ Required failures, evidence gaps, and operator decisions:
 Decision-skill discovery, actual invocation evidence, result validity, unresolved gates, and host-enforcement status:
 
 Task outcome (`COMPLETED` or `BLOCKED`), distinct from artifact trust status:
+Stop reason, elapsed time, attempts, and remaining budget:
 Unfinished mandatory operations, partial results, and required next action:
 Separate follow-up artifacts, investigations, and material risks:

@@ -1,7 +1,7 @@
 ---
 name: podori-egov
 description: Use when eGovFrame code needs security review or fixes. Apply version-specific security rules, code cases, and regression checks.
-version: 0.5.0
+version: 0.6.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]

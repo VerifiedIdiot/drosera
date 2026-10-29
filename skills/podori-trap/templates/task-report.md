@@ -7,7 +7,17 @@
 - Explicit approval and permitted changes:
 - Required deliverable IDs and completion criteria:
 - Required security, normal-use, resource, and activation checks:
-- Approved retry or resource limit, if any:
+- Work start, deadline, and elapsed time:
+- Attempt limit and explicit user override, if any:
+- Host limits and actual enforcement evidence:
+- Token limit, meter source, and measured usage or `unmeasured`:
+
+## Progress Ledger
+
+| Required ID/check | Attempt | Relevant input identities | Actual result/failed assertion | Reused evidence/invalidation reason | Next distinct hypothesis |
+|---|---|---|---|---|---|
+
+Keep prior attempts and evidence when the report changes.
 
 ## Results
 
@@ -17,6 +27,7 @@
 ## Completion Outcome
 
 - Outcome: `COMPLETED` or `BLOCKED`:
+- Stop reason and remaining time/attempts:
 - Unresolved required items and introduced regressions:
 - Required authority, evidence, or next action for blocked work:
 - Actual activation state and separate production approval:

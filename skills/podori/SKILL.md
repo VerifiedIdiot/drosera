@@ -1,7 +1,7 @@
 ---
 name: podori
 description: Use when application or web code changes. It covers security code review, vulnerability fixes, and regression tests.
-version: 0.5.0
+version: 0.6.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]

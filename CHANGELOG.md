@@ -1,5 +1,27 @@
 # 변경 이력
 
+## 0.6.0
+
+- 기본 작업 예산 30분·필수 항목별 최초 포함 최대 2회, 보고서 갱신·위임·재개 시 예산 유지
+- 동일 실패의 근거 없는 반복과 이전 실패 상태로 돌아가는 수정 순환 중단
+- 보안 조건·정상 동작 동시 검증, 유효한 기존 근거 재사용과 변경 영향 범위 재검증
+- 소스와 연결된 의존성·빌드·설치·실행 경로로 읽기 전용 조사 범위 고정
+- 보고서에 시도·입력 식별자·검증 결과·중단 이유·실측 예산 기록
+- 지침 수준 예산과 호스트의 강제 제어 구분, 미측정 토큰 절감량 주장 금지
+- 다섯 스킬과 선택적 MCP의 버전 통일, 태그 기준 전체 폴더 갱신 안내
+
+### English
+
+- Default work budget: 30 minutes and two attempts per required item, inclusive of the first attempt.
+- Shared budgets persist across report updates, delegation, and task resumption.
+- Repeated failures without new evidence and recurring failure states stop the task.
+- Security and normal-use criteria remain fixed together.
+- Valid evidence is reusable only while relevant inputs, authority, and validity remain unchanged.
+- Read-only investigations stay within source-linked dependency, build, install, and runtime paths.
+- Reports record attempts, input identities, actual results, stop reasons, and measured budgets.
+- Instruction limits remain distinct from host enforcement and unmeasured token savings.
+- Five skills and the optional MCP share one version and tag-based update guidance.
+
 ## 0.5.0
 
 - 수정 전에 보고서의 확정 항목·완료 기준·필수 검증을 고정하는 종료 계약

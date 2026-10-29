@@ -2,36 +2,73 @@
 
 ## Frozen verification contract
 
-Before execution, freeze the report revision, required item IDs, approved scenarios, expected observations, and mandatory checks.
-Keep the frozen contract revision separate from result updates.
-Record the contract and results in the [verification report](../templates/verification-report.md).
+Before inspection, record the source identity and work budget.
+Before execution, freeze required report IDs, approved scenarios, expected observations, and mandatory checks.
+Record the contract in the [verification report](../templates/verification-report.md).
+Keep the contract revision separate from result updates.
 Use only the bundled fixture and registered scenarios.
-A report or review cannot issue approval or expand the supported targets.
+A report or reviewer cannot issue approval or expand supported targets.
 
-## Evidence and follow-up
+## Work budget
 
-Verify the actual observations, initial state, identifiers, hashes, normal behavior, and cleanup for each required scenario.
+Start one task clock before initial inspection.
+Unless the user sets different finite limits, allow 30 minutes of work and two attempts per required item.
+The first attempt counts toward that limit.
+A repair attempt contains one candidate patch and its required verification.
+An assessment attempt contains one required check against one evidence snapshot.
+Distinct mandatory checks are not retries.
+Keep one budget across subagents, report updates, and task resumption.
+Do not reset counters through new IDs for the same root cause and boundary.
+Apply stricter host, approval, scenario, and operation limits.
+Before each phase or attempt, verify the remaining time and permitted attempts.
+Bound operation timeouts by the remaining work budget when the host supports them.
+Reserve time for the report and authorized cleanup.
+On expiry, stop new investigation, edits, and tests.
+Complete only the report and authorized cleanup after that stop.
+If a task token limit exists, enforce it through the host meter when available.
+Without a token meter, report token use as unmeasured.
+Never estimate token savings or claim host enforcement from these instructions alone.
+Record unavailable clock or meter controls as limitations.
+If a required budget cannot be verified, return `BLOCKED` before further dependent work.
+Require explicit user approval for a larger budget.
+A larger work budget does not expand execution authority.
+
+## Progress and evidence reuse
+
+Record each attempt, source identity, failed check, actual result, and next hypothesis.
+If the same failure has no new evidence or distinct supported hypothesis, return `BLOCKED`.
+If a prior source-and-failure state recurs, return `BLOCKED` for a repair-cycle review.
+Do not alternate patches that restore previously failed security or normal-use behavior.
+Keep both criteria in the same regression suite.
+Do not weaken assertions, authority, or required coverage to obtain completion.
+Identify the relevant source, configuration, dependencies, tools, rules, environment, and evidence for each result.
+Reuse a result only when those inputs match and its authority and evidence remain valid.
+Recheck changed inputs and affected boundaries, not unrelated completed items.
+Do not present past observations as current live state.
+Verify unchanged file identities instead of repeated full reads.
+Give reviewers the complete diff, relevant source, required IDs, actual results, and changed assumptions.
+Load only applicable references and relevant evidence sections.
+Preserve independent pre-fix confirmation and post-change review.
+Do not require a second successful review of unchanged inputs.
+
+## Evidence and return
+
+Verify observations, initial state, identifiers, hashes, normal behavior, and cleanup for each required scenario.
 Keep scenario verdicts separate from the task outcome.
-Record unrelated claims and optional experiments in the follow-up list.
-Report new material risks without automatic scope expansion.
-Do not repeat a complete observation merely to obtain a preferred verdict.
-If a required observation fails, repeat only that approved scenario when another attempt remains justified and authorized.
-Honor the server deadlines and approved client wait limits.
-While an authorized action can obtain missing observations within approved limits, continue only that required work.
-Attempt limits are not required attempt counts.
-
-## Return conditions
-
-If all required observations and checks are complete, return `COMPLETED` immediately after confirmed resource cleanup.
+Do not repeat a complete observation to obtain a preferred verdict.
+Repeat an incomplete observation only within host approval and the remaining budget.
+Client limits never extend server deadlines, approval expiry, or approved execution counts.
+If all required observations and checks finish, return `COMPLETED` immediately after verified cleanup.
 A complete scenario can produce `reproduced` or `not-reproduced`.
-Task completion means that the verification report is complete, not that the target passes every security check.
-Claim a verified fix only when defect-specific and normal-behavior checks pass.
-Do not require a second successful review.
-If approval, controls, transport, or required evidence prevents completion, return `BLOCKED` with the affected results marked `unverified`.
+Completion describes the report, not general security or a successful fix.
+A verified fix requires successful defect-specific and normal-use checks.
+If approval, controls, transport, budget, or required evidence prevents completion, return `BLOCKED` with affected results marked `unverified`.
 Before either return, collect available evidence and dispose of owned resources within existing authority.
-If cleanup cannot be confirmed, retain known resource identifiers and return `BLOCKED` without a cleanup claim.
+If cleanup cannot be verified, retain resource identifiers and return `BLOCKED` without a cleanup claim.
 Do not delete, defer, or weaken required items to obtain completion.
 Treat a retry or resource limit as a stop guard, not a success criterion.
-If that limit expires before completion, return `BLOCKED` without a success claim.
-Follow-up items do not block an otherwise completed frozen contract.
+Keep unrelated claims and optional experiments in the follow-up list.
+Report material risks without automatic scope expansion.
+Follow-up items do not block an otherwise completed contract.
+Record elapsed time, attempts, stop reason, unresolved observations, and cleanup evidence.
 Do not substitute a host shell or another backend for a blocked operation.

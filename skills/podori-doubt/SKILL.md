@@ -1,7 +1,7 @@
 ---
 name: podori-doubt
 description: Use when dependencies or images need trust checks. Inspect package and container image provenance through read-only checks.
-version: 0.5.0
+version: 0.6.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]

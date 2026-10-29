@@ -1,7 +1,7 @@
 ---
 name: podori-trap
 description: Use when the user explicitly requests web app traps. Create isolated decoys with server-verified detection. Require separate production approval.
-version: 0.5.0
+version: 0.6.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]

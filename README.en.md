@@ -4,7 +4,7 @@
 
 **Security fixes with checks for normal behavior.**
 
-[한국어 안내](README.md) | English · `0.5.0`
+[한국어 안내](README.md) | English · `0.6.0`
 
 podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests.
 
@@ -62,6 +62,8 @@ flowchart TD
 The agent reads project code and configuration to select the review target. You do not need an additional task prompt. If project evidence or required approval is missing, the agent asks a focused question. A review-only request leaves the code unchanged.
 
 Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
+
+For an update, select release tag `v0.6.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
 
 ## Explore the skills
 
@@ -133,9 +135,15 @@ The MCP refuses arbitrary repositories, images, paths, shell commands, and produ
 
 ## Results and completion
 
-Each skill first defines the task scope, completion criteria, and required checks in its report. When every required item and check passes, it returns the result. Security fixes also require related regression checks.
+Each skill first freezes the task scope, completion criteria, and required checks. Security fixes address confirmed defects and preserve normal behavior. The task ends when all required checks pass, without another search for improvements.
 
-Separate defects and optional improvements stay on a follow-up list. If required approval or evidence is unavailable, the agent reports unresolved items and stops. `podori-doubt` returns a read-only assessment without changes.
+The default work budget is 30 minutes and two attempts per required item, inclusive of the first attempt. Users can specify different finite limits. Stricter host and approval limits take precedence. Report updates and subagent delegation do not reset the budget.
+
+Valid evidence remains reusable while its relevant inputs remain unchanged. Only changed inputs and affected boundaries require another check. The agent stops when a repeated failure has no new evidence or a patch restores an earlier failure state. At the limit, it stops new investigation, edits, and tests. Only the report and authorized cleanup continue. Unfinished required work returns `BLOCKED`.
+
+Separate defects and optional improvements stay on a follow-up list. `podori-doubt` traces source-linked dependency, build, install, and runtime paths through read-only checks. A shared registry does not justify more targets.
+
+These budgets are agent instructions. Hard time and token limits require host controls. Without a token meter, usage remains unmeasured, with no estimate of token savings.
 
 ## Frequently asked questions
 
