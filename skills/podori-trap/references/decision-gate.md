@@ -4,6 +4,7 @@
 
 Use the host's trusted skill catalog to find decision capabilities.
 Select by task suitability and an executable interface, not provider or skill name.
+Select only approved, prepared local capabilities within the declared network boundary.
 Instruction access alone does not count as a decision call.
 Preserve data scope, network permissions, cost approval, and non-execution controls.
 Do not install tools or enable services to satisfy this gate.

@@ -1,10 +1,11 @@
 ---
 name: podori-trap
 description: Use when the user explicitly requests web app traps. Create isolated decoys with server-verified detection. Require separate production approval.
-version: 0.7.0
-author: VerifiedIdiot
 license: MIT
-platforms: [linux, macos, windows]
+metadata:
+  version: "0.7.0"
+  author: VerifiedIdiot
+  platforms: "linux, macos, windows"
 ---
 
 # podori-trap
@@ -23,7 +24,10 @@ Read the [completion contract](references/report-completion.md) before review or
 - Use local routes, source, logs, tests, help, and approved advisory snapshots.
 - Use the same bundled rules and prepared local evidence on connected and isolated hosts.
 - Prepare the agent, model, tools, and dependencies before the task.
-- Record the prepared agent, model, provider, tool, and dependency identities.
+- Use an approved agent and model within the declared network boundary.
+Record the actual host controls.
+These instructions do not establish network isolation.
+Record the prepared agent, model, provider, tool, and dependency identities.
 - Preserve those identities throughout the task.
 - If required inputs are unavailable, block dependent work.
 - Do not substitute models, providers, or tools automatically.

@@ -7,6 +7,7 @@
 - 런타임 등록 설정·플랫폼·이미지·fixture를 연결한 policy·승인·증거
 - gVisor 게스트 관측과 호스트 cgroup·프로세스 통제의 구분, 기존 자원 한도 유지
 - 전체 스킬과 선택형 MCP의 폐쇄망·외부망 공통 원칙 명시
+- Agent Skills 규격 메타데이터, 독립 설치 전제와 네트워크 경계 안내
 - policy·승인 schema 2 적용, 이전 상태의 자동 변환 없이 새 준비와 승인 요구
 
 ### English
@@ -17,6 +18,7 @@
 - gVisor guest observations remain separate from host cgroup and process controls.
 - Existing resource limits remain unchanged.
 - Every skill and the optional MCP share the connected and isolated operation principle.
+- Agent Skills metadata and explicit prerequisites for standalone packages and network boundaries.
 - Policy and approval schema 2 requires new preparation and approval without automatic migration.
 
 ## 0.6.0

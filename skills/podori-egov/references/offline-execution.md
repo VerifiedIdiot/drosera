@@ -19,7 +19,8 @@ Record the actual host controls without an enforcement claim that lacks tests.
 2. Verify required local references exist within the copied package.
 3. Record the package identity and [source profile](source-baseline.json) in the report.
 4. Record the target revision, relevant uncommitted content, scope, approvals, and evidence identities.
-5. Record the agent/model identity, available local tools, reviewer availability, and declared network boundary without secrets.
+5. Record the prepared agent, model, provider, tool, and dependency identities without secrets.
+   Record reviewer availability and the declared network boundary.
 6. Inspect target commands, hooks, and cached dependencies before any execution.
 7. Select approved local tools without installations, updates, telemetry, or remote lookups.
 8. Freeze these inputs for the assessment and completion contract.

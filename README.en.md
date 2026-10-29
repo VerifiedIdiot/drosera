@@ -2,7 +2,7 @@
 
 # podori · Security code review skills for AI coding agents
 
-**Security fixes with checks for normal behavior.**
+**Fix vulnerabilities. Verify that normal behavior still works.**
 
 [한국어 안내](README.md) | English · `0.7.0`
 
@@ -10,7 +10,7 @@ podori is a collection of security skills for AI coding agents. It guides applic
 
 Independent skills cover eGovFrame secure coding, package and container image supply-chain security, and decoys and traps on request. Sandbox verification compares only the bundled synthetic app.
 
-**Optional gVisor isolation** adds a separate isolation layer for synthetic app verification.
+**Optional gVisor isolation reduces the host kernel attack surface.** Its userspace kernel handles application system calls instead of exposing the host kernel interface directly.
 
 ## Background
 
@@ -29,6 +29,8 @@ Start with `podori` for application and web security code reviews. Use `podori-e
 | Compare vulnerable and fixed variants of the bundled synthetic app | [podori-wreck · Sandbox verification](skills/podori-wreck/SKILL.md) |
 
 Each skill works independently and does not invoke the others.
+
+**All five skills follow the same procedure on connected and isolated hosts.** Prepare the agent, model, tools, and evidence before the task. The procedure excludes automatic downloads and model substitution during the task.
 
 The security, eGovFrame, and dependency skills record vulnerability severity with CVSS v4.0. Unsupported scores remain unrated. Severity does not replace approvals or required verification.
 
@@ -89,7 +91,7 @@ Review-only requests leave the code unchanged. The skill does not add traps auto
 
 The package includes 20 design criteria and 49 implementation criteria from MOIS Notice 2025-1, Appendix 3. Each criterion has applicability conditions, local checks, and verification targets. The [criterion coverage record](skills/podori-egov/templates/criteria-coverage.md) captures evidence and results. The [sources and baseline edition](skills/podori-egov/references/government-baseline.md) identify the original documents and their scope.
 
-Connected and isolated hosts use the same baseline and procedure without external queries. The [eGovFrame security and offline guide](skills/podori-egov/README.en.md) explains prerequisites and unresolved evidence.
+The [eGovFrame security guide](skills/podori-egov/README.en.md) explains source editions, prerequisites, and unresolved evidence.
 
 ```text
 /podori-egov
@@ -137,7 +139,7 @@ The current target is only the bundled synthetic app. The local stdio MCP verifi
 
 If the MCP cannot verify external network denial, isolation, or resource and time limits, it stops execution. Evidence contains actual requests, responses, and state observations. Cleanup removes only the experiment resources. Unexecuted items remain unverified.
 
-The MCP refuses arbitrary repositories, images, paths, shell commands, and production or external targets. It also excludes autonomous exploration, vulnerability chains, code-execution demonstrations, destructive tests, and resource-exhaustion tests. This is not a general sandbox for malicious code. Read the [MCP guide](mcp/README.en.md) for detailed execution requirements.
+The MCP refuses arbitrary repositories, images, paths, shell commands, and production or external targets. It also excludes autonomous exploration, vulnerability chains, code-execution demonstrations, destructive tests, and resource-exhaustion tests. This is not a general sandbox for malicious code. gVisor does not replace host security updates or guarantee protection against every vulnerability. Read the [MCP guide](mcp/README.en.md) for detailed execution requirements.
 
 ## Results and completion
 

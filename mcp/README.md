@@ -43,6 +43,8 @@ linux/amd64 manifest: sha256:ec857ea6bb60cb3d0fa4d97495590c5fe7d51be8572c307b559
 
 ## gVisor 선택형 격리 실행
 
+gVisor의 사용자 공간 커널은 앱의 시스템 콜을 처리해 호스트 커널 취약점의 직접 악용 경로를 줄입니다. 호스트 보안 패치를 대신하거나 모든 취약점의 차단을 보장하지는 않습니다. 보호 범위는 [gVisor 보안 모델](https://gvisor.dev/docs/architecture_guide/security/)을 참고합니다.
+
 gVisor를 사용하려면 Linux Docker 호스트에 `runsc`를 설치하고 같은 이름의 런타임으로 등록합니다. 설치 방법은 [gVisor 공식 안내](https://gvisor.dev/docs/user_guide/install/)를 참고합니다. 배포본의 `runsc`와 `gvisor-bin/`은 함께 준비해야 합니다.
 
 `runsc` 모드에서는 MCP도 Docker와 같은 네이티브 Linux 호스트에서 실행합니다. 호스트의 실제 PID와 cgroup을 읽을 수 있어야 합니다. macOS에서 사용할 때는 별도 Linux 환경에 이 구성을 준비합니다. 패키지는 Docker Desktop VM이나 기본 런타임 설정을 자동 변경하지 않습니다.
@@ -69,7 +71,7 @@ gVisor를 선택할 때는 마지막 인자에 `--runtime=runsc`를 추가합니
 
 `prepare`는 디렉터리를 0700, 상태 파일을 0600으로 생성합니다. 이미 존재하는 state 디렉터리는 소유권과 모드를 검사합니다. 심볼릭 링크, 다중 hard link, 잘못된 경로, 과도한 파일 크기는 거절합니다. 기존 policy를 덮어쓰는 CLI 호출도 거절합니다.
 
-빌드 context는 `fixture/`로 한정됩니다. Dockerfile에는 설치 단계나 `RUN`이 없습니다. root 소유 fixture 파일, non-root 사용자, 고정된 독립 제한 프로세스만 포함합니다. 빌드는 네트워크 없이 로컬 베이스에서 수행됩니다. 최종 이미지 식별자와 fixture 내용 해시를 policy에 고정합니다.
+빌드 context는 `fixture/`로 한정됩니다. 의존성을 설치하는 단계는 없습니다. 고정된 `RUN`은 읽기 전용 검사에 사용할 빈 파일을 UID/GID 1000·권한 0600으로 만듭니다. 애플리케이션 파일은 root 소유로 유지합니다. non-root 사용자와 고정된 독립 제한 프로세스로 실행하며, 빌드는 네트워크 없이 로컬 베이스를 사용합니다. 최종 이미지 식별자와 fixture 내용 해시를 policy에 고정합니다.
 
 4. 보고서와 항목 ID, 등록된 시나리오, 24시간 이내의 UTC 만료를 지정합니다.
 

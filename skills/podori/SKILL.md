@@ -1,10 +1,11 @@
 ---
 name: podori
 description: Use when application or web code changes. It covers security code review, vulnerability fixes, and regression tests.
-version: 0.7.0
-author: VerifiedIdiot
 license: MIT
-platforms: [linux, macos, windows]
+metadata:
+  version: "0.7.0"
+  author: VerifiedIdiot
+  platforms: "linux, macos, windows"
 ---
 
 # podori
@@ -28,6 +29,9 @@ Do not create traps or decoys.
 Use local files, installed source, local help, logs, and approved advisory snapshots.
 Use the same bundled rules and prepared local evidence on connected and isolated hosts.
 Prepare the agent, model, tools, and dependencies before the task.
+Use an approved agent and model within the declared network boundary.
+Record the actual host controls.
+These instructions do not establish network isolation.
 Record the prepared agent, model, provider, tool, and dependency identities.
 Preserve those identities throughout the task.
 If required inputs are unavailable, block dependent work.

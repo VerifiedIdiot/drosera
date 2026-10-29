@@ -46,6 +46,8 @@ linux/amd64 manifest: sha256:ec857ea6bb60cb3d0fa4d97495590c5fe7d51be8572c307b559
 
 ## Optional gVisor isolation
 
+gVisor handles application system calls in a userspace kernel and reduces direct exploitation paths to the host kernel. It does not replace host security updates or guarantee protection against every vulnerability. Read the [gVisor security model](https://gvisor.dev/docs/architecture_guide/security/) for its protection boundary.
+
 For gVisor, install `runsc` on the Linux Docker host. Register it as the `runsc` runtime. Read the [official installation guide](https://gvisor.dev/docs/user_guide/install/). Keep the release's `runsc` and `gvisor-bin/` together.
 
 The `runsc` mode requires MCP and Docker on the same native Linux host. MCP requires access to the actual host PID and cgroup records. On macOS, prepare this configuration in a separate Linux environment. The package does not modify the Docker Desktop VM or default runtime.
@@ -72,7 +74,7 @@ Do not reuse policy or approval files from 0.6.0. First, stop and clean up exper
 
 `prepare` creates the directory with mode 0700 and state files with mode 0600. It verifies ownership and permissions for an existing state directory. It rejects symbolic links, multiple hard links, invalid paths, and excessive file sizes. The CLI also rejects attempts to overwrite an existing policy.
 
-Builds use only `fixture/` as their context. The Dockerfile contains no installation step or `RUN`. It contains root-owned fixture files, a non-root user, and fixed independent processes with limits. The build uses the local base image without network access. The policy pins the final image identifier and fixture content hashes.
+Builds use only `fixture/` as their context. The fixture build does not install dependencies. A fixed `RUN` instruction creates an empty rootfs probe file with UID/GID 1000 and mode 0600. Application files remain root-owned. The image uses a non-root user and a fixed lifetime guard. The build uses the local base image without network access. The policy pins the final image identifier and fixture content hashes.
 
 4. Specify the report ID, item ID, registered scenario, and a UTC expiry within 24 hours.
 

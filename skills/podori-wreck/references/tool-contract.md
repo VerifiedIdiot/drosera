@@ -1,5 +1,7 @@
 # Tool contract
 
+The separate MCP distribution provides the server and the `mcp/dist/host.js` approval command.
+The instruction package does not include these runtime files.
 The server uses local stdio only.
 Every input object rejects unknown fields.
 An experiment identifier alone does not grant access.

@@ -2,8 +2,11 @@
 
 [한국어 안내](README.md) | English
 
+**Connect government security criteria to code and verification evidence.**
+
 An independent skill for eGovFrame security reviews, fixes, and regression checks.
-It bundles government weakness criteria and version-specific rules without source-site access during review.
+Each criterion defines what to inspect and which evidence to record.
+The package includes version-specific rules and code examples.
 
 ## Same invocation, same baseline
 
@@ -13,7 +16,7 @@ For agents with slash-command support, invoke the skill in the target project:
 /podori-egov
 ```
 
-Connected and isolated hosts use the bundled baseline and approved local evidence.
+Like every podori skill, it uses the bundled baseline and approved local evidence on connected and isolated hosts.
 The default scope includes necessary fixes and verification.
 A review-only request leaves the code unchanged.
 Other podori skills and MCP servers are not required.

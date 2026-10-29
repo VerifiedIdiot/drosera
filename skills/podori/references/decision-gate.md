@@ -3,6 +3,7 @@
 ## Calls
 
 Discover suitable executable decision skills through the trusted host catalog, regardless of provider or name.
+Select only approved, prepared local capabilities within the declared network boundary.
 Instruction access is not invocation.
 Preserve data/network permissions, cost approval, and non-execution controls.
 Do not install tools or enable services for this gate.

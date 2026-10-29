@@ -40,6 +40,8 @@ Empty results or incomplete coverage do not prove safety.
 
 Before final verdicts or fixes, use a separate reviewer without discovery or implementation involvement.
 Preserve approved tools, data boundaries, cost limits, and ownership.
+Independent review can use an approved separate local agent context or a human reviewer.
+Do not require another provider or external service for independent review.
 Provide claims, source references, prerequisites, evidence, and missing checks.
 Require current-source inspection and challenges to reachability, controls, prerequisites, and impact.
 Verify evidence files, source references, commands, exit status, and target revision directly.
