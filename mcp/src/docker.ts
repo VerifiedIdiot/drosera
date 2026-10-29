@@ -91,9 +91,16 @@ export class DockerBackend {
   }
   async inspect(id:string):Promise<ContainerInspection|null> {
     const name=this.name(id);
-    const ids=await this.command(['container','ls','-a','--filter',`name=^/${name}$`,'--format','{{.ID}}']);
+    const list=['container','ls','-a','--filter',`name=^/${name}$`,'--format','{{.ID}}'];
+    const ids=await this.command(list);
     if (!ids) return null;
-    return Inspection.parse(JSON.parse(await this.command(['container','inspect',name]))[0]);
+    try {
+      return Inspection.parse(JSON.parse(await this.command(['container','inspect',name]))[0]);
+    } catch(error) {
+      // Cleanup can remove a listed container before inspect. Confirm absence once.
+      if(error instanceof CommandFailure && error.reason==='docker-command-failed' && error.exitCode===1 && error.diagnostic.trim()===`Error response from daemon: No such container: ${name}` && await this.command(list)==='')return null;
+      throw error;
+    }
   }
   async owned():Promise<string[]> {
     const out=await this.command(['container','ls','-a','--filter',`label=${OWNER}=${this.config.owner}`,'--format','{{.Names}}']);

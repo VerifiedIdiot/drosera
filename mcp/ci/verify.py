@@ -16,6 +16,7 @@ def main():
         ("build", ["npm", "run", "build"], 120),
         ("typecheck", ["npm", "run", "typecheck"], 120),
         ("unit", ["npm", "test"], 180),
+        ("native-isolation-smoke", ["node", "ci/native-isolation-smoke.mjs"], 180),
         ("integration", ["npm", "run", "test:integration"], 900),
     ]
     for name, command, timeout in checks:
