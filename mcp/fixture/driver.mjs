@@ -2,7 +2,7 @@ import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { networkInterfaces } from 'node:os';
 import { connect } from 'node:net';
 import { createServer } from 'node:http';
-import { readGuestControls, probeTmpLimit } from './probe.mjs';
+import { readGuestControls, probeTmpLimit, probeRootWrite, verifyFixtureMetadata } from './probe.mjs';
 
 const action = process.argv[2];
 const variants = [['vulnerable',3000],['fixed',3001]];
@@ -26,8 +26,9 @@ function attempt(options) {
 async function probe() {
   const status=await readFile('/proc/self/status','utf8');
   const field=name=>status.split('\n').find(x=>x.startsWith(name+':'))?.split(':')[1].trim();
-  let rootWrite='unexpected-success';
-  try { await writeFile('/podori-write-probe','probe',{flag:'wx'}); } catch(error) {rootWrite=error.code;}
+  await verifyFixtureMetadata();
+  const rootWrite=await probeRootWrite();
+  if(rootWrite==='EROFS')await verifyFixtureMetadata();
   await writeFile('/tmp/probe','synthetic'); await unlink('/tmp/probe');
   const mounts=await readFile('/proc/mounts','utf8');
   return {
