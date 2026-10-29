@@ -11,7 +11,9 @@ test('A11: each existing skill remains self-contained without MCP and doubt rema
   for(const name of names) {
     const root=resolve('..','skills',name), skill=readFileSync(join(root,'SKILL.md'),'utf8');
     assert.match(skill,new RegExp(`^name: ${name}$`,'m'));
-    assert.match(skill,/^version: \d+\.\d+\.\d+(?:[-+][\w.-]+)?$/m);
+    const frontmatter=skill.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1];
+    const metadata=frontmatter?.match(/^metadata:\r?\n((?:[ \t]+[^\r\n]*(?:\r?\n|$)|\r?\n)*)/m)?.[1];
+    assert.match(metadata ?? '',/^ {2}version: (["'])\d+\.\d+\.\d+(?:[-+][\w.-]+)?\1\r?$/m);
     assert.match(skill,/No other podori skill is required or invoked\./);
     for(const file of documents(root))for(const match of readFileSync(file,'utf8').matchAll(/\]\(([^)]+)\)/g)) {
       const target=match[1].split('#')[0];

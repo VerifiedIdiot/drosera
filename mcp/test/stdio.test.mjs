@@ -44,7 +44,8 @@ test('V02: current release metadata matches the MCP package version', () => {
   for (const name of ['podori', 'podori-egov', 'podori-doubt', 'podori-trap', 'podori-wreck']) {
     const skill = readFileSync(`../skills/${name}/SKILL.md`, 'utf8');
     const frontmatter = skill.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1];
-    assert.equal(frontmatter?.match(/^version: (\S+)\r?$/m)?.[1], pkg.version, `${name} frontmatter version`);
+    const metadata = frontmatter?.match(/^metadata:\r?\n((?:[ \t]+[^\r\n]*(?:\r?\n|$)|\r?\n)*)/m)?.[1];
+    assert.equal(metadata?.match(/^ {2}version: (["'])([^"'\r\n]+)\1\r?$/m)?.[2], pkg.version, `${name} frontmatter metadata.version`);
   }
   for (const file of ['../README.md', '../README.en.md', 'README.md', 'README.en.md']) {
     const readme = readFileSync(file, 'utf8');
