@@ -21,6 +21,16 @@ Do not invent either value.
 Creation returns a token once.
 The server stores only its hash.
 
+## Runtime identity
+
+The trusted host selects `runc` or `runsc` before approval.
+The Docker host supplies the native Linux ARM64 or AMD64 platform.
+Policy, approval, and evidence bind the platform and registered runtime configuration.
+The server verifies the actual container runtime.
+If the selected runtime is unavailable or changes, reject execution without another runtime.
+For `runsc`, distinguish virtual guest probes from host-enforced controls.
+Keep the resource limits and all required isolation checks.
+
 ## Fixed limits
 
 Each controller permits two active experiments.
@@ -52,7 +62,7 @@ The runtime never pulls an image.
 ## Evidence
 
 Each attempt records report, item, scenario, experiment, and attempt identifiers.
-It also records the approval hash, fixture revision, image digest, initial-state hash, and input hash.
+It also records the approval hash, runtime identity, platform, fixture revision, image digest, initial-state hash, and input hash.
 Complete observations include requests, responses, state changes, service state, and resource use.
 The observation hash covers the returned observations.
 The report hash covers the report except its own `hash` field.

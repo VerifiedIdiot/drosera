@@ -37,11 +37,15 @@ Repeat per candidate with stable root-cause/boundary IDs:
 - Evidence references/actual observations:
 - Independent reviewer/invocation/disagreements:
 - Demonstrated impact/unresolved condition:
+- CVSS assessment state (`rated` or `unrated`), local severity, and score:
+- CVSS version/nomenclature/vector/metric evidence/score source/date:
+- Published advisory score/version/vector/source and target applicability:
+- Work priority and any context-based override:
 - Next check/rejection reason:
 
 ## Work Plan
 
-| Confirmed finding ID | Proposed change/boundaries | Authority/approval gap | Convention IDs/exception | Security/normal-behavior criteria | Work state |
+| Confirmed finding ID / priority | Proposed change/boundaries | Authority/approval gap | Convention IDs/exception | Security/normal-behavior criteria | Work state |
 |---|---|---|---|---|---|
 
 Complete a Work Plan row for every proposed change. Exclude unresolved candidates from executable work.

@@ -18,13 +18,19 @@ export const ImageId = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const Reference = z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$/);
 export const Scenario = z.enum(['authorization', 'input-validation']);
 export type ScenarioId = z.infer<typeof Scenario>;
+export const Runtime = z.enum(['runc', 'runsc']);
+export type RuntimeName = z.infer<typeof Runtime>;
+export const Platform = z.enum(['linux/arm64', 'linux/amd64']);
+export type NativePlatform = z.infer<typeof Platform>;
+const ExecutionIdentity = { runtime: Runtime, runtimeConfigHash: Hash, platform: Platform };
 export const Config = z.strictObject({
-  version: z.literal(1), owner: Id,
+  version: z.literal(2), owner: Id, ...ExecutionIdentity,
   endpoint: z.string().regex(/^unix:\/\/\/[A-Za-z0-9_./-]+\.sock$/).refine(x => !x.split('/').includes('..')),
   imageId: ImageId, fixtureRevision: Hash, budget: Budget,
 });
 export type Configuration = z.infer<typeof Config>;
 export const Approval = z.strictObject({
+  version: z.literal(2), ...ExecutionIdentity,
   id: Id, reportId: Reference, itemId: Reference, target: z.literal('synthetic-http-v1'),
   scenario: Scenario, fixtureRevision: Hash, imageId: ImageId, budget: Budget,
   expiresAt: z.iso.datetime(), claimHash: Hash,
@@ -51,7 +57,7 @@ export function matchesToken(token: string, expected: string): boolean {
 }
 export function scopeValid(grant: Grant, config: Configuration): void {
   Approval.parse(grant);
-  if (grant.imageId !== config.imageId || grant.fixtureRevision !== config.fixtureRevision) throw new Error('scope-mismatch');
+  if (grant.imageId !== config.imageId || grant.fixtureRevision !== config.fixtureRevision || grant.runtime !== config.runtime || grant.runtimeConfigHash !== config.runtimeConfigHash || grant.platform !== config.platform) throw new Error('scope-mismatch');
   if (Date.parse(grant.expiresAt) <= Date.now()) throw new Error('approval-expired');
 }
 export function authorize(input: unknown, config: Configuration, token: string): Grant {

@@ -2,6 +2,10 @@ import { mkdtempSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
+import { Runtime, Platform } from '../dist/policy.js';
+
+export const testRuntime = Runtime.parse(process.env.PODORI_TEST_RUNTIME ?? 'runc');
+export const expectedPlatform = process.env.PODORI_EXPECTED_ARCH ? Platform.parse(`linux/${process.env.PODORI_EXPECTED_ARCH}`) : undefined;
 
 export const evidenceRoot = process.env.PODORI_EVIDENCE_DIR;
 assert.ok(evidenceRoot, 'Set PODORI_EVIDENCE_DIR to a private artifact directory');
@@ -17,7 +21,9 @@ export function endpoint() {
 export async function prepared(label = 'state') {
   const { prepare } = await import('../dist/docker.js');
   const dir=join(artifacts,label); mkdirSync(dir,{mode:0o700});
-  const config=await prepare(dir,endpoint());
+  const config=await prepare(dir,endpoint(),testRuntime);
+  assert.equal(config.runtime,testRuntime);
+  if(expectedPlatform)assert.equal(config.platform,expectedPlatform,'The Docker daemon must use the native CI architecture');
   save(`${label}-policy`, config);
   return {dir,config};
 }

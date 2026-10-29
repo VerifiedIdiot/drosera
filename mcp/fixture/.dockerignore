@@ -2,4 +2,5 @@
 !Dockerfile
 !app.mjs
 !driver.mjs
+!probe.mjs
 !.dockerignore

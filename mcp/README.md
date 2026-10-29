@@ -2,7 +2,7 @@
 
 한국어 안내 | [English](README.en.md)
 
-`0.6.0`의 선택적 로컬 stdio 패키지입니다. 기존 네 스킬은 이 패키지 없이 그대로 사용할 수 있습니다.
+`0.7.0`의 선택적 로컬 stdio 패키지입니다. 기존 네 스킬은 이 패키지 없이 그대로 사용할 수 있습니다.
 
 ## 지원 범위
 
@@ -15,15 +15,21 @@
 
 ## 준비
 
-승인된 로컬 Docker Unix socket, linux/arm64 이미지, cgroup v2, 기본 seccomp와 CPU·메모리·PID 제한 지원이 필요합니다. 원격 TCP/SSH endpoint는 거절합니다. Docker CLI에 넘기는 환경은 별도로 제한하며, 저장된 endpoint를 모든 실행에 명시합니다.
+폐쇄망과 외부망에서 같은 준비된 구성으로 같은 검증을 수행합니다. Node·의존성·Docker·승인된 이미지와 선택한 런타임을 미리 준비하세요. 설치와 판본 갱신은 검증 실행과 분리합니다. MCP는 누락된 구성요소를 자동 다운로드하거나 다른 런타임으로 대체하지 않습니다.
 
-호스트 Node 지원 선언은 `>=24 <26`입니다. 개발 시험은 macOS arm64의 Node 25와 Docker Desktop을 사용합니다. 게스트는 고정 Node 24.22.0을 사용합니다. 다른 호스트·아키텍처는 검증 범위 밖입니다.
+승인된 로컬 Docker Unix socket, Linux ARM64 또는 AMD64 이미지, cgroup v2, 기본 seccomp와 CPU·메모리·PID 제한 지원이 필요합니다. Docker 호스트의 아키텍처에 맞춰 이미지를 선택하며 에뮬레이션으로 우회하지 않습니다. 원격 TCP/SSH endpoint는 거절합니다. Docker CLI에 넘기는 환경은 별도로 제한하며, 저장된 endpoint를 모든 실행에 명시합니다.
+
+호스트 Node 지원 선언은 `>=24 <26`입니다. 게스트는 고정 Node 24.22.0을 사용합니다. 기본 런타임은 `runc`이며 `runsc`를 별도로 선택할 수 있습니다.
+
+아래 명령은 연결된 준비 환경의 예시입니다. 폐쇄망에는 같은 lockfile의 의존성을 검증해 반입하고, 준비된 npm 캐시나 승인된 내부 레지스트리를 사용합니다.
 
 ```sh
 npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
 npm run build
 npm run typecheck
 ```
+
+npm 캐시를 모두 준비한 환경에서는 `npm ci --offline --ignore-scripts --no-audit --no-fund`를 사용합니다. 필요한 항목이 없으면 설치를 중단하며 외부망으로 우회하지 않습니다.
 
 의존성은 정확한 버전과 `package-lock.json`으로 고정합니다. 설치 훅은 실행하지 않습니다. 서버/클라이언트 SDK는 2.4.0, zod는 4.6.7, TypeScript는 7.0.2, `@types/node`는 24.19.2입니다. 별도 scanner·Inspector·telemetry 도구를 자동 설치하지 않습니다.
 
@@ -32,7 +38,16 @@ npm run typecheck
 ```text
 docker.io/library/node@sha256:a5f4366e834695d5f363b920c104953a535d3a9864d1bdf74566a0ebe01daee5
 linux/arm64 manifest: sha256:156e9bc7a0a267cc6ca77b4283e32b123479342df684ce297455d7b95ff5a6b5
+linux/amd64 manifest: sha256:ec857ea6bb60cb3d0fa4d97495590c5fe7d51be8572c307b55957eeb06569cf7
 ```
+
+## gVisor 선택형 격리 실행
+
+gVisor를 사용하려면 Linux Docker 호스트에 `runsc`를 설치하고 같은 이름의 런타임으로 등록합니다. 설치 방법은 [gVisor 공식 안내](https://gvisor.dev/docs/user_guide/install/)를 참고합니다. 배포본의 `runsc`와 `gvisor-bin/`은 함께 준비해야 합니다.
+
+`runsc` 모드에서는 MCP도 Docker와 같은 네이티브 Linux 호스트에서 실행합니다. 호스트의 실제 PID와 cgroup을 읽을 수 있어야 합니다. macOS에서 사용할 때는 별도 Linux 환경에 이 구성을 준비합니다. 패키지는 Docker Desktop VM이나 기본 런타임 설정을 자동 변경하지 않습니다.
+
+런타임 등록 설정의 해시와 플랫폼을 승인에 고정하고 실제 컨테이너 런타임을 확인합니다. gVisor 내부의 가상 `/proc`·cgroup과 호스트 통제를 구분합니다. 등록 설정 해시는 런타임 실행 파일의 무결성 증명은 아닙니다. 필요한 관측이 없으면 실행을 거절합니다.
 
 ## 신뢰된 호스트 운영자 절차
 
@@ -47,6 +62,10 @@ STATE=/absolute/private/podori-state
 ENDPOINT="$(docker context inspect --format '{{.Endpoints.docker.Host}}')"
 node dist/host.js prepare "$STATE" "$ENDPOINT"
 ```
+
+gVisor를 선택할 때는 마지막 인자에 `--runtime=runsc`를 추가합니다. 기본값은 `runc`이며 `--runtime=runc`로 명시할 수도 있습니다. 선택한 런타임이 없거나 설정이 바뀌면 중단하며 다른 런타임으로 자동 전환하지 않습니다.
+
+0.6.0의 policy·승인 파일은 재사용하지 않습니다. 기존 버전으로 실험을 종료·정리한 뒤 새 state 디렉터리에서 준비와 승인을 진행하세요. 기존 기록을 자동 변환하거나 덮어쓰지 않습니다.
 
 `prepare`는 디렉터리를 0700, 상태 파일을 0600으로 생성합니다. 이미 존재하는 state 디렉터리는 소유권과 모드를 검사합니다. 심볼릭 링크, 다중 hard link, 잘못된 경로, 과도한 파일 크기는 거절합니다. 기존 policy를 덮어쓰는 CLI 호출도 거절합니다.
 
@@ -103,7 +122,7 @@ state 인자 없이 실행하면 환경 미구성 여부만 조회할 수 있습
 
 - 컨테이너마다 network none, non-root 1000:1000, cap-drop ALL, no-new-privileges, read-only rootfs를 적용합니다.
 - 호스트 bind mount, Docker socket, 사용자 자격 증명, 포트 publish는 없습니다.
-- 컨테이너당 CPU 0.5, 메모리/스왑 합계 128 MiB, PID 64, `/tmp` tmpfs 4 MiB를 제한합니다.
+- 컨테이너당 CPU 0.5, 메모리/스왑 합계 128 MiB, PID 64, `/tmp` tmpfs 4 MiB를 제한합니다. `runsc`의 PID 제한은 가상 게스트 프로세스 수가 아니라 호스트 태스크 기준입니다.
 - 한 state 디렉터리에서 동시 실험 2개, 전체 기록 20개, 실험당 시도·reset 각 4회를 제한합니다.
 - 비교/reset은 8초, 일반 Docker 호출은 10초, 출력은 합계 32 KiB로 제한합니다. 호스트 전용 빌드는 120초입니다.
 - 독립된 고정 `/usr/bin/timeout`이 게스트를 45초 뒤 종료합니다. 제어부가 SIGKILL되어도 이 제한은 남습니다.
@@ -123,6 +142,7 @@ Docker가 중단되면 제거를 확인할 수 없습니다. 제어부가 중단
 
 ```sh
 export PODORI_EVIDENCE_DIR=/absolute/private/podori-evidence
+export PODORI_TEST_RUNTIME=runsc
 npm run build
 npm run typecheck
 npm test

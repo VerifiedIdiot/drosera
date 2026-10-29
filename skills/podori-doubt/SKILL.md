@@ -1,7 +1,7 @@
 ---
 name: podori-doubt
 description: Use when dependencies or images need trust checks. Inspect package and container image provenance through read-only checks.
-version: 0.6.0
+version: 0.7.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]
@@ -21,6 +21,15 @@ Read the [completion contract](references/report-completion.md) before review or
 - Trace registries or clusters only within explicitly approved scope.
 - Skill document edits do not authorize an investigation.
 - Default to local artifacts, trust policy, documentation, and imported evidence without a mandatory scanner or external service.
+- Use the same bundled rules and prepared local evidence on connected and isolated hosts.
+- Prepare the agent, model, tools, and dependencies before the task.
+- Record the prepared agent, model, provider, tool, and dependency identities.
+- Preserve those identities throughout the task.
+- If required inputs are unavailable, block dependent work.
+- Do not substitute models, providers, or tools automatically.
+- Do not download replacements during the task.
+- Keep tool downloads and baseline updates outside the task.
+- Network access does not change the procedure or relax required controls.
 - Before network access, require approved destinations, artifact scope, and disclosed data.
 - Disable updates, telemetry, remote reputation queries, and implicit pulls. Keep TLS verification active.
 - If evidence or tools are missing, report the gap without automatic installation.

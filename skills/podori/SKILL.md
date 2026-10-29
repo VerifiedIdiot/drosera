@@ -1,7 +1,7 @@
 ---
 name: podori
 description: Use when application or web code changes. It covers security code review, vulnerability fixes, and regression tests.
-version: 0.6.0
+version: 0.7.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]
@@ -26,7 +26,15 @@ Do not create traps or decoys.
 ## Evidence
 
 Use local files, installed source, local help, logs, and approved advisory snapshots.
-Do not require internet, external services, or installations.
+Use the same bundled rules and prepared local evidence on connected and isolated hosts.
+Prepare the agent, model, tools, and dependencies before the task.
+Record the prepared agent, model, provider, tool, and dependency identities.
+Preserve those identities throughout the task.
+If required inputs are unavailable, block dependent work.
+Do not substitute models, providers, or tools automatically.
+Do not download replacements during the task.
+Keep tool downloads and baseline updates outside the task.
+Network access does not change the procedure or relax required controls.
 Require approved destinations and data scope before network access.
 Disable tool downloads, updates, telemetry, and remote lookups.
 For missing or stale evidence, mark affected conclusions unverified.

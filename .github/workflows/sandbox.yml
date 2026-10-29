@@ -1,0 +1,49 @@
+name: Sandbox runtime verification
+
+on:
+  push:
+    branches: [main, feat/gvisor-runtime-0.7]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sandbox:
+    name: ${{ matrix.arch }} / ${{ matrix.runtime }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+        runtime: [runc, runsc]
+        include:
+          - runner: ubuntu-24.04
+            arch: amd64
+          - runner: ubuntu-24.04-arm
+            arch: arm64
+    env:
+      PODORI_TEST_RUNTIME: ${{ matrix.runtime }}
+      PODORI_EXPECTED_ARCH: ${{ matrix.arch }}
+      PODORI_EVIDENCE_DIR: ${{ runner.temp }}/podori-evidence
+      NPM_CONFIG_AUDIT: 'false'
+      NPM_CONFIG_FUND: 'false'
+      NPM_CONFIG_UPDATE_NOTIFIER: 'false'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24.22.0'
+          package-manager-cache: false
+      - name: Prepare the native runtime
+        run: python3 mcp/ci/prepare.py
+      - name: Install locked dependencies without hooks
+        working-directory: mcp
+        run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Verify the package and actual sandbox
+        env:
+          NPM_CONFIG_OFFLINE: 'true'
+        run: python3 mcp/ci/verify.py

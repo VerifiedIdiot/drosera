@@ -1,7 +1,7 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { BUDGET, Access, Approval, Config, CreateInput, Hash, Id, RunInput, Scenario, authorize, digest, matchesToken, objectHash, scopeValid, type Configuration } from './policy.js';
-import { DockerBackend, CommandFailure, enforceContainer, enforceProbe } from './docker.js';
+import { BUDGET, Access, Approval, Config, CreateInput, Hash, Id, RunInput, Runtime, Platform, Scenario, authorize, digest, matchesToken, objectHash, scopeValid, type Configuration } from './policy.js';
+import { DockerBackend, CommandFailure } from './docker.js';
 import { Store } from './store.js';
 import { HttpObservation, INITIAL, evaluate, requests, unverified } from './evidence.js';
 
@@ -10,6 +10,7 @@ const ResetRow=z.strictObject({before:HttpObservation,reset:HttpObservation,afte
 const ResetObservation=z.strictObject({vulnerable:ResetRow,fixed:ResetRow});
 const Attempt = z.strictObject({
   id:Id,experimentId:Id,reportId:z.string(),itemId:z.string(),scenario:Scenario,
+  runtime:Runtime,runtimeConfigHash:Hash,platform:Platform,isolation:z.unknown().nullable(),
   fixtureRevision:Hash,imageId:z.string(),approvalHash:Hash,inputHash:Hash,initialHash:Hash,
   startedAt:z.iso.datetime(),finishedAt:z.iso.datetime().nullable(),reason:z.string().nullable(),
   state:z.enum(['running','complete','unverified']),exitStatus:z.number().nullable(),
@@ -23,7 +24,7 @@ const RecordSchema = z.strictObject({
   createdAt:z.iso.datetime(), reason:z.string().max(64).nullable(), isolation:z.unknown().nullable(),
   attempts:z.array(Attempt).max(BUDGET.attempts),
   exclusions:z.array(z.strictObject({reason:z.string(),requestedScenario:z.string(),result:z.literal('unverified')})).max(8),
-  resets:z.array(z.strictObject({id:Id,initialHash:Hash,observationHash:Hash,observations:ResetObservation,at:z.iso.datetime()})).max(4),
+  resets:z.array(z.strictObject({id:Id,initialHash:Hash,observationHash:Hash,observations:ResetObservation,isolation:z.unknown(),at:z.iso.datetime()})).max(4),
   termination:z.unknown().nullable(),
 });
 type Experiment = z.infer<typeof RecordSchema>;
@@ -99,7 +100,7 @@ export class Controller {
     this.environmentBusy=true;
     try {
       await this.backend.preflight();
-      return {configured:true,available:true,target:'synthetic-http-v1',fixtureRevision:this.config.fixtureRevision,imageId:this.config.imageId,budget:BUDGET};
+      return {configured:true,available:true,target:'synthetic-http-v1',runtime:this.config.runtime,runtimeConfigHash:this.config.runtimeConfigHash,platform:this.config.platform,fixtureRevision:this.config.fixtureRevision,imageId:this.config.imageId,budget:BUDGET};
     } finally {this.environmentBusy=false;}
   }
   create(input:unknown):unknown {
@@ -123,7 +124,8 @@ export class Controller {
         const actual=await this.backend.provision(id,checkpoint); checkpoint();
         const states=z.strictObject({vulnerable:HttpObservation,fixed:HttpObservation}).parse(actual.states);
         if([states.vulnerable,states.fixed].some(s=>s.response.status!==200 || objectHash(s.response.body)!==objectHash(INITIAL)))throw new Error('initial-state-mismatch');
-        record.isolation={inspection:actual.inspection,probe:actual.probe,states};
+        const host={OSType:'linux',runtime:this.config.runtime,runtimeConfigHash:this.config.runtimeConfigHash,platform:this.config.platform};
+        record.isolation={host,inspection:actual.inspection,probe:actual.probe,hostControls:actual.hostControls,states};
         record.status='ready';this.save(record);
       } catch(error) {
         if(record.generation!==generation)return;
@@ -138,7 +140,7 @@ export class Controller {
   }
   status(input:unknown):unknown {
     const record=this.access(input);
-    return {experimentId:record.id,status:record.status,reason:record.reason,reportId:record.grant.reportId,itemId:record.grant.itemId,scenario:record.grant.scenario,fixtureRevision:record.grant.fixtureRevision,imageId:record.grant.imageId,createdAt:record.createdAt};
+    return {experimentId:record.id,status:record.status,reason:record.reason,reportId:record.grant.reportId,itemId:record.grant.itemId,scenario:record.grant.scenario,runtime:record.grant.runtime,runtimeConfigHash:record.grant.runtimeConfigHash,platform:record.grant.platform,fixtureRevision:record.grant.fixtureRevision,imageId:record.grant.imageId,createdAt:record.createdAt};
   }
   evidence(input:unknown):unknown {
     const record=this.access(input);
@@ -162,15 +164,14 @@ export class Controller {
     if(!['ready','completed'].includes(record.status))throw new Error('experiment-not-ready');
     if(record.attempts.length>=BUDGET.attempts)throw new Error('attempt-limit');
     const scenario=Scenario.parse(parsed.scenario),generation=record.generation;
-    const attempt:z.infer<typeof Attempt>={id:randomUUID(),experimentId:record.id,reportId:record.grant.reportId,itemId:record.grant.itemId,scenario,fixtureRevision:record.grant.fixtureRevision,imageId:record.grant.imageId,approvalHash:objectHash(record.grant),inputHash:objectHash(requests(scenario)),initialHash:objectHash(INITIAL),startedAt:new Date().toISOString(),finishedAt:null,reason:null,state:'running',exitStatus:null,observations:null,observationHash:null,endState:null,resourceUse:null,verdict:unverified()};
+    const attempt:z.infer<typeof Attempt>={id:randomUUID(),experimentId:record.id,reportId:record.grant.reportId,itemId:record.grant.itemId,scenario,runtime:record.grant.runtime,runtimeConfigHash:record.grant.runtimeConfigHash,platform:record.grant.platform,isolation:null,fixtureRevision:record.grant.fixtureRevision,imageId:record.grant.imageId,approvalHash:objectHash(record.grant),inputHash:objectHash(requests(scenario)),initialHash:objectHash(INITIAL),startedAt:new Date().toISOString(),finishedAt:null,reason:null,state:'running',exitStatus:null,observations:null,observationHash:null,endState:null,resourceUse:null,verdict:unverified()};
     record.attempts.push(attempt);record.status='running';record.reason=null;this.save(record);
     const checkpoint=():void=>{if(record.generation!==generation || this.closing)throw new Error('operation-cancelled');this.grantValid(record);};
     const timeout=setTimeout(()=>{void this.stop(record,'timed_out','run-timeout').catch(()=>{});},BUDGET.runMs);
     const task=(async()=>{
       try {
         await this.backend.preflight();checkpoint();
-        enforceContainer(await this.backend.inspect(record.id),this.config,this.backend.name(record.id));
-        enforceProbe(await this.backend.observe(record.id,'probe'));checkpoint();
+        attempt.isolation=await this.backend.verifyIsolation(record.id,checkpoint);checkpoint();
         const observations=await this.backend.observe(record.id,scenario);checkpoint();
         const endState=await this.backend.inspect(record.id);checkpoint();
         if(!endState?.State.Running)throw new Error('target-exited');
@@ -200,10 +201,11 @@ export class Controller {
     const timeout=setTimeout(()=>{void this.stop(record,'timed_out','reset-timeout').catch(()=>{});},BUDGET.runMs);
     const task=(async()=>{
       try {
-        enforceContainer(await this.backend.inspect(record.id),this.config,this.backend.name(record.id));checkpoint();
+        await this.backend.preflight();checkpoint();
+        const isolation=await this.backend.verifyIsolation(record.id,checkpoint);checkpoint();
         const observations=ResetObservation.parse(await this.backend.observe(record.id,'reset'));checkpoint();
         for(const row of Object.values(observations))if(row.before.response.status!==200 || row.reset.response.status!==200 || row.after.response.status!==200 || objectHash(row.reset.response.body)!==objectHash(INITIAL) || objectHash(row.after.response.body)!==objectHash(INITIAL))throw new Error('reset-not-confirmed');
-        record.resets.push({id:randomUUID(),initialHash:objectHash(INITIAL),observationHash:objectHash(observations),observations,at:new Date().toISOString()});
+        record.resets.push({id:randomUUID(),initialHash:objectHash(INITIAL),observationHash:objectHash(observations),observations,isolation,at:new Date().toISOString()});
         record.status='ready';this.save(record);
       } catch(error) {
         failure=error;

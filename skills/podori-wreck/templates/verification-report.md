@@ -5,6 +5,7 @@
 - Contract revision and required report/item IDs:
 - Approved scenario IDs and expected observations:
 - Host-issued approval reference, without its capability:
+- Native platform, selected runtime, registered runtime configuration, and actual container runtime:
 - Fixture revision, image digest, initial-state hash, and input hash:
 - Required normal-behavior, isolation, deadline, and cleanup checks:
 - Work start, deadline, and elapsed time:

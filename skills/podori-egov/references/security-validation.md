@@ -67,9 +67,39 @@ Continue independent authorized checks.
 
 Separate defense improvements from confirmed defects.
 Deduplicate by root cause and boundary.
-Limit severity to demonstrated impact.
 Keep runtime claims unverified without direct runtime evidence.
 Schema checks do not establish evidence validity.
+
+## Severity and work order
+
+Classify confirmed vulnerabilities with CVSS v4.0.
+Use CVSS-B for new local assessments.
+Record the version, nomenclature, vector, metric evidence, score source, and assessment date.
+Use approved local score records or an available, verified calculator.
+Do not estimate scores or install calculators during review.
+Accept scores from 0.0 through 10.0 with one decimal place.
+For unsupported scores or unconfirmed candidates, record `unrated` without a local score or CVSS rating.
+`unrated` is an assessment state, not a CVSS rating.
+
+| Severity | CVSS score |
+|---|---|
+| `critical` | 9.0-10.0 |
+| `high` | 7.0-8.9 |
+| `medium` | 4.0-6.9 |
+| `low` | 0.1-3.9 |
+| `none` | 0.0 |
+
+Preserve published advisory scores separately with their original versions, vectors, sources, and applicability evidence.
+Do not relabel another CVSS version as v4.0.
+Before the worklist freeze, use severity to propose scope and order, not automatic exclusions.
+Within authorized work, address critical, high, medium, then low items.
+Record exposure, business impact, or dependency constraints for priority overrides.
+Review unrated items by documented impact and evidence gaps, never as automatically low priority.
+A lower severity does not remove frozen required items.
+Severity grants no authority, budget extension, or general safety verdict.
+
+Optional provenance: [FIRST CVSS v4.0, qualitative severity scale](https://www.first.org/cvss/v4.0/specification-document#Qualitative-Severity-Rating-Scale).
+Do not fetch the source during review.
 
 ## Safe execution
 

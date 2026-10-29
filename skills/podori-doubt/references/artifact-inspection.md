@@ -95,6 +95,34 @@ Record digest, file/layer, line/byte range, activation path, behavior, baseline 
 Redact secret values without loss of location evidence.
 For suspected exfiltration or persistence, inspect code without execution or contact with its destination.
 
+## Vulnerability severity
+
+Keep vulnerability severity separate from artifact trust, compromise confidence, and check status.
+Record published advisory scores with their original CVSS versions, vectors, sources, and exact-target applicability.
+Use CVSS v4.0 for new local assessments, with CVSS-B as the default.
+Use approved local score records or an available, verified calculator.
+Do not estimate scores, convert another version, install tools, or fetch sources during this assessment.
+Accept scores from 0.0 through 10.0 with one decimal place.
+
+| Severity | CVSS score |
+|---|---|
+| `critical` | 9.0-10.0 |
+| `high` | 7.0-8.9 |
+| `medium` | 4.0-6.9 |
+| `low` | 0.1-3.9 |
+| `none` | 0.0 |
+
+For unsupported scores or unresolved applicability, record `unrated` without a local score or CVSS rating.
+`unrated` is an assessment state, not a CVSS rating.
+Order applicable advisory checks by severity unless documented exposure or evidence gaps require another order.
+Do not place unrated items last automatically.
+Keep frozen required checks and the existing work budget.
+A critical rating grants no execution, repair, quarantine, or deletion authority.
+A none rating does not establish artifact trust or absence of malicious behavior.
+
+Optional provenance: [FIRST CVSS v4.0, qualitative severity scale](https://www.first.org/cvss/v4.0/specification-document#Qualitative-Severity-Rating-Scale).
+Do not fetch the source during review.
+
 ## Optional Background
 
 These links provide background, not required tools or procedures.

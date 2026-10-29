@@ -4,11 +4,13 @@
 
 **Security fixes with checks for normal behavior.**
 
-[한국어 안내](README.md) | English · `0.6.0`
+[한국어 안내](README.md) | English · `0.7.0`
 
 podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests.
 
 Independent skills cover eGovFrame secure coding, package and container image supply-chain security, and decoys and traps on request. Sandbox verification compares only the bundled synthetic app.
+
+**Optional gVisor isolation** adds a separate isolation layer for synthetic app verification.
 
 ## Background
 
@@ -27,6 +29,8 @@ Start with `podori` for application and web security code reviews. Use `podori-e
 | Compare vulnerable and fixed variants of the bundled synthetic app | [podori-wreck · Sandbox verification](skills/podori-wreck/SKILL.md) |
 
 Each skill works independently and does not invoke the others.
+
+The security, eGovFrame, and dependency skills record vulnerability severity with CVSS v4.0. Unsupported scores remain unrated. Severity does not replace approvals or required verification.
 
 <details>
 <summary>See each skill's role at a glance</summary>
@@ -63,7 +67,7 @@ The agent reads project code and configuration to select the review target. You 
 
 Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
 
-For an update, select release tag `v0.6.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
+For an update, select release tag `v0.7.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
 
 ## Explore the skills
 
@@ -121,6 +125,8 @@ New traps start disabled. Production activation requires resource limits, exit c
 
 ### podori-wreck · Sandbox verification
 
+**Select gVisor (`runsc`) with Docker for added isolation.** The MCP uses the native Linux ARM64 or AMD64 image. It rejects execution if the selected runtime fails verification.
+
 Compare vulnerable and fixed variants of the bundled synthetic HTTP app. The MCP sends identical requests from identical initial data and verifies authorization and input-validation results. It also verifies that normal requests still work.
 
 ```text
@@ -157,7 +163,9 @@ Copy the complete selected skill folder. `SKILL.md` defines the procedure. The `
 
 ### Can I use podori in an air-gapped environment?
 
-`podori-egov` uses the same bundled criteria and local evidence on connected and isolated hosts. An isolated host needs an internal agent, model, and the required local tools and dependencies. The skill does not fetch external data or install tools during review. Source and CVE updates remain separate tasks. Read the [offline guide](skills/podori-egov/README.en.md) for prerequisites.
+This principle applies to every skill and the optional MCP. Connected and isolated hosts use the same edition, inputs, prepared tools, and procedure. Network access does not change review criteria or required controls.
+
+Prepare the agent, model, tools, and dependencies for each environment. MCP also requires the approved images and selected runtime. Review and execution do not trigger automatic downloads or baseline updates. Data acquisition and updates require separate approval. Missing evidence remains unverified.
 
 ### Does the government baseline replace security certification?
 

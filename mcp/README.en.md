@@ -2,7 +2,7 @@
 
 [한국어 안내](README.md) | English
 
-This optional local stdio package accompanies `0.6.0`. The four existing skills work without this package.
+This optional local stdio package accompanies `0.7.0`. The four existing skills work without this package.
 
 ## Supported scope
 
@@ -15,15 +15,24 @@ Inputs cannot specify arbitrary repositories, images, paths, code, shells, or ex
 
 ## Prerequisites
 
-The host requires an approved local Docker Unix socket and a linux/arm64 image. It also requires cgroup v2, default seccomp, and CPU, memory, and PID limits. The package rejects remote TCP/SSH endpoints. It restricts the Docker CLI environment and explicitly selects the stored endpoint for every operation.
+Connected and isolated hosts use the same prepared configuration and verification procedure.
+Prepare Node, dependencies, Docker, approved images, and the selected runtime before verification.
+Keep installation and version updates separate from verification.
+MCP does not download missing components or substitute another runtime.
 
-The declared host Node range is `>=24 <26`. Development tests use Node 25 and Docker Desktop on macOS arm64. The guest uses the fixed Node 24.22.0 image. Other hosts and architectures are outside the verified scope.
+The host requires an approved local Docker Unix socket and a Linux ARM64 or AMD64 image. It also requires cgroup v2, default seccomp, and CPU, memory, and PID limits. The MCP selects the Docker host's native architecture without emulation. It rejects remote TCP/SSH endpoints. It restricts the Docker CLI environment and explicitly selects the stored endpoint for every operation.
+
+The declared host Node range is `>=24 <26`. The guest uses the fixed Node 24.22.0 image. The default runtime is `runc`, with `runsc` as an explicit option.
+
+These commands apply to a connected preparation host. For an isolated host, stage the same locked dependencies. Use a prepared npm cache or an approved internal registry.
 
 ```sh
 npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
 npm run build
 npm run typecheck
 ```
+
+With a complete npm cache, use `npm ci --offline --ignore-scripts --no-audit --no-fund`. Missing entries stop installation without an external-network fallback.
 
 Exact versions and `package-lock.json` pin dependencies. Install hooks do not run. The server/client SDK version is 2.4.0. Other versions are zod 4.6.7, TypeScript 7.0.2, and `@types/node` 24.19.2. The package does not automatically install separate scanners, Inspector, or telemetry tools.
 
@@ -32,7 +41,16 @@ The following user-approved base image must exist locally with its actual config
 ```text
 docker.io/library/node@sha256:a5f4366e834695d5f363b920c104953a535d3a9864d1bdf74566a0ebe01daee5
 linux/arm64 manifest: sha256:156e9bc7a0a267cc6ca77b4283e32b123479342df684ce297455d7b95ff5a6b5
+linux/amd64 manifest: sha256:ec857ea6bb60cb3d0fa4d97495590c5fe7d51be8572c307b55957eeb06569cf7
 ```
+
+## Optional gVisor isolation
+
+For gVisor, install `runsc` on the Linux Docker host. Register it as the `runsc` runtime. Read the [official installation guide](https://gvisor.dev/docs/user_guide/install/). Keep the release's `runsc` and `gvisor-bin/` together.
+
+The `runsc` mode requires MCP and Docker on the same native Linux host. MCP requires access to the actual host PID and cgroup records. On macOS, prepare this configuration in a separate Linux environment. The package does not modify the Docker Desktop VM or default runtime.
+
+Approval binds the registered runtime configuration hash and native platform. The server verifies the actual container runtime. It distinguishes gVisor's virtual `/proc` and cgroup values from host controls. The registration hash does not attest runtime executable bytes. Missing observations stop execution.
 
 ## Trusted host operator procedure
 
@@ -47,6 +65,10 @@ STATE=/absolute/private/podori-state
 ENDPOINT="$(docker context inspect --format '{{.Endpoints.docker.Host}}')"
 node dist/host.js prepare "$STATE" "$ENDPOINT"
 ```
+
+For gVisor, append `--runtime=runsc`. The default is `runc`, which also accepts the explicit `--runtime=runc` argument. A missing runtime or changed registration stops execution without another runtime.
+
+Do not reuse policy or approval files from 0.6.0. First, stop and clean up experiments with the previous version. Then prepare a new state directory and issue new approvals. The package does not migrate or overwrite old records.
 
 `prepare` creates the directory with mode 0700 and state files with mode 0600. It verifies ownership and permissions for an existing state directory. It rejects symbolic links, multiple hard links, invalid paths, and excessive file sizes. The CLI also rejects attempts to overwrite an existing policy.
 
@@ -103,7 +125,7 @@ Keep separate new claims and optional experiments on a follow-up list. Do not ex
 
 - Each container uses network none, non-root 1000:1000, cap-drop ALL, no-new-privileges, and a read-only rootfs.
 - Containers have no host bind mounts, Docker socket, user credentials, or published ports.
-- Each container has CPU 0.5, combined memory/swap 128 MiB, PID 64, and `/tmp` tmpfs 4 MiB limits.
+- Each container has CPU 0.5, combined memory/swap 128 MiB, PID 64, and `/tmp` tmpfs 4 MiB limits. For `runsc`, PID limits cover host tasks rather than virtual guest process counts.
 - Each state directory permits 2 concurrent experiments and 20 total records. Each experiment permits 4 attempts and 4 resets.
 - Comparisons and resets have an 8-second limit. Ordinary Docker calls have a 10-second limit. Combined output cannot exceed 32 KiB. Host-only builds have a 120-second limit.
 - The independent fixed `/usr/bin/timeout` terminates the guest after 45 seconds. This limit remains effective if SIGKILL terminates the controller.
@@ -123,6 +145,7 @@ Set the test artifact path outside the repository. Docker integration tests crea
 
 ```sh
 export PODORI_EVIDENCE_DIR=/absolute/private/podori-evidence
+export PODORI_TEST_RUNTIME=runsc
 npm run build
 npm run typecheck
 npm test

@@ -13,9 +13,11 @@ test('A4/A7: the actual container enforces controls and serves normal HTTP reque
   try {
     const actual=await backend.provision(id, () => {});
     save('actual-isolation',actual);
-    enforceHost(actual.host);
+    enforceHost(actual.host,config.runtime);
     enforceContainer(actual.inspection,config,backend.name(id));
-    enforceProbe(actual.probe);
+    enforceProbe(actual.probe,config,actual.hostControls,actual.inspection);
+    assert.equal(actual.inspection.HostConfig.Runtime,config.runtime);
+    assert.equal(actual.hostControls?.source ?? null,config.runtime==='runsc'?'native-linux-cgroup-v2':null);
     assert.equal(actual.probe.uid,1000);
     assert.equal(actual.probe.rootWrite,'EROFS');
     assert.equal(actual.probe.egress4.connected,false);
@@ -29,11 +31,16 @@ test('A4/A7: the actual container enforces controls and serves normal HTTP reque
     assert.equal(result.fixed.normal.response.status,200);
     for(const key of ['MemoryLimit','PidsLimit','CpuCfsQuota']) assert.throws(() => enforceHost({...actual.host,[key]:false}));
     assert.throws(() => enforceHost({...actual.host,SecurityOptions:[]}));
-    for(const [field,value] of [['NetworkMode','bridge'],['ReadonlyRootfs',false],['Memory',0],['PidsLimit',0],['NanoCpus',0],['Binds',['/tmp:/host']]]) {
+    for(const [field,value] of [['Runtime',config.runtime==='runsc'?'runc':'runsc'],['NetworkMode','bridge'],['ReadonlyRootfs',false],['Memory',0],['PidsLimit',0],['NanoCpus',0],['Binds',['/tmp:/host']]]) {
       assert.throws(() => enforceContainer({...actual.inspection,HostConfig:{...actual.inspection.HostConfig,[field]:value}},config,backend.name(id)));
     }
-    assert.throws(() => enforceProbe({...actual.probe,egress4:{connected:true}}));
-    assert.throws(() => enforceProbe({...actual.probe,seccomp:0}));
+    assert.throws(() => enforceProbe({...actual.probe,egress4:{connected:true}},config,actual.hostControls,actual.inspection));
+    if(config.runtime==='runc')assert.throws(() => enforceProbe({...actual.probe,seccomp:0}));
+    else {
+      assert.throws(() => enforceProbe(actual.probe,config,null,actual.inspection));
+      assert.throws(() => enforceProbe(actual.probe,config,{...actual.hostControls,seccomp:0},actual.inspection));
+      assert.throws(() => enforceProbe(actual.probe,config,{...actual.hostControls,memoryMax:'max'},actual.inspection));
+    }
     const absent = new DockerBackend({...config,imageId:`sha256:${'0'.repeat(64)}`},dir);
     await assert.rejects(absent.preflight());
   } finally {

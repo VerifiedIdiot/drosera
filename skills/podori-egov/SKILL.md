@@ -1,7 +1,7 @@
 ---
 name: podori-egov
 description: Use when eGovFrame code needs security review or fixes. Apply version-specific security rules, code cases, and regression checks.
-version: 0.6.0
+version: 0.7.0
 author: VerifiedIdiot
 license: MIT
 platforms: [linux, macos, windows]
@@ -26,6 +26,8 @@ Do not create traps or decoys.
 ## Evidence
 
 Use the same [offline procedure](references/offline-execution.md) on connected and isolated hosts.
+Prepare the agent, model, tools, and dependencies before the task.
+Network access does not change the procedure or relax required controls.
 Use the bundled [government baseline](references/government-baseline.md), local target evidence, and approved advisory snapshots.
 Do not fetch sources, install tools, or call external services during review.
 Separate baseline and advisory refresh from the review task.

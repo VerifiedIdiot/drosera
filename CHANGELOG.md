@@ -1,5 +1,24 @@
 # 변경 이력
 
+## 0.7.0
+
+- CVSS v4.0 심각도 분류, 점수 근거와 미평가 상태 기록
+- 선택형 gVisor(`runsc`) 런타임과 Linux ARM64·AMD64 네이티브 플랫폼 선택
+- 런타임 등록 설정·플랫폼·이미지·fixture를 연결한 policy·승인·증거
+- gVisor 게스트 관측과 호스트 cgroup·프로세스 통제의 구분, 기존 자원 한도 유지
+- 전체 스킬과 선택형 MCP의 폐쇄망·외부망 공통 원칙 명시
+- policy·승인 schema 2 적용, 이전 상태의 자동 변환 없이 새 준비와 승인 요구
+
+### English
+
+- CVSS v4.0 severity, score evidence, and an explicit unrated state.
+- Optional gVisor (`runsc`) with native Linux ARM64 and AMD64 platform selection.
+- Policies, approvals, and evidence bind runtime registration, platform, image, and fixture identity.
+- gVisor guest observations remain separate from host cgroup and process controls.
+- Existing resource limits remain unchanged.
+- Every skill and the optional MCP share the connected and isolated operation principle.
+- Policy and approval schema 2 requires new preparation and approval without automatic migration.
+
 ## 0.6.0
 
 - 기본 작업 예산 30분·필수 항목별 최초 포함 최대 2회, 보고서 갱신·위임·재개 시 예산 유지

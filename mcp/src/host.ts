@@ -7,11 +7,12 @@ import { safeError } from './controller.js';
 async function main():Promise<void> {
   const [command,root,...args]=process.argv.slice(2);
   if(!root)throw new Error('state-directory-required');
-  if(command==='prepare' && args.length===1) {
+  if(command==='prepare' && (args.length===1 || (args.length===2 && ['--runtime=runc','--runtime=runsc'].includes(args[1]!)))) {
+    const runtime=args[1]==='--runtime=runsc'?'runsc':'runc';
     new Store(root,true);
     if(new Store(root).names('policy').length>0)throw new Error('already-prepared');
-    const config=await prepare(root,args[0]!);
-    process.stdout.write(JSON.stringify({prepared:true,imageId:config.imageId,fixtureRevision:config.fixtureRevision})+'\n');
+    const config=await prepare(root,args[0]!,runtime);
+    process.stdout.write(JSON.stringify({prepared:true,runtime:config.runtime,runtimeConfigHash:config.runtimeConfigHash,platform:config.platform,imageId:config.imageId,fixtureRevision:config.fixtureRevision})+'\n');
   } else if(command==='approve' && args.length===4) {
     const store=new Store(root), config=Config.parse(store.read('policy.json'));
     if(store.names('grant-').length>=BUDGET.records)throw new Error('approval-limit');
@@ -20,7 +21,7 @@ async function main():Promise<void> {
     const expiry=Date.parse(expiresAt!);
     if(!Number.isFinite(expiry) || expiry<=Date.now() || expiry>Date.now()+86400000)throw new Error('invalid-approval-expiry');
     const id=randomUUID(), token=randomBytes(32).toString('hex');
-    const grant=Approval.parse({id,reportId,itemId,target:'synthetic-http-v1',scenario,fixtureRevision:config.fixtureRevision,imageId:config.imageId,budget:BUDGET,expiresAt,claimHash:digest(token)});
+    const grant=Approval.parse({version:2,runtime:config.runtime,runtimeConfigHash:config.runtimeConfigHash,platform:config.platform,id,reportId,itemId,target:'synthetic-http-v1',scenario,fixtureRevision:config.fixtureRevision,imageId:config.imageId,budget:BUDGET,expiresAt,claimHash:digest(token)});
     store.write(`grant-${id}.json`,grant);
     const capabilityFile=`capability-${id}.json`;
     store.write(capabilityFile,{approvalId:id,claimToken:token});

@@ -28,6 +28,11 @@ Keep prior attempts and evidence when the report changes.
 | Artifact and location | Trigger and behavior | Baseline difference | Confidence | Recommended decision |
 |---|---|---|---|---|
 
+## Vulnerability Severity
+
+| Artifact / advisory | Applicability | Published CVSS version / vector / score / source | Local CVSS state / version / nomenclature / vector / score / severity | Metric evidence / calculator identity / date | Review priority / override |
+|---|---|---|---|---|---|
+
 Commands, tool versions, exit status, non-execution controls, and evidence dates:
 Effective scanner configuration, exclusions, and coverage gaps:
 Unresolved dependencies, child manifests, opaque content, and unsupported formats:

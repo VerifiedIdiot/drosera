@@ -2,6 +2,7 @@ import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { networkInterfaces } from 'node:os';
 import { connect } from 'node:net';
 import { createServer } from 'node:http';
+import { readGuestControls, probeTmpLimit } from './probe.mjs';
 
 const action = process.argv[2];
 const variants = [['vulnerable',3000],['fixed',3001]];
@@ -32,9 +33,8 @@ async function probe() {
   return {
     uid:process.getuid(),capEff:field('CapEff'),noNewPrivs:Number(field('NoNewPrivs')),seccomp:Number(field('Seccomp')),
     rootWrite,tmpWrite:true,interfaces:Object.keys(networkInterfaces()).sort(),
-    memoryMax:(await readFile('/sys/fs/cgroup/memory.max','utf8')).trim(),
-    pidsMax:(await readFile('/sys/fs/cgroup/pids.max','utf8')).trim(),
-    cpuMax:(await readFile('/sys/fs/cgroup/cpu.max','utf8')).trim(),
+    ...await readGuestControls(),
+    tmpLimit:await probeTmpLimit(),
     tmpMount:mounts.split('\n').find(x=>x.split(' ')[1]==='/tmp'),
     egress4:await attempt({host:'192.0.2.1',port:443}),
     egress6:await attempt({host:'2001:db8::1',port:443}),
