@@ -1,0 +1,262 @@
+{
+  "unit": [
+    {
+      "file": "test/ci-verification.test.mjs",
+      "name": "CI01: required native test evidence fails closed"
+    },
+    {
+      "file": "test/compatibility.test.mjs",
+      "name": "A11: each existing skill remains self-contained without MCP and doubt remains non-executing"
+    },
+    {
+      "file": "test/evidence.test.mjs",
+      "name": "A10: verdicts require observations, not success flags or incomplete responses"
+    },
+    {
+      "file": "test/fixture-probe.test.mjs",
+      "name": "G06: fixed fixture probes report virtual cgroup absence and test the unchanged tmpfs cap"
+    },
+    {
+      "file": "test/fixture-probe.test.mjs",
+      "name": "G02/G06: the fixture build context includes every fixed probe source"
+    },
+    {
+      "file": "test/host-evidence.test.mjs",
+      "name": "G06: collect native runsc cgroup and sentry evidence from the inspected PID, never the guest"
+    },
+    {
+      "file": "test/inspection-race.test.mjs",
+      "name": "A10: inspection confirms absence when output-error cleanup removes a listed container"
+    },
+    {
+      "file": "test/inspection-race.test.mjs",
+      "name": "inspection only accepts one successful exact-name absence confirmation"
+    },
+    {
+      "file": "test/inspection-race.test.mjs",
+      "name": "inspection preserves daemon, permission, transport and wrong-target errors without retry"
+    },
+    {
+      "file": "test/inspection-race.test.mjs",
+      "name": "inspection preserves errors when absence confirmation fails or a resource still exists"
+    },
+    {
+      "file": "test/inspection-race.test.mjs",
+      "name": "inspection preserves malformed-response rejection and valid inspection results"
+    },
+    {
+      "file": "test/inspection-race.test.mjs",
+      "name": "inspection scope and removal ownership checks remain fail-closed"
+    },
+    {
+      "file": "test/policy.test.mjs",
+      "name": "A8: approval binds a host-issued capability to the exact scope"
+    },
+    {
+      "file": "test/probe-diagnostics.test.mjs",
+      "name": "selects only guest isolation fields, excluding unrelated evidence"
+    },
+    {
+      "file": "test/probe-diagnostics.test.mjs",
+      "name": "bounds malformed selected values without leaking strings or nested data"
+    },
+    {
+      "file": "test/rootfs-probe.test.mjs",
+      "name": "native fixed metadata check rejects actual invalid local fixture metadata"
+    },
+    {
+      "file": "test/rootfs-probe.test.mjs",
+      "name": "image precreates only the fixed empty owner-writable probe"
+    },
+    {
+      "file": "test/rootfs-probe.test.mjs",
+      "name": "fixed root probe writes a real existing writable file and reports unexpected-success"
+    },
+    {
+      "file": "test/runtime-backend.test.mjs",
+      "name": "G02/G04: preflight rejects selected runtime drift and non-native fixture images before create"
+    },
+    {
+      "file": "test/runtime-backend.test.mjs",
+      "name": "G01/G02/G04: create uses the policy runtime and platform and rejects a different actual runtime"
+    },
+    {
+      "file": "test/runtime-backend.test.mjs",
+      "name": "G06: provision requires fresh host evidence before accepting a runsc guest probe"
+    },
+    {
+      "file": "test/runtime-cli.test.mjs",
+      "name": "G01/G02/G03: host prepare and approve bind explicit runtime and native build platform"
+    },
+    {
+      "file": "test/runtime-cli.test.mjs",
+      "name": "G01/G02/G04: preparation rejects absent runtimes, image mismatches and arbitrary runtime arguments without fallback"
+    },
+    {
+      "file": "test/runtime-controller.test.mjs",
+      "name": "G03/G05/G06: controller binds runtime identity and observed isolation to create, run and reset evidence"
+    },
+    {
+      "file": "test/runtime-controller.test.mjs",
+      "name": "G04/G05/G06: runtime drift, actual-runtime mismatch and failed probes stop run or reset and clean up"
+    },
+    {
+      "file": "test/runtime-controller.test.mjs",
+      "name": "G03/G04/G05: mismatched grants cannot create and host-probe failures cannot reach ready"
+    },
+    {
+      "file": "test/runtime-host.test.mjs",
+      "name": "G01/G02/G04: a registered runtime selects only a supported native Linux platform"
+    },
+    {
+      "file": "test/runtime-policy.test.mjs",
+      "name": "G03/G04: policy and approval bind runtime registration and native platform with no legacy migration"
+    },
+    {
+      "file": "test/runtime-probe.test.mjs",
+      "name": "G06: runc retains every existing guest isolation check"
+    },
+    {
+      "file": "test/runtime-probe.test.mjs",
+      "name": "G06: runsc uses bound native host controls, not virtual guest cgroups or seccomp"
+    },
+    {
+      "file": "test/runtime-selection.test.mjs",
+      "name": "G07: CI selects only the literal runtime and expected native architecture"
+    },
+    {
+      "file": "test/stdio.test.mjs",
+      "name": "A1: real stdio client initializes, discovers and calls a strict tool"
+    },
+    {
+      "file": "test/stdio.test.mjs",
+      "name": "V01: real stdio initialization reports the private package version"
+    },
+    {
+      "file": "test/stdio.test.mjs",
+      "name": "V02: current release metadata matches the MCP package version"
+    },
+    {
+      "file": "test/store.test.mjs",
+      "name": "Private state rejects paths, links, loose permissions and a second controller"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG01: all five valid packages retain their documented runtime boundaries"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG02: all five packages reject absent licenses"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG03: all five packages reject shared MCP version drift"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG04: all five packages reject missing references"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG05: all five packages reject references outside the package"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG06: all five packages reject symlink reference escapes"
+    },
+    {
+      "file": "test/package-compatibility.test.mjs",
+      "name": "PKG07: all five packages require SKILL.md and matching names"
+    }
+  ],
+  "integration": [
+    {
+      "file": "test/integration/approval-boundary.test.mjs",
+      "name": "A8: approval expiry during real preflight prevents container creation"
+    },
+    {
+      "file": "test/integration/approval-boundary.test.mjs",
+      "name": "A8: approval expiry during post-create inspect prevents container start"
+    },
+    {
+      "file": "test/integration/approval-boundary.test.mjs",
+      "name": "A8: changed server-side approval fails and foreign tokens fail for every control"
+    },
+    {
+      "file": "test/integration/authorization.test.mjs",
+      "name": "A2/A6: the fixed HTTP app rejects the same cross-account request"
+    },
+    {
+      "file": "test/integration/cancel.test.mjs",
+      "name": "A9: MCP cancellation reclaims only its experiment"
+    },
+    {
+      "file": "test/integration/cancel.test.mjs",
+      "name": "A9: late real create and HTTP completion cannot resurrect a cancelled experiment"
+    },
+    {
+      "file": "test/integration/cleanup-failure.test.mjs",
+      "name": "A4/A9: unconfirmed cleanup blocks new work until the owned resource is recovered"
+    },
+    {
+      "file": "test/integration/cleanup-failure.test.mjs",
+      "name": "A9: shutdown waits for error cleanup before release of the controller lock"
+    },
+    {
+      "file": "test/integration/cleanup-failure.test.mjs",
+      "name": "A9: parallel shutdown retains the lock until all cleanup settles after a failure"
+    },
+    {
+      "file": "test/integration/comparison.test.mjs",
+      "name": "A2/A3/A5/A6/A10: real MCP runs bind evidence and retain exclusions as unverified"
+    },
+    {
+      "file": "test/integration/control-concurrency.test.mjs",
+      "name": "A4: concurrent environment probes cannot multiply Docker subprocesses"
+    },
+    {
+      "file": "test/integration/docker.test.mjs",
+      "name": "A4/A7: the actual container enforces controls and serves normal HTTP requests"
+    },
+    {
+      "file": "test/integration/input.test.mjs",
+      "name": "A3/A6: bounded input comparison returns real normal HTTP observations"
+    },
+    {
+      "file": "test/integration/limits.test.mjs",
+      "name": "A8/A9: expiry denies new execution but permits evidence, cancellation and disposal"
+    },
+    {
+      "file": "test/integration/limits.test.mjs",
+      "name": "A9: the independent guest deadline stops after SIGKILL without a live controller"
+    },
+    {
+      "file": "test/integration/limits.test.mjs",
+      "name": "A10: real Docker output truncation cannot produce a verification verdict"
+    },
+    {
+      "file": "test/integration/mcp.test.mjs",
+      "name": "A1/A8: host approval, real MCP creation, scoped status and disposal"
+    },
+    {
+      "file": "test/integration/peer.test.mjs",
+      "name": "A7: an actual loopback receiver is reachable only in its own experiment"
+    },
+    {
+      "file": "test/integration/recovery.test.mjs",
+      "name": "A9: an actual target crash is reaped without removal of its sibling"
+    },
+    {
+      "file": "test/integration/recovery.test.mjs",
+      "name": "A9: SIGKILL and restart recover actual resources and invalidate an incomplete attempt"
+    },
+    {
+      "file": "test/integration/reset.test.mjs",
+      "name": "A9: reset restores actual initial HTTP data and preserves comparison evidence"
+    },
+    {
+      "file": "test/integration/timeout.test.mjs",
+      "name": "A9: the deadline removes the actual container and rejects late HTTP completion"
+    }
+  ]
+}
