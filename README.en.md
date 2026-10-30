@@ -4,7 +4,7 @@
 
 **Fix vulnerabilities. Verify that normal behavior still works.**
 
-[한국어 안내](README.md) | English · `0.8.0`
+[한국어 안내](README.md) | English · `0.9.0`
 
 podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests.
 
@@ -41,6 +41,10 @@ Ordinary feature work does not start a full security audit.
 Corrections form one batch with checks for both security and normal behavior.
 The task stops after all required checks pass and permits at most two repair/review rounds.
 If required defects remain at the limit, the result stays incomplete.
+
+The security, eGovFrame, and trap skills verify the target project through its actual tests.
+They freeze required tests, assertions, and commands before changes.
+Missing, skipped, or unexecuted required tests do not pass.
 
 When current vulnerability evidence is required, approved network access and prepared tools support official API and vendor advisory queries.
 The task freezes evidence for the exact target versions before review.
@@ -87,7 +91,7 @@ The agent reads project code and configuration to select the review target. You 
 
 Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
 
-For an update, select release tag `v0.8.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
+For an update, select release tag `v0.9.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
 
 ## Explore the skills
 

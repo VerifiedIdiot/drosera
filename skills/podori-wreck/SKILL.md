@@ -3,7 +3,7 @@ name: podori-wreck
 description: Use for bounded synthetic HTTP verification. Compare authorization and input-validation fixes in the bundled fixture with host-issued approval.
 license: MIT
 metadata:
-  version: "0.8.0"
+  version: "0.9.0"
   author: VerifiedIdiot
   platforms: "linux, macos"
 compatibility: Execution requires a separately prepared local stdio MCP server and approved images. The Docker host must provide native Linux ARM64 or AMD64 with runc or runsc. The trusted host operator must issue approval before execution. Prepare all runtime dependencies before the task.

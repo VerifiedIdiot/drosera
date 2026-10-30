@@ -1,5 +1,23 @@
 # 변경 이력
 
+## 0.9.0
+
+- 보안·전자정부 보안·함정 스킬의 실제 프로젝트 테스트 기반 검증
+- 필수 테스트·assertion·명령·입력 식별자 고정과 실제 실행 결과에 따른 판정
+- 필수 테스트 누락·건너뜀·미실행·시간 초과·오래된 근거의 통과 처리 금지
+- 변경 관련 테스트 우선 실행, 최종 후보의 필수 검증, 유효한 결과만 재사용
+- 중복 검토 지침 축소와 조건부 참조, 기존 승인·격리·작업 한도 유지
+- 의심 스킬의 읽기 전용 범위와 샌드박스의 승인된 합성 앱 실행 범위 유지
+
+### English
+
+- The security, eGovFrame, and trap skills use actual project tests for verification.
+- Required tests, assertions, commands, and input identities remain fixed before changes.
+- Missing, skipped, or unexecuted required tests, timeouts, and stale evidence cannot pass.
+- Affected tests precede broader checks, and the final candidate requires every mandatory check.
+- Concise conditional references preserve approvals, isolation, and existing work limits.
+- Doubt remains read-only, and sandbox execution remains limited to the approved synthetic app.
+
 ## 0.8.0
 
 - 다섯 독립 스킬의 조건부 참조와 일반 기능 개발·보안 점검 절차 분리
