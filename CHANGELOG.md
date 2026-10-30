@@ -1,5 +1,23 @@
 # 변경 이력
 
+## 0.8.0
+
+- 다섯 독립 스킬의 조건부 참조와 일반 기능 개발·보안 점검 절차 분리
+- 작업 전체 수정·재검토 최대 두 차례, 회귀·위임·재개 시 동일 예산 유지
+- 정상 동작과 보안 조건의 동시 검증, 통과 후 즉시 종료와 필수 결함 미해결 시 중단
+- 승인된 공식 API·제품 공급자 공지의 사전 조회와 검토 근거 고정
+- 폐쇄망 반입 근거, 조회 실패·오래된 자료·미완전 범위의 명시
+- 특정 에이전트·추가 MCP 의존 없이 조건부 문서 로딩과 실행환경 격리 구분
+
+### English
+
+- Conditional references and separate feature-development and security-assessment procedures across five independent skills.
+- At most two task-wide repair/review rounds with shared budgets across regressions, delegation, and resumption.
+- Security and normal-use checks remain together, with immediate completion or an explicit unresolved blocker.
+- Approved official API and vendor advisory preparation precedes the frozen review evidence.
+- Imported offline evidence retains explicit query failures, stale records, and coverage gaps.
+- Conditional document loads remain separate from context isolation and host enforcement without a mandatory agent or additional MCP.
+
 ## 0.7.0
 
 - CVSS v4.0 심각도 분류, 점수 근거와 미평가 상태 기록

@@ -15,9 +15,13 @@ Record the actual host controls without an enforcement claim that lacks tests.
 
 ## Preflight
 
+Before the evidence freeze, use approved [advisory preparation](advisory-preflight.md) when current component evidence is required.
+On an isolated host, use imported records with their dates and coverage.
+Do not install tools or change the bundled government baseline for advisory preparation.
+
 1. Verify the approved package source identity and complete file set before review.
 2. Verify required local references exist within the copied package.
-3. Record the package identity and [source profile](source-baseline.json) in the report.
+3. Record the package identity and [source profile](source-baseline.json) in the applicable task record or report.
 4. Record the target revision, relevant uncommitted content, scope, approvals, and evidence identities.
 5. Record the prepared agent, model, provider, tool, and dependency identities without secrets.
    Record reviewer availability and the declared network boundary.
@@ -62,7 +66,9 @@ Approved local test services remain subject to those controls and the recorded n
 
 A missing optional tool does not cancel checks that need no such tool.
 A missing mandatory check does not become a pass because the host is isolated.
-Keep the [decision gate](decision-gate.md), [validation](security-validation.md), and [completion contract](report-completion.md) in force.
+Before material decisions, use the [decision gate](decision-gate.md).
+For application changes or vulnerability findings, use applicable [validation](security-validation.md) sections.
+For retries, evidence reuse, handoffs, or blockers, use the [completion contract](report-completion.md).
 
 ## Repeatability and maintenance
 

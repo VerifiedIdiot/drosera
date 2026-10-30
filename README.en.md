@@ -4,7 +4,7 @@
 
 **Fix vulnerabilities. Verify that normal behavior still works.**
 
-[한국어 안내](README.md) | English · `0.7.0`
+[한국어 안내](README.md) | English · `0.8.0`
 
 podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests.
 
@@ -30,9 +30,27 @@ Start with `podori` for application and web security code reviews. Use `podori-e
 
 Each skill works independently and does not invoke the others.
 
-**All five skills follow the same procedure on connected and isolated hosts.** Prepare the agent, model, tools, and evidence before the task. The procedure excludes automatic downloads and model substitution during the task.
+**All five skills follow the same procedure on connected and isolated hosts.** Prepare the agent, model, tools, and evidence before the task. The procedure excludes automatic tool installation and model or dependency substitution.
 
 The security, eGovFrame, and dependency skills record vulnerability severity with CVSS v4.0. Unsupported scores remain unrated. Severity does not replace approvals or required verification.
+
+## Read what the task needs and verify its criteria
+
+The instructions select references by implementation, assessment, or repair phase.
+Ordinary feature work does not start a full security audit.
+Corrections form one batch with checks for both security and normal behavior.
+The task stops after all required checks pass and permits at most two repair/review rounds.
+If required defects remain at the limit, the result stays incomplete.
+
+When current vulnerability evidence is required, approved network access and prepared tools support official API and vendor advisory queries.
+The task freezes evidence for the exact target versions before review.
+Edits do not restart the search.
+Isolated hosts use imported evidence.
+Stale records and failed queries do not establish safety.
+
+Conditional references and work limits are agent instructions.
+They do not install context isolation or host-enforced limits.
+No particular agent or additional MCP server is mandatory.
 
 <details>
 <summary>See each skill's role at a glance</summary>
@@ -69,7 +87,7 @@ The agent reads project code and configuration to select the review target. You 
 
 Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
 
-For an update, select release tag `v0.7.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
+For an update, select release tag `v0.8.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
 
 ## Explore the skills
 

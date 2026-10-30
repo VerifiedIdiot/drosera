@@ -18,7 +18,14 @@ An adverse verdict never authorizes installation, execution, repair, quarantine,
 Start one task clock before initial inspection.
 Unless the user sets different finite limits, allow 30 minutes of work and two attempts per required item.
 The first attempt counts toward that limit.
-A repair attempt contains one candidate patch and its required verification.
+Complete one bounded initial assessment before repair rounds.
+Allow at most two repair/review rounds across the task.
+A round contains one batch of authorized corrections and affected verification.
+For read-only verification, correct records or repeat affected checks, never target artifacts.
+Local edits and test cycles within that batch do not each create another round.
+An item attempt contains its candidate correction or assessment and required verification.
+Count the first item attempt, including an initial assessment check.
+Do not reset a round or item counter through new IDs, new regressions, subagents, or resumed work.
 An assessment attempt contains one required check against one evidence snapshot.
 Distinct mandatory checks are not retries.
 Keep one budget across subagents, report updates, and task resumption.
@@ -34,12 +41,14 @@ Without a token meter, report token use as unmeasured.
 Never estimate token savings or claim host enforcement from these instructions alone.
 Record unavailable clock or meter controls as limitations.
 If a required budget cannot be verified, return `BLOCKED` before further dependent work.
-Require explicit user approval for a larger budget.
+Do not exceed the two-round task ceiling.
+Require explicit user approval before any other budget extension.
+Do not repeatedly suggest extensions after a stop.
 A larger work budget does not expand execution authority.
 
 ## Progress and evidence reuse
 
-Record each attempt, source identity, failed check, actual result, and next hypothesis.
+Record each round, item attempt, source identity, failed check, actual result, and next hypothesis.
 If the same failure has no new evidence or distinct supported hypothesis, return `BLOCKED`.
 If a prior source-and-failure state recurs, return `BLOCKED` for a repair-cycle review.
 Do not alternate patches that restore previously failed security or normal-use behavior.
@@ -52,7 +61,11 @@ Do not present past observations as current live state.
 Verify unchanged file identities instead of repeated full reads.
 Give reviewers the complete diff, relevant source, required IDs, actual results, and changed assumptions.
 Load only applicable references and relevant evidence sections.
-Preserve independent pre-fix confirmation and post-change review.
+For confirmed vulnerability fixes, preserve independent pre-fix confirmation and post-change affected review.
+A reference load in the same context does not create independent review or context isolation.
+An optional fresh review context inherits the frozen scope and remaining task budget.
+Require a compact evidence result with source identities, checks, verdicts, and blockers.
+Do not require subagents or another provider.
 Do not require a second successful review of unchanged inputs.
 
 ## Return conditions
@@ -67,5 +80,8 @@ A written evidence gap never substitutes for a mandatory successful verification
 Do not weaken required checks or enlarge access to obtain completion.
 Treat a retry or resource limit as a stop guard, not a success criterion.
 Report material risks without automatic scope expansion.
-Follow-up items do not block an otherwise completed contract.
+Optional follow-up items do not block an otherwise completed contract.
+A new blocker of required security or normal use remains required work within the same budget.
+Do not silently defer that blocker to obtain success.
+If time, item attempts, or two rounds expire with required items unresolved, return `BLOCKED`.
 Record final identities, elapsed time, attempts, stop reason, unresolved trust evidence, and follow-up items.

@@ -1,9 +1,12 @@
-# Local Advisories and Lifecycle
+# Advisory evidence and lifecycle
+
+Before the evidence freeze, use the approved [advisory preflight](advisory-preflight.md) when current component evidence is required.
+After that preflight, keep the selected snapshot fixed for review and repairs.
 
 1. Reconcile resolved/transitive packages, base OS, runtime versions, platforms, and available deployed digests.
 2. Record approved snapshot origin, integrity, publication/import dates, and coverage.
 3. Inspect installed audit-tool documentation without tool execution.
-4. Disable remote queries, updates, telemetry, and implicit pulls before any invocation, including local help.
+4. During review, disable remote queries, tool updates, telemetry, and implicit pulls before tool calls, including local help.
 5. Report missing tools/data without automatic installation.
 6. Compare affected ranges, feature use, and exposure against exact assets.
 7. Classify advisories as affected, unaffected, or unknown with evidence.

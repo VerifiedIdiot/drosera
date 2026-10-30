@@ -27,6 +27,13 @@ Design references use section `3.3.category.item`.
 Implementation references use section `4.category.item`.
 Catalog page references use printed page numbers, not PDF viewer positions.
 
+## Scope selection
+
+For ordinary feature work, assess affected criteria within the requested behavior and boundaries.
+Record those criteria in the concise task record without a fabricated vulnerability report.
+For a full security assessment, apply the complete inventory procedure below.
+Keep frozen required criteria, unresolved checks, and newly discovered blockers visible.
+
 ## Assessment procedure
 
 1. Record the profile, package identity, target revision, approved scope, and local evidence set.

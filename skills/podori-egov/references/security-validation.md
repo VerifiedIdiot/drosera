@@ -2,21 +2,25 @@
 
 ## Report and conventions
 
-Create one current [report](../templates/security-report.md) and [convention baseline](../templates/project-conventions.md) before application edits.
+For security assessments or confirmed fixes, create one current [report](../templates/security-report.md) and [convention baseline](../templates/project-conventions.md).
+For ordinary feature work, use a concise task record with scope, conventions, security criteria, normal-use criteria, and required checks.
+Create the applicable record before application edits.
+Do not fabricate vulnerability findings for feature work.
 Use the project review location or host task-artifact area.
 Keep records outside application source unless the project specifies otherwise.
 When a template leaves the package, resolve its links to the approved installed references or accompanying local copies.
 Link companion reports and coverage records to their actual output paths.
 Do not preserve package-relative links that fail from the output directory.
 Scale records to scope.
-Include the [government criterion coverage](../templates/criteria-coverage.md) without omitting excluded or unresolved IDs.
+For full assessments, include the complete [government criterion coverage](../templates/criteria-coverage.md), including excluded or unresolved IDs.
+For ordinary feature work, record affected criterion IDs and evidence in the task record.
 Keep criterion results separate from attack-path status and finding verdicts.
-Populate the templates, including exact source, relevant uncommitted evidence, and report/baseline revisions.
+For security assessments or confirmed fixes, populate the templates with source, relevant uncommitted evidence, and record revisions.
 Separate independent verdicts, proposed work, and verified results.
-Only confirmed items within existing change authority enter executable work.
+Only authorized feature work and independently confirmed vulnerability fixes enter executable work.
 Reports grant no execution or change authority.
 Block approval/evidence-dependent items without blocking unrelated authorized work.
-Before each change, compare current source and assumptions against both records.
+Before each change, compare current source and assumptions against the applicable records.
 Revalidate affected required items only when their source, assumptions, or evidence materially change.
 Update actual changes, results, exceptions, and unresolved checks in the same records.
 Preserve resolved items' original evidence.
@@ -33,7 +37,7 @@ Exclude unrelated style changes and repository-wide formatting.
 
 ## Coverage
 
-Populate report coverage for every material attack path.
+For security assessments, populate report coverage for every material attack path within the frozen scope.
 Use `open`, `reviewed`, `deferred`, or `out_of_scope`.
 Require source traces and control checks for `reviewed`, even with unresolved defects.
 Record reasons and next checks for deferred/excluded paths.
@@ -43,7 +47,9 @@ Empty results or incomplete coverage do not prove safety.
 
 ## Independent review
 
-Before final verdicts or fixes, use a separate reviewer without discovery or implementation involvement.
+Use this section for vulnerability verdicts or fixes, not routine feature work.
+
+For vulnerability verdicts or fixes, use a separate reviewer without discovery or implementation involvement.
 Use an approved independent local agent context or human reviewer under the [offline procedure](offline-execution.md).
 Do not require another model provider, sibling skill, or remote review service.
 Preserve approved tools, data boundaries, cost limits, and ownership.
@@ -113,7 +119,15 @@ Use synthetic data and controlled test services.
 Do not download or execute malware.
 Without required isolation, continue static review without runtime claims.
 
+## Feature verification
+
+For ordinary feature changes, verify affected security controls, normal-use behavior, failure paths, and configured quality checks.
+Record actual evidence and unresolved required checks in the task record.
+Do not require a separate vulnerability report or full audit without a security finding or explicit audit scope.
+
 ## Fix verification
+
+Apply this section to confirmed vulnerability fixes.
 
 Before fixes, run regression tests against confirmed defects in authorized test copies.
 Require expected security-assertion failures, not setup/infrastructure failures (RED).

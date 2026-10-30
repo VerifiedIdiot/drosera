@@ -12,7 +12,7 @@ async function guarded(operation:()=>unknown):Promise<{content:{type:'text';text
   catch(error) {return {...response({error:safeError(error),result:'unverified'}),isError:true};}
 }
 const handle=serveStdio(()=>{
-  const server=new McpServer({name:'podori-sandbox',version:'0.7.0'});
+  const server=new McpServer({name:'podori-sandbox',version:'0.8.0'});
   server.registerTool('sandbox_environment', {description:'Check the local sandbox configuration. This tool does not grant approval.',inputSchema:z.strictObject({})}, async()=>guarded(()=>controller?.environment() ?? {configured:false,available:false}));
   if(controller) {
     server.registerTool('sandbox_create',{description:'Consume a host-issued approval. Keep the returned access token private.',inputSchema:CreateInput},async input=>guarded(()=>controller.create(input)));
