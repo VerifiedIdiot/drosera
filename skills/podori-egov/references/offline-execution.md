@@ -24,7 +24,7 @@ Do not install tools or change the bundled government baseline for advisory prep
 3. Record the package identity and [source profile](source-baseline.json) in the applicable task record or report.
 4. Record the target revision, relevant uncommitted content, scope, approvals, and evidence identities.
 5. Record the prepared agent, model, provider, tool, and dependency identities without secrets.
-   Record reviewer availability and the declared network boundary.
+   Record test-runner availability and the declared network boundary.
 6. Inspect target commands, hooks, and cached dependencies before any execution.
 7. Select approved local tools without installations, updates, telemetry, or remote lookups.
 8. Freeze these inputs for the assessment and completion contract.
@@ -59,20 +59,21 @@ Approved local test services remain subject to those controls and the recorded n
 | Runtime, dependency, or sandbox absent | Continue supported static checks. Leave dependent runtime behavior unverified. |
 | Advisory snapshot absent, stale, or incomplete | Mark affected current-vulnerability conclusions unknown. Preserve supported design and implementation checks. |
 | Version applicability uncertain | Record the local evidence gap. Continue supported criteria without assumed compatibility. |
-| No eligible local decision skill | Record trusted discovery evidence and use the normal procedure under the decision gate. |
-| No independent reviewer | Retain `needs_validation` candidates. Do not confirm findings, reject candidates, or apply dependent fixes. |
-| Decision or review call fails | Hold dependent actions and conclusions. Preserve failure evidence instead of an absent-capability fallback. |
+| No optional reviewer or decision skill | Continue test-based verification without capability discovery or a replacement service. |
+| Required project test cannot run | Keep the dependent behavior unverified. Do not fabricate a passing result. |
+| Explicitly required external review fails | Hold dependent work and preserve failure evidence. Do not use an absent-capability fallback. |
 | Mandatory check lacks evidence or authority | Return `BLOCKED` with verified partial results under the frozen contract. |
 
 A missing optional tool does not cancel checks that need no such tool.
 A missing mandatory check does not become a pass because the host is isolated.
-Before material decisions, use the [decision gate](decision-gate.md).
+If additional approval or review is explicitly required, use [external requirements](decision-gate.md).
+For application changes, use [test verification](test-verification.md).
 For application changes or vulnerability findings, use applicable [validation](security-validation.md) sections.
 For retries, evidence reuse, handoffs, or blockers, use the [completion contract](report-completion.md).
 
 ## Repeatability and maintenance
 
-For comparison, preserve the package, target, evidence, approvals, tool versions, model configuration, and reviewer conditions.
+For comparison, preserve the package, target, evidence, approvals, tool versions, model configuration, and test environment.
 Compare criterion IDs, applicability, evidence gaps, required checks, and completion outcomes.
 These inputs support a consistent procedure, not identical model wording or guaranteed identical findings.
 Do not describe fixture checks as a full agent evaluation or target-application verification.

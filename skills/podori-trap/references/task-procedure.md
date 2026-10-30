@@ -1,14 +1,10 @@
 # Trap procedures
 
-## Decision Gate
+## Verification basis
 
-Read `decision-gate.md` before material decisions.
-Gate trap selection, event attribution, and normal-use exclusions before implementation or final findings.
-If a suitable callable decision skill exists, you must invoke it.
-If no suitable callable skill exists, record discovery evidence before the normal procedure.
-If approval is absent or the call fails, hold dependent actions and conclusions.
-Continue independent checks.
-Report actual call evidence, result validity, and host-enforcement status.
+Use [project tests](test-verification.md) for trap events, attribution boundaries, and normal-use exclusions.
+If additional review or approval is explicitly required, preserve [external requirements](decision-gate.md).
+Tests do not authorize production activation or new infrastructure.
 
 ## Procedure
 
@@ -19,7 +15,7 @@ Report actual call evidence, result validity, and host-enforcement status.
 5. Select plausible decoys from project evidence and an attacker perspective, not a compulsory catalog.
 6. Implement new traps behind a switch that defaults to disabled.
 7. Preserve existing activation state except for authorized changes or preapproved emergency actions.
-8. Run the applicable reference tests and normal-feature regressions.
+8. Run affected project tests and the required normal-feature regressions.
 
 | Feature | Reference |
 |---|---|
@@ -39,7 +35,9 @@ Do not embed trap logic in business handlers, shared utilities, or normal UI com
 ## Verification
 
 Report changed files, module boundaries, integration points, selected traps, actual tests, local costs, unresolved limits, and activation state.
-Verify that trap removal or deactivation preserves normal behavior and existing security controls.
+Test default-disabled behavior, approved synthetic triggers, and normal-use exclusions through actual application paths.
+Test that removal or deactivation preserves normal behavior and existing security controls.
+Test event attribution, replay limits, resource limits, and failure paths within the approved scope.
 Mark unexecuted checks unverified.
 
 ## Pitfalls

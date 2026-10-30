@@ -59,8 +59,8 @@ Split rows when modules or paths have different applicability or results.
 | Result | Required evidence |
 |---|---|
 | `satisfied` | Evidence supports the required control within the stated verification scope. Runtime claims require actual runtime evidence. |
-| `confirmed` | Direct evidence and independent review establish a defect under the finding contract. Link the confirmed finding. |
-| `needs_validation` | Applicability, source, control behavior, review, or required verification remains unresolved. Record the specific gap. |
+| `confirmed` | Source evidence and an applicable executed check establish a defect. Link its finding and verification evidence. |
+| `needs_validation` | Applicability, source, control behavior, or required verification remains unresolved. Record the specific gap. |
 | `not_applicable` | Evidence establishes that the relevant feature or boundary is absent throughout the stated scope. |
 | `out_of_scope` | The authorized scope excludes this boundary. Record the boundary and exclusion authority. |
 

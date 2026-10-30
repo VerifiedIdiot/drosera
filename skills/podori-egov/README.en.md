@@ -52,7 +52,7 @@ Maintenance requires a separate approved task.
 ## Read the result
 
 - Each criterion records applicability, observed controls, and actual verification results or a specific evidence gap.
-- Missing tools, reviewers, or advisory data do not establish safety.
+- Unexecuted required tests and missing advisory data do not establish safety.
 - Supported local checks continue.
 - If mandatory verification is blocked, the skill returns verified partial results and the blocker.
 - The task ends after its required fixes and checks pass.

@@ -4,14 +4,14 @@
 
 1. Identify the target, exact versions, controls, and tests.
 2. For security findings or application changes, read applicable [validation](security-validation.md) sections.
-3. Read [decision gates](decision-gate.md) before material decisions.
-4. Gate attack-path priorities and proposed fixes before edits or final findings.
+3. Preserve explicitly required [external approvals or reviews](decision-gate.md).
+4. Confirm source paths and required test assertions before fixes.
 5. Map assets, attacker capabilities, entry points, trust boundaries, and conventions.
 6. Trace plausible attacks, weakness chains, and normal-feature abuse through actual code and configuration.
 7. For advisories, dependency changes, or release gates, follow [lifecycle](lifecycle-and-cve.md).
 8. For security assessments or confirmed fixes, create the report and convention baseline before application edits.
 9. Apply only confirmed, report-linked fixes within change authority and conventions.
-10. Verify security, normal behavior, and conventions through validation.
+10. Verify security, normal behavior, and conventions through [project tests](test-verification.md).
 11. Update the same report and affected coverage after material changes.
 
 Consider stolen credentials, insiders, dependency substitution, configuration drift, and resource abuse within scope.

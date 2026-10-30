@@ -71,7 +71,8 @@ For retries, evidence reuse, handoffs, or blockers, read [completion](references
 For feature work, read [feature development](references/feature-development.md).
 For security assessments or confirmed fixes, read [security procedures](references/task-procedure.md#security-assessment-and-confirmed-fixes).
 For security findings or confirmed fixes, read applicable [validation](references/security-validation.md) sections.
-Before a material security decision, read [decision gates](references/decision-gate.md).
+For application changes, use [test verification](references/test-verification.md).
+If additional review or approval is explicitly required, read [external requirements](references/decision-gate.md).
 For advisories, dependency changes, or release gates, read [lifecycle](references/lifecycle-and-cve.md).
 For eGov-specific work, read [version selection](references/versions.md) and the matching local profile.
 If dependency, runtime, OS, image, or release evidence requires advisory freshness, read [advisory preflight](references/advisory-preflight.md) before the evidence freeze.

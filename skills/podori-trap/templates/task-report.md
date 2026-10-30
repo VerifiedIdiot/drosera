@@ -7,6 +7,8 @@
 - Explicit approval and permitted changes:
 - Required deliverable IDs and completion criteria:
 - Required security, normal-use, resource, and activation checks:
+- Required test IDs, fixed assertions, runner commands, and report locations:
+- Source, configuration, dependency, and test environment identities:
 - Work start, deadline, and elapsed time:
 - Attempt limit and explicit user override, if any:
 - Host limits and actual enforcement evidence:
@@ -21,7 +23,7 @@ Keep prior attempts and evidence when the report changes.
 
 ## Results
 
-| Required ID | Change or assessment | Source and evidence | Commands and exit status | Verdict |
+| Required ID | Change or assessment | Source and actual test report | Commands and exit status | Verdict |
 |---|---|---|---|---|
 
 ## Completion Outcome

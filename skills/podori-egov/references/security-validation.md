@@ -16,8 +16,8 @@ For full assessments, include the complete [government criterion coverage](../te
 For ordinary feature work, record affected criterion IDs and evidence in the task record.
 Keep criterion results separate from attack-path status and finding verdicts.
 For security assessments or confirmed fixes, populate the templates with source, relevant uncommitted evidence, and record revisions.
-Separate independent verdicts, proposed work, and verified results.
-Only authorized feature work and independently confirmed vulnerability fixes enter executable work.
+Separate source-supported candidates, proposed work, and executed test results.
+Only authorized feature work and evidence-confirmed vulnerability fixes enter executable work.
 Reports grant no execution or change authority.
 Block approval/evidence-dependent items without blocking unrelated authorized work.
 Before each change, compare current source and assumptions against the applicable records.
@@ -45,36 +45,23 @@ Compare reused records with current source and assumptions.
 Reopen changed paths and unresolved checks.
 Empty results or incomplete coverage do not prove safety.
 
-## Independent review
+## Finding evidence
 
-Use this section for vulnerability verdicts or fixes, not routine feature work.
-
-For vulnerability verdicts or fixes, use a separate reviewer without discovery or implementation involvement.
-Use an approved independent local agent context or human reviewer under the [offline procedure](offline-execution.md).
-Do not require another model provider, sibling skill, or remote review service.
-Preserve approved tools, data boundaries, cost limits, and ownership.
-Provide claims, source references, prerequisites, evidence, and missing checks.
-Require current-source inspection and challenges to reachability, controls, prerequisites, and impact.
-Verify evidence files, source references, commands, exit status, and target revision directly.
-Record reviewer identity, actual invocation, disagreements, and verdict without secrets.
-Count decision calls as reviews only when execution satisfies these requirements.
-If no reviewer is available, retain `needs_validation` candidates with that limitation.
-If the review invocation fails, hold dependent verdicts and fixes.
-If required evidence changes, revalidate only its affected items.
-Follow the [completion contract](report-completion.md) before another review.
-Never classify failed review as unavailable review.
-Continue independent authorized checks.
+Use [test verification](test-verification.md) as the default verification procedure.
+Trace reachability, existing controls, prerequisites, and impact through actual source and configuration.
+For behavioral defects, require a failing assertion against the real target code before confirmation.
+For static controls, use the applicable configured check and record its limited verification scope.
+Keep claims unresolved when available checks cannot establish the claimed behavior.
 
 | Verdict | Requirement |
 |---|---|
-| `confirmed` | Direct evidence and independent review establish boundary violation, prerequisites, and supported impact. |
-| `needs_validation` | Record unresolved condition, missing evidence, and next check without severity. |
-| `rejected` | Record the failed premise or preventive control. |
+| `confirmed` | Source evidence and an applicable executed check establish the violation, prerequisites, and supported impact. |
+| `needs_validation` | Record the missing premise, check, or evidence without a local severity rating. |
+| `rejected` | Evidence establishes a failed premise or an effective preventive control. |
 
-Separate defense improvements from confirmed defects.
-Deduplicate by root cause and boundary.
-Keep runtime claims unverified without direct runtime evidence.
-Schema checks do not establish evidence validity.
+A passing test does not reject a claim outside that test's coverage.
+Keep runtime claims unverified without runtime evidence.
+Deduplicate candidates by root cause and boundary.
 
 ## Severity and work order
 
@@ -127,19 +114,10 @@ Do not require a separate vulnerability report or full audit without a security 
 
 ## Fix verification
 
-Apply this section to confirmed vulnerability fixes.
-
-Before fixes, run regression tests against confirmed defects in authorized test copies.
-Require expected security-assertion failures, not setup/infrastructure failures (RED).
-After fixes, require the same assertions to pass against corrected code (GREEN).
-Verify permitted users and normal inputs.
-Do not remove tests, weaken assertions/checks, replace configured tools, or disable legitimate features to obtain passes.
-Require independent review of the complete diff, affected trust boundaries, and convention compliance.
-Run applicable configured format, lint, type, and test commands.
-Separate pre-existing failures from regressions.
-Record blocked convention checks without compliance claims.
-Populate report results with source revisions, commands, exit status, and actual before/after evidence without secrets.
-Without safe reproduction, mark fixes unverified.
-Without both security and normal-behavior evidence, mark fixes unverified.
+For confirmed fixes, preserve the pre-fix failure and post-fix success of the same required assertions.
+Require security and normal-behavior evidence from actual project tests.
+Check the complete diff against the frozen scope, conventions, and affected boundaries.
+Separate pre-existing failures from introduced regressions.
+Record source identities, commands, exit status, reports, and unresolved checks without secrets.
+Without safe execution or required evidence, leave the dependent fix unverified.
 Complete the report under the [completion contract](report-completion.md).
-Retain explicit unresolved checks and follow-up findings.

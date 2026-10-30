@@ -77,7 +77,8 @@ A reference load in the same context does not isolate that context.
 Do not require subagents or another provider.
 For retries, evidence reuse, handoffs, or blockers, read [completion](references/report-completion.md).
 For approved trap design, implementation, or maintenance, read [trap procedures](references/task-procedure.md).
-Before material trap decisions, read [decision gates](references/decision-gate.md).
+For application changes, use [test verification](references/test-verification.md).
+If additional review or approval is explicitly required, read [external requirements](references/decision-gate.md).
 For event attribution, read [detection](references/detection-and-response.md).
 For resource and expiry limits, read [costs](references/operating-costs.md).
 For routes, credentials, or seeds, read [decoys](references/seed-and-decoys.md).

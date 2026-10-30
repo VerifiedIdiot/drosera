@@ -17,8 +17,8 @@
 - Declared network boundary/actual enforcement evidence:
 - Available local tools/versions/offline configuration:
 - Dependency cache/source/advisory snapshot identities and dates:
-- Local decision-capability discovery/exclusions/invocation:
-- Independent reviewer availability/identity/invocation:
+- Test runner, required commands, and native report locations:
+- Additional approval or review only when explicitly required:
 - Missing artifacts/tools/evidence and dependent checks:
 
 ## Completion Contract
@@ -57,7 +57,7 @@ Repeat per candidate with stable root-cause/boundary IDs:
 - Attacker capability/prerequisites:
 - Source-to-impact trace/existing controls:
 - Evidence references/actual observations:
-- Independent reviewer/invocation/disagreements:
+- Required test IDs, actual assertions, execution reports, and source identity:
 - Demonstrated impact/unresolved condition:
 - CVSS assessment state (`rated` or `unrated`), local severity, and score:
 - CVSS version/nomenclature/vector/metric evidence/score source/date:
