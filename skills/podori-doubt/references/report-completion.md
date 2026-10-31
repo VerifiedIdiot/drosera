@@ -15,21 +15,12 @@ An adverse verdict never authorizes installation, execution, repair, quarantine,
 
 ## Work budget
 
-Start one task clock before initial inspection.
-Unless the user sets different finite limits, allow 30 minutes of work and two attempts per required item.
-The first attempt counts toward that limit.
-Complete one bounded initial assessment before repair rounds.
-Allow at most two repair/review rounds across the task.
-A round contains one batch of authorized corrections and affected verification.
-For read-only verification, correct records or repeat affected checks, never target artifacts.
-Local edits and test cycles within that batch do not each create another round.
-An item attempt contains its candidate correction or assessment and required verification.
-Count the first item attempt, including an initial assessment check.
-Do not reset a round or item counter through new IDs, new regressions, subagents, or resumed work.
+Use the entry document's clock, item limits, and round ceiling.
 An assessment attempt contains one required check against one evidence snapshot.
 Distinct mandatory checks are not retries.
-Keep one budget across subagents, report updates, and task resumption.
-Do not reset counters through new IDs for the same root cause and boundary.
+A correction attempt includes the correction and its required verification.
+For read-only verification, correct records or repeat affected checks, never target artifacts.
+Keep one budget across new IDs, regressions, subagents, report updates, and resumed work.
 Apply stricter host, approval, scenario, and operation limits.
 Before each phase or attempt, verify the remaining time and permitted attempts.
 Bound operation timeouts by the remaining work budget when the host supports them.
@@ -46,27 +37,40 @@ Require explicit user approval before any other budget extension.
 Do not repeatedly suggest extensions after a stop.
 A larger work budget does not expand execution authority.
 
-## Progress and evidence reuse
+## Incremental worklist
 
-Record each round, item attempt, source identity, failed check, actual result, and next hypothesis.
+Use one worklist in the existing task record without another runtime or service.
+Give each required check one stable ID, prerequisite IDs, state, evidence, and consumed attempts.
+Bind each result to its relevant source, configuration, dependencies, tools, rules, environment, authority, and evidence.
+Index inputs by their dependent check IDs.
+Reuse completed results only when their recorded inputs, authority, and evidence remain valid.
+After an authorized change batch, traverse only affected dependencies with one visited set.
+Visit each affected check and dependency edge at most once per batch.
+Queue each unresolved check once after its prerequisites become valid.
+If a prerequisite fails or forms a cycle, record dependent blockers without recursive checks.
+Preserve unrelated completed results.
+If impact remains uncertain, assess that boundary once before dependent execution.
+Before another attempt, record new evidence or a distinct supported hypothesis within the original limits.
+Count each correction and verification cycle as an item attempt, even inside one repair round.
+For explicitly required fresh runs, record distinct environment or repetition IDs before execution.
+Without relevant input changes, report updates and task resumption do not invalidate results.
+Do not rebuild the worklist after each completed check.
+Do not restart unrelated discovery or invoke this skill recursively.
+Recheck live authority and input validity before protected execution or evidence reuse.
+
+## Evidence reuse boundaries
+
 If the same failure has no new evidence or distinct supported hypothesis, return `BLOCKED`.
 If a prior source-and-failure state recurs, return `BLOCKED` for a repair-cycle review.
-Do not alternate patches that restore previously failed security or normal-use behavior.
-Keep both criteria in the same regression suite.
+Keep security and normal-use criteria in the same required checks.
 Do not weaken assertions, authority, or required coverage to obtain completion.
-Identify the relevant source, configuration, dependencies, tools, rules, environment, and evidence for each result.
-Reuse a result only when those inputs match and its authority and evidence remain valid.
-Recheck changed inputs and affected boundaries, not unrelated completed items.
 Do not present past observations as current live state.
 Verify unchanged file identities instead of repeated full reads.
-Give reviewers the complete diff, relevant source, required IDs, actual results, and changed assumptions.
-Load only applicable references and relevant evidence sections.
+Give required reviewers the diff, relevant source, required IDs, results, and changed assumptions.
 For confirmed vulnerability fixes, preserve independent pre-fix confirmation and post-change affected review.
-A reference load in the same context does not create independent review or context isolation.
-An optional fresh review context inherits the frozen scope and remaining task budget.
-Require a compact evidence result with source identities, checks, verdicts, and blockers.
-Do not require subagents or another provider.
-Do not require a second successful review of unchanged inputs.
+Keep required reviews within the frozen scope and remaining budget.
+A reference load does not establish independent review or context isolation.
+Do not require subagents, another provider, or a second successful review of unchanged inputs.
 
 ## Return conditions
 

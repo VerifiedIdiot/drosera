@@ -1,5 +1,21 @@
 # 변경 이력
 
+## 1.0.0
+
+- 다섯 독립 스킬과 선택형 MCP의 1.x 호환 범위 명시
+- MCP 원본 입력 검증으로 추가 필드·null·잘못된 자료형 차단
+- 필수 테스트 ID와 실제 테스트러너 결과의 대조 강화
+- 전체 스킬 패키지의 구성·내부 참조·판본 정합 회귀 검사
+- 기업 소스 발췌와 합성 Next.js 샘플에 대한 읽기 전용 모델 평가 결과를 README에 공개
+
+### English
+
+- The five independent skills and optional MCP define their 1.x compatibility contracts.
+- Raw MCP input validation rejects extra fields, null, and invalid types before tool actions.
+- Required test identities match actual native test results.
+- Regression tests verify every skill package, internal reference, and version marker.
+- The README publishes read-only model evaluations on an enterprise source excerpt and a synthetic Next.js sample.
+
 ## 0.9.0
 
 - 보안·전자정부 보안·함정 스킬의 실제 프로젝트 테스트 기반 검증

@@ -2,14 +2,16 @@
 
 ## Report and conventions
 
-For security assessments or confirmed fixes, create one current [report](../templates/security-report.md) and [convention baseline](../templates/project-conventions.md).
+For assessments or fixes, keep one current [report](../templates/security-report.md).
+Before application changes, create a [convention baseline](../templates/project-conventions.md).
 For ordinary feature work, use a concise task record with scope, conventions, security criteria, normal-use criteria, and required checks.
 Create the applicable record before application edits.
 Do not fabricate vulnerability findings for feature work.
-Use the project review location or host task-artifact area.
+Without write authority, include required report and coverage fields in the response.
+Otherwise, use the approved project or host artifact location.
 Keep records outside application source unless the project specifies otherwise.
 Scale records to scope.
-For security assessments or confirmed fixes, populate the templates with source, relevant uncommitted evidence, and record revisions.
+Populate applicable templates with source identities, relevant uncommitted evidence, and revisions.
 Separate source-supported candidates, proposed work, and executed test results.
 Only authorized feature work and evidence-confirmed vulnerability fixes enter executable work.
 Reports grant no execution or change authority.
@@ -41,8 +43,10 @@ Empty results or incomplete coverage do not prove safety.
 
 ## Finding evidence
 
-Use [test verification](test-verification.md) as the default verification procedure.
+For required executable checks or application changes, use [test verification](test-verification.md).
 Trace reachability, existing controls, prerequisites, and impact through actual source and configuration.
+Before absence claims, inspect upstream, downstream, and framework-provided controls.
+Limit conclusions to observed boundaries when that trace is incomplete.
 For behavioral defects, require a failing assertion against the real target code before confirmation.
 For static controls, use the applicable configured check and record its limited verification scope.
 Keep claims unresolved when available checks cannot establish the claimed behavior.

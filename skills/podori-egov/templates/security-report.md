@@ -42,7 +42,9 @@ Result updates do not reset the frozen contract.
 - Assessed IDs and result counts:
 - Unresolved applicability and verification limits:
 
-Reconcile the record against all 20 design and 49 implementation IDs in the bundled catalogs.
+For full assessments, reconcile all 20 design and 49 implementation IDs in the bundled catalogs.
+For scoped fixes, reconcile affected IDs and preserve valid unaffected coverage.
+Keep unresolved required criteria visible.
 Do not count default template markers as completed assessments.
 
 | Path ID | Entry/boundary | Attack class | Source/evidence | Status | Next check/exclusion reason |

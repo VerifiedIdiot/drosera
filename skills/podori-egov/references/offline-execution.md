@@ -66,10 +66,7 @@ Approved local test services remain subject to those controls and the recorded n
 
 A missing optional tool does not cancel checks that need no such tool.
 A missing mandatory check does not become a pass because the host is isolated.
-If additional approval or review is explicitly required, use [external requirements](decision-gate.md).
-For application changes, use [test verification](test-verification.md).
-For application changes or vulnerability findings, use applicable [validation](security-validation.md) sections.
-For retries, evidence reuse, handoffs, or blockers, use the [completion contract](report-completion.md).
+Use the entry document's reference conditions without another discovery pass.
 
 ## Repeatability and maintenance
 

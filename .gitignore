@@ -5,3 +5,4 @@ seed.txt
 mcp/node_modules/
 mcp/dist/
 /docs/
+__pycache__/

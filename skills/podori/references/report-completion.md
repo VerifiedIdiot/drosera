@@ -2,7 +2,7 @@
 
 ## Frozen contract
 
-Before edits, freeze scope, authorized changes, required IDs, security criteria, normal-use criteria, and checks.
+Use the entry document's frozen scope, authority, required checks, and worklist.
 For assessments or fixes, keep one report and its evidence.
 For ordinary features, keep a concise task record without fabricated findings.
 For review-only requests, preserve that scope without application edits.
@@ -27,9 +27,32 @@ Do not exceed the two-round ceiling or repeatedly request extensions.
 Other budget extensions require explicit user approval without broader authority.
 Without a host meter, report token usage as unmeasured.
 
+## Incremental worklist
+
+Use one worklist in the existing task record without another runtime or service.
+Give each required check one stable ID, prerequisite IDs, state, evidence, and consumed attempts.
+Bind each result to its relevant source, configuration, dependencies, tools, rules, environment, authority, and evidence.
+Index inputs by their dependent check IDs.
+Reuse completed results only when their recorded inputs, authority, and evidence remain valid.
+After an authorized change batch, traverse only affected dependencies with one visited set.
+Visit each affected check and dependency edge at most once per batch.
+Queue each unresolved check once after its prerequisites become valid.
+If a prerequisite fails or forms a cycle, record dependent blockers without recursive checks.
+Preserve unrelated completed results.
+If impact remains uncertain, assess that boundary once before dependent execution.
+Before another attempt, record new evidence or a distinct supported hypothesis within the original limits.
+Count each correction and verification cycle as an item attempt, even inside one repair round.
+For explicitly required fresh runs, record distinct environment or repetition IDs before execution.
+Without relevant input changes, report updates and task resumption do not invalidate results.
+Do not rebuild the worklist after each completed check.
+Do not restart unrelated discovery or invoke this skill recursively.
+Recheck live authority and input validity before protected execution or evidence reuse.
+
 ## Evidence and return
 
-Use [test verification](test-verification.md) for actual checks, fixed result rules, and valid evidence reuse.
+For application changes or required executable checks, use [test verification](test-verification.md).
+For source-only reviews, complete the agreed static checks and evidence record.
+Keep unexecuted behavior unverified.
 Check the complete diff against the frozen scope and affected boundaries.
 Keep security assertions and normal-use assertions together without weaker checks.
 Treat introduced regressions as required work under the original contract.

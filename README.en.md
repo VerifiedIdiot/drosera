@@ -4,17 +4,26 @@
 
 **Fix vulnerabilities. Verify that normal behavior still works.**
 
-[한국어 안내](README.md) | English · `0.9.0`
+[한국어 안내](README.md) | English · `1.0.0`
 
-podori is a collection of security skills for AI coding agents. It guides application and web security code reviews, vulnerability fixes, and regression tests.
+podori is a collection of security skills for AI coding agents. It reviews code and configuration for vulnerabilities, then guides approved fixes and regression checks for normal behavior. Select the skill that fits the task and use it on its own.
 
-Independent skills cover eGovFrame secure coding, package and container image supply-chain security, and decoys and traps on request. Sandbox verification compares only the bundled synthetic app.
+Independent skills cover eGovFrame secure coding, package and container image supply-chain security, and decoys and traps on request. Sandbox verification isolates the app to help protect the host OS, then compares behavior before and after changes.
 
-**Optional gVisor isolation reduces the host kernel attack surface.** Its userspace kernel handles application system calls instead of exposing the host kernel interface directly.
+## Start here
 
-## Background
+1. Copy the complete selected `skills/<skill-name>/` directory into the agent's skill location. For a general security review, select `skills/podori/`.
+2. Invoke the skill in the target project. This example uses an agent that supports slash commands.
 
-My team recently patched vulnerabilities in Node.js, Python, Java, and nginx across dozens of repositories. I share the checklists and procedures for fixes and verification from that work so other developers can use them.
+```text
+/podori
+```
+
+The agent reads project code and configuration to select the review target. You do not need an additional task prompt. If project evidence or required approval is missing, the agent asks a focused question. A review-only request leaves the code unchanged.
+
+Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
+
+For an update, select release tag `v1.0.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
 
 ## Choose your skill
 
@@ -26,35 +35,9 @@ Start with `podori` for application and web security code reviews. Use `podori-e
 | Review government security criteria and secure coding for the relevant eGovFrame version | [podori-egov · eGovFrame security](skills/podori-egov/SKILL.md) |
 | Check package and container image provenance and supply-chain security | [podori-doubt · Doubt](skills/podori-doubt/SKILL.md) |
 | Detect unauthorized exploration with decoys and traps | [podori-trap · Traps](skills/podori-trap/SKILL.md) |
-| Compare vulnerable and fixed variants of the bundled synthetic app | [podori-wreck · Sandbox verification](skills/podori-wreck/SKILL.md) |
+| Compare app behavior before and after changes in isolation to help protect the host OS | [podori-wreck · Sandbox verification](skills/podori-wreck/SKILL.md) |
 
 Each skill works independently and does not invoke the others.
-
-**All five skills follow the same procedure on connected and isolated hosts.** Prepare the agent, model, tools, and evidence before the task. The procedure excludes automatic tool installation and model or dependency substitution.
-
-The security, eGovFrame, and dependency skills record vulnerability severity with CVSS v4.0. Unsupported scores remain unrated. Severity does not replace approvals or required verification.
-
-## Read what the task needs and verify its criteria
-
-The instructions select references by implementation, assessment, or repair phase.
-Ordinary feature work does not start a full security audit.
-Corrections form one batch with checks for both security and normal behavior.
-The task stops after all required checks pass and permits at most two repair/review rounds.
-If required defects remain at the limit, the result stays incomplete.
-
-The security, eGovFrame, and trap skills verify the target project through its actual tests.
-They freeze required tests, assertions, and commands before changes.
-Missing, skipped, or unexecuted required tests do not pass.
-
-When current vulnerability evidence is required, approved network access and prepared tools support official API and vendor advisory queries.
-The task freezes evidence for the exact target versions before review.
-Edits do not restart the search.
-Isolated hosts use imported evidence.
-Stale records and failed queries do not establish safety.
-
-Conditional references and work limits are agent instructions.
-They do not install context isolation or host-enforced limits.
-No particular agent or additional MCP server is mandatory.
 
 <details>
 <summary>See each skill's role at a glance</summary>
@@ -78,20 +61,27 @@ flowchart TD
 
 </details>
 
-## Start here
+## Background
 
-1. Copy the complete selected `skills/<skill-name>/` directory into the agent's skill location. For a general security review, select `skills/podori/`.
-2. Invoke the skill in the target project. This example uses an agent that supports slash commands.
+My team recently patched vulnerabilities in Node.js, Python, Java, and nginx across dozens of repositories. I share the checklists and procedures for fixes and verification from that work so other developers can use them.
 
-```text
-/podori
-```
+## How a task runs
 
-The agent reads project code and configuration to select the review target. You do not need an additional task prompt. If project evidence or required approval is missing, the agent asks a focused question. A review-only request leaves the code unchanged.
+Each skill first freezes the task scope, completion criteria, and required checks. The instructions select references by implementation, assessment, or repair phase. Ordinary feature work does not start a full security audit.
 
-Installation paths and invocation syntax depend on the agent. Each skill folder includes the instructions and references for its review procedure.
+A review-only task reports source evidence and unverified items. Unexecuted behavior remains unverified, and the code stays unchanged. A repair task, or a task that requires executable verification, uses the target project's actual tests to confirm both security conditions and normal behavior. Required tests, assertions, and commands are frozen before changes, and actual test results decide the outcome. Missing, skipped, or unexecuted required tests do not pass.
 
-For an update, select release tag `v0.9.0`. Back up the current installation before you replace the complete selected folder. Verify the `SKILL.md` version and all package files against that tag. Unused skills need no installation.
+The security, eGovFrame, and dependency skills record vulnerability severity with CVSS v4.0. Unsupported scores remain unrated and are not downgraded to a low severity. Severity does not replace approvals or required verification.
+
+When current vulnerability evidence is required, approved network access and prepared tools support official API and vendor advisory queries. The task freezes evidence for the exact target versions before review. Edits do not restart the search. Isolated hosts use imported evidence. Stale records and failed queries do not establish safety.
+
+Confirmed defects form one correction batch with checks for both security and normal behavior. The task ends when all required checks pass, without another search for improvements. It permits at most two repair/review rounds. The default work budget is 30 minutes and two attempts per required item, inclusive of the first attempt. Users can specify different finite limits. Stricter host and approval limits take precedence. Report updates and subagent delegation do not reset the budget.
+
+Valid evidence remains reusable while its relevant inputs remain unchanged. Only changed inputs and affected boundaries require another check. The agent stops when a repeated failure has no new evidence or a patch restores an earlier failure state. At the limit, it stops new investigation, edits, and tests. Only the report and authorized cleanup continue. Unfinished required work returns `BLOCKED`.
+
+Separate defects and optional improvements stay on a follow-up list. `podori-doubt` traces source-linked dependency, build, install, and runtime paths through read-only checks. A shared registry does not justify more targets.
+
+Conditional references and work budgets are agent instructions. They do not install context isolation or host-enforced limits, and no particular agent or additional MCP server is mandatory. Hard time and token limits require host controls. Without a token meter, usage remains unmeasured, with no estimate of token savings.
 
 ## Explore the skills
 
@@ -149,7 +139,7 @@ New traps start disabled. Production activation requires resource limits, exit c
 
 ### podori-wreck · Sandbox verification
 
-**Select gVisor (`runsc`) with Docker for added isolation.** The MCP uses the native Linux ARM64 or AMD64 image. It rejects execution if the selected runtime fails verification.
+**Select gVisor (`runsc`) with Docker for added isolation.** Its userspace kernel handles application system calls instead of exposing the host kernel interface directly, which reduces the host kernel attack surface. The MCP uses the native Linux ARM64 or AMD64 image. It rejects execution if the selected runtime fails verification.
 
 Compare vulnerable and fixed variants of the bundled synthetic HTTP app. The MCP sends identical requests from identical initial data and verifies authorization and input-validation results. It also verifies that normal requests still work.
 
@@ -163,17 +153,42 @@ If the MCP cannot verify external network denial, isolation, or resource and tim
 
 The MCP refuses arbitrary repositories, images, paths, shell commands, and production or external targets. It also excludes autonomous exploration, vulnerability chains, code-execution demonstrations, destructive tests, and resource-exhaustion tests. This is not a general sandbox for malicious code. gVisor does not replace host security updates or guarantee protection against every vulnerability. Read the [MCP guide](mcp/README.en.md) for detailed execution requirements.
 
-## Results and completion
+## Verification
 
-Each skill first freezes the task scope, completion criteria, and required checks. Security fixes address confirmed defects and preserve normal behavior. The task ends when all required checks pass, without another search for improvements.
+Version 1.0.0 passed three kinds of verification. Their counts do not combine into one score.
 
-The default work budget is 30 minutes and two attempts per required item, inclusive of the first attempt. Users can specify different finite limits. Stricter host and approval limits take precedence. Report updates and subagent delegation do not reset the budget.
+- **Package consistency**: regression tests check the required files, internal references, and version markers of all five skill packages.
+- **Sandbox execution tests**: the `podori-wreck` MCP compares requests and responses between the vulnerable and fixed variants of the bundled synthetic app.
+- **Model evaluation**: security defect identification and known-vulnerability (CVE) matching on source excerpts from a large enterprise business system and on a synthetic Next.js sample.
 
-Valid evidence remains reusable while its relevant inputs remain unchanged. Only changed inputs and affected boundaries require another check. The agent stops when a repeated failure has no new evidence or a patch restores an earlier failure state. At the limit, it stops new investigation, edits, and tests. Only the report and authorized cleanup continue. Unfinished required work returns `BLOCKED`.
+The model evaluation ran a code review and a dependency advisory review on each target. Every run used the same English task text, the same `podori` package as this release, and two read-only tools, with one fresh run per model.
 
-Separate defects and optional improvements stay on a follow-up list. `podori-doubt` traces source-linked dependency, build, install, and runtime paths through read-only checks. A shared registry does not justify more targets.
+- **Enterprise excerpt**: authentication and request-handling boundaries in 13 backend and frontend source files. The source alone establishes two defects, and every model found both with exact line numbers. In the advisory review, every model identified all three vulnerable packages among 22 declared packages (`nuxt` with 16 advisories, `lodash-es` with 3, and `swiper` with 1 CRITICAL) and all 20 advisories.
+- **Next.js sample**: 16 files with middleware authentication, server actions, file upload, and secret handling, with 10 planted defects and 3 false-positive traps. Every model found all 10 defects, no model fell for a trap, and every model reported the client-controlled role header that reaches the admin API as its first finding. The advisory review covered 4 vulnerable packages and 71 advisories, including the middleware authorization bypass in `next@14.2.20`, and the models related that advisory to the sample's middleware authentication code.
 
-These budgets are agent instructions. Hard time and token limits require host controls. Without a token meter, usage remains unmeasured, with no estimate of token savings.
+Across both targets there were no invented advisory identifiers and no false positives, and the highest severities matched. In the code reviews, which had no advisory snapshot, no model asserted a CVE from a version alone.
+
+| Model | Defects (excerpt · Next.js) | Vulnerable dependencies | Advisory IDs | Acceptance |
+|---|---:|---:|---:|---|
+| `gpt-6.1-sol` | 2/2 · 10/10 | 3/3 · 4/4 | 20/20 · 71/71 | Met |
+| `gpt-6-astra` | 2/2 · 10/10 | 3/3 · 4/4 | 20/20 · 71/71 | Met |
+| `gpt-6.1-terra` | 2/2 · 10/10 | 3/3 · 4/4 | 20/20 · 71/71 | Met |
+| `claude-opus-5-5` | 2/2 · 10/10 | 3/3 · 4/4 | 20/20 · 71/71 | Met |
+| `claude-fable-5-1` | 2/2 · 10/10 | 3/3 · 4/4 | 20/20 · 71/71 | Met |
+| `claude-sonnet-5-5` | 2/2 · 10/10 | 3/3 · 4/4 | 20/20 · 71/71 | Met |
+| `claude-haiku-5-5` | 2/2 · 10/10 | 3/3 · 3/4 | 20/20 · 71/71 | Met · classified one `zod` advisory as unknown |
+| `gpt-6-luna` | 2/2 · 10/10 | 3/3 · 0/4 | 20/20 · 0/71 | Not met · required references unread, stopped the Next.js advisory review |
+| `gemma-4-31b-it` | 2/2 · — | — | — | Not met · required references unread |
+
+Acceptance covers defect and vulnerability identification, the reference reads the skill requires, and accurate evidence reporting. `gemma-4-31b-it` ran as a self-hosted preliminary pilot on the enterprise code review only. One run per model does not establish speed rankings or general model superiority. Advisory matching used declared versions, and the read-only evaluation did not include fixes or regression checks. The enterprise source and raw logs stay private.
+
+## Compatibility and conditions of use
+
+The 1.x contract covers the five skill names, independent use, and documented approval, isolation, and completion rules. Report wording, detection results, and internal reference paths are not stable interfaces. Security corrections can reject inputs that violate the documented contract.
+
+The optional MCP follows its [tool, input, and approval contract](mcp/README.en.md#1x-compatibility-contract). Incompatible contract changes require a new major version.
+
+**All five skills follow the same procedure on connected and isolated hosts.** Prepare the agent, model, tools, and evidence before the task. The procedure excludes automatic tool installation and model or dependency substitution.
 
 ## Frequently asked questions
 

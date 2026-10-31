@@ -2,7 +2,7 @@
 
 [한국어 안내](README.md) | English
 
-This optional local stdio package accompanies `0.9.0`. The four existing skills work without this package.
+This optional local stdio package accompanies `1.0.0`. The four existing skills work without this package.
 
 ## Supported scope
 
@@ -95,6 +95,12 @@ For an input-validation item, specify `input-validation`. Output contains only t
 ```
 
 Without a state argument, the server only reports whether the environment lacks configuration. STDOUT carries only MCP messages. The package exposes no HTTP MCP listener or public port.
+
+## 1.x compatibility contract
+
+The 1.x contract covers documented tool names, input schemas, access-token requirements, and evidence verdict meanings. The trusted operator issues approvals outside MCP. Security corrections can reject inputs that violate the documented contract.
+
+Incompatible tool, input, or approval contract changes require a new major version. Internal files, diagnostic text, and dependency versions are not stable client interfaces. The package does not automatically migrate existing state.
 
 ## MCP use
 

@@ -137,6 +137,34 @@
       "name": "V02: current release metadata matches the MCP package version"
     },
     {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW01: raw stdio rejects prototype key before environment action"
+    },
+    {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW01: raw stdio rejects ordinary extra key before environment action"
+    },
+    {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW01: raw stdio rejects null before environment action"
+    },
+    {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW01: raw stdio rejects array before environment action"
+    },
+    {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW02: raw stdio preserves empty arguments and unconfigured tool boundary"
+    },
+    {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW02: raw stdio preserves omitted arguments and unconfigured tool boundary"
+    },
+    {
+      "file": "test/raw-stdio.test.mjs",
+      "name": "RAW03: configured raw stdio validates registered schemas before actions and retains host authorization"
+    },
+    {
       "file": "test/store.test.mjs",
       "name": "Private state rejects paths, links, loose permissions and a second controller"
     },

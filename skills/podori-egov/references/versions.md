@@ -2,7 +2,7 @@
 
 1. Record each module's resolved runtime, common-component, Spring, Spring Security, Servlet, JDK, and container versions separately.
 2. Record authentication mode, configuration source, overrides, active filters, and available local evidence.
-3. For affected government criteria, read the [government baseline](government-baseline.md).
+3. Retain affected government criterion IDs in the task record.
 4. For shared controls, read applicable [common rules](common.md).
 5. For version-specific behavior, read the matching profile below.
 6. Match a rule's conditions against actual source and configuration, not the major label alone.

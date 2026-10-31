@@ -5,7 +5,7 @@
 Before material trust decisions, read [decision gates](decision-gate.md).
 Gate suspicious-behavior classification and unresolved trust evidence before final findings.
 If a suitable callable decision skill exists, you must invoke it.
-If no suitable callable skill exists, record discovery evidence before the normal procedure.
+If no suitable callable skill exists, record discovery evidence before the dependent trust decision.
 If approval is absent or the call fails, hold dependent actions and conclusions.
 Continue independent checks.
 Report actual call evidence, result validity, and host-enforcement status.

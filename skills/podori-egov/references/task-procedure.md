@@ -8,12 +8,15 @@
 4. Preserve explicitly required [external approvals or reviews](decision-gate.md).
 5. Confirm source paths and required test assertions before fixes.
 6. Map assets, attacker capabilities, entry points, trust boundaries, and conventions.
-7. Record every government criterion in the [coverage record](../templates/criteria-coverage.md) with actual applicability and evidence.
+7. For full assessments, record every government criterion in the [coverage record](../templates/criteria-coverage.md).
+   Record actual applicability and evidence.
+   For scoped fixes, update affected criteria without another full assessment.
+   Preserve valid unaffected coverage and unresolved required criteria.
 8. Trace plausible attacks, weakness chains, and normal-feature abuse through actual code and configuration.
 9. For advisories, dependency changes, or release gates, follow [lifecycle](lifecycle-and-cve.md).
-10. For security assessments or confirmed fixes, create the report and convention baseline before application edits.
+10. Before application edits, prepare the report and convention baseline.
 11. Apply only confirmed, report-linked fixes within change authority and conventions.
-12. Verify security, normal behavior, and conventions through [project tests](test-verification.md).
+12. For application changes or required executable checks, verify security, normal behavior, and conventions through [project tests](test-verification.md).
 13. Update the same report and affected coverage after material changes.
 
 Consider stolen credentials, insiders, dependency substitution, configuration drift, and resource abuse within scope.
@@ -35,7 +38,8 @@ Exclude unrelated fixes, services, and dependencies.
 
 ## Completion
 
-For security assessments or confirmed fixes, complete the [report](../templates/security-report.md), including affected authorization, tenant, normal-feature, and failure-path tests.
+Complete the [report](../templates/security-report.md) with evidence for the checks required by the task.
+For excluded runtime checks, report `unverified` without runtime claims.
 Include the criterion coverage record and explicit evidence gaps.
 Require separate deployment approval.
 Clean scans, absent advisories, obscure routes, and crawler notices do not establish safety or replace access controls.

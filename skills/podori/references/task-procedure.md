@@ -9,9 +9,9 @@
 5. Map assets, attacker capabilities, entry points, trust boundaries, and conventions.
 6. Trace plausible attacks, weakness chains, and normal-feature abuse through actual code and configuration.
 7. For advisories, dependency changes, or release gates, follow [lifecycle](lifecycle-and-cve.md).
-8. For security assessments or confirmed fixes, create the report and convention baseline before application edits.
+8. Before application edits, prepare the report and convention baseline.
 9. Apply only confirmed, report-linked fixes within change authority and conventions.
-10. Verify security, normal behavior, and conventions through [project tests](test-verification.md).
+10. For application changes or required executable checks, verify security, normal behavior, and conventions through [project tests](test-verification.md).
 11. Update the same report and affected coverage after material changes.
 
 Consider stolen credentials, insiders, dependency substitution, configuration drift, and resource abuse within scope.
@@ -33,6 +33,7 @@ Exclude unrelated fixes, services, and dependencies.
 
 ## Completion
 
-For security assessments or confirmed fixes, complete the [report](../templates/security-report.md), including affected authorization, tenant, normal-feature, and failure-path tests.
+Complete the [report](../templates/security-report.md) with evidence for the checks required by the task.
+For excluded runtime checks, report `unverified` without runtime claims.
 Require separate deployment approval.
 Clean scans, absent advisories, obscure routes, and crawler notices do not establish safety or replace access controls.

@@ -29,18 +29,19 @@ Catalog page references use printed page numbers, not PDF viewer positions.
 
 ## Scope selection
 
-For ordinary feature work, assess affected criteria within the requested behavior and boundaries.
-Record those criteria in the concise task record without a fabricated vulnerability report.
+For ordinary feature work or scoped fixes, assess affected criteria within the requested behavior and boundaries.
+For ordinary features, use the concise task record without a fabricated vulnerability report.
+For scoped fixes, update the existing report and affected coverage.
 For a full security assessment, apply the complete inventory procedure below.
 Keep frozen required criteria, unresolved checks, and newly discovered blockers visible.
 
 ## Assessment procedure
 
 1. Record the profile, package identity, target revision, approved scope, and local evidence set.
-2. Create the [criterion coverage record](../templates/criteria-coverage.md) beside the security report.
+2. Include the [criterion coverage fields](../templates/criteria-coverage.md) in the approved report or response.
 3. Assess applicability for every catalog ID before the frozen worklist.
 4. For each applicable criterion, inspect its local check and available verification evidence.
-5. Add the relevant [version profile](versions.md) without replacing the government criterion.
+5. Apply the selected version profile without replacing the government criterion.
 6. Record source paths, effective configuration, verification scope, observed results, and missing evidence.
 7. Link candidate findings to the criterion IDs and existing attack-path coverage.
 8. Follow [security validation](security-validation.md) before any confirmed verdict or fix.
@@ -80,7 +81,7 @@ Do not remove required rows or checks to obtain completion.
 
 ## eGovFrame overlays
 
-Select actual resolved versions through [version selection](versions.md).
+Reuse the recorded version selection and matching local profile.
 Verify every overlay against local target source and effective configuration.
 Do not infer full-major compatibility from the inspected baselines.
 

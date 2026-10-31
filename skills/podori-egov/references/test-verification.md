@@ -1,5 +1,7 @@
 # Test verification
 
+Apply this procedure to application changes or explicitly required executable checks.
+
 ## Fixed inputs
 
 Use the target project's existing test runner and configured check commands.
@@ -17,7 +19,9 @@ For new behavior or defect fixes, require the intended assertion failure before 
 Setup errors do not establish that failure.
 After the change, require those assertions to pass without weaker checks or disabled normal behavior.
 During repairs, run affected tests before broader checks.
-For the final candidate, run every configured mandatory check.
+For the final candidate, reuse valid results before any new execution.
+Run only required checks with absent or invalid evidence.
+If fresh execution is explicitly required, retain that check in the frozen worklist.
 Respect approvals, isolation, network limits, and the remaining task budget for every test command.
 Do not invoke another agent or decision skill as a routine verification prerequisite.
 
